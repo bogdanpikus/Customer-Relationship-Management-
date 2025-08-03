@@ -5,8 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+        Title="MainWindow" 
+        WindowState="Maximized"
+        WindowStyle="SingleBorderWindow">
+    <Grid Background="Gainsboro">
+        <Button x:Name="Create_Database" Click="Create_Database_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700px" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">Create Database</Button>
+        <Button x:Name="Open_Database" Click="Open_Database_Click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700px" Margin="0,140,0,0" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">Open Database</Button>
+        <Button x:Name="Close_MainWindow" FontSize="50px" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="100px" Height="60px" Background="Black" Foreground="WhiteSmoke">Exit</Button>
+        <Button x:Name="Documentation" FontSize="50px" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50px" Height="60px" Background="Black" Foreground="WhiteSmoke">?</Button>
     </Grid>
 </Window>

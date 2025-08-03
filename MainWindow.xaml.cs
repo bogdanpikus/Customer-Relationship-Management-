@@ -20,5 +20,15 @@ namespace CRM
         {
             InitializeComponent();
         }
+
+        private void Create_Database_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Open_Database_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
