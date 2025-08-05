@@ -8,4 +8,19 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Documentation.pdf" />
+    <None Remove="logo_ico.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="logo_ico.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Documentation.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
