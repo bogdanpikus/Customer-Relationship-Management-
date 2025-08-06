@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:CRM"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Icon=".\\logo_ico.ico"
+        Icon="../Assets/logo_ico.ico"
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow">
     <Grid Background="#F2E8E8">

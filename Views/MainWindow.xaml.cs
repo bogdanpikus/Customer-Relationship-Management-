@@ -25,7 +25,9 @@ namespace CRM
 
         private void Create_Database_Click(object sender, RoutedEventArgs e)
         {
-
+            Create_Database_Window create_Database_Window = new Create_Database_Window();
+            create_Database_Window.Show();
+            this.Close();
         }
 
         private void Open_Database_Click(object sender, RoutedEventArgs e)

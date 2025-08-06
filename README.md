@@ -1,1 +1,1 @@
-<hi align="cener">CRM</hi>
+<hi align="center">CRM</hi>

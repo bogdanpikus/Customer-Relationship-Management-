@@ -9,18 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Documentation.pdf" />
+    <None Remove="Assets\Documentation.pdf" />
     <None Remove="logo_ico.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="logo_ico.ico" />
+    <Resource Include="Assets\logo_ico.ico" />
   </ItemGroup>
 
+	<ItemGroup>
+		<Folder Include="Views\Pages\" />
+		<Folder Include="Core\" />
+	</ItemGroup>
+  
   <ItemGroup>
-    <Content Include="Documentation.pdf">
+	  <ApplicationDefinition Include="Core\App.xaml"></ApplicationDefinition>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="Documentation.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
 
 </Project>
