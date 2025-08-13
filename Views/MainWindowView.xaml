@@ -1,4 +1,4 @@
-﻿<Window x:Class="CRM.MainWindow"
+﻿<Window x:Class="CRM.MainWindowView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,11 +11,11 @@
         WindowState="Maximized"
         ResizeMode="CanResize">
     <Grid Background="#F2E8E8">
-        <Button Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700px" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">Create Database</Button>
-        <Button Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700px" Margin="0,140,0,0" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">Open Database</Button>
-        <Button Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="700px" Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
+        <Button Command="{Binding CreateDatabase}" Content="Create Database" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700px" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px"></Button>
+        <Button Command="{Binding OpenDatabase}" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700px" Margin="0,140,0,0" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">Open Database</Button>
+        <Button Command="{Binding ExitSystem}" Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="700px" Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
             <TextBlock VerticalAlignment="Center">Exit</TextBlock>
-        </Button>
+        </Button>   
         <Button Cursor="Hand" FontSize="50px" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50px" Height="60px" Background="Black" Foreground="WhiteSmoke">
             <TextBlock VerticalAlignment="Center">?</TextBlock>
         </Button>
