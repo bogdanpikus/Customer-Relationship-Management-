@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:CRM"
              StartupUri="Views\MainWindowView.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Templates/TextBoxPlaceholder.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

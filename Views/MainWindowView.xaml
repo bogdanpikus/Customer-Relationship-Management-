@@ -15,10 +15,30 @@
         <Button Command="{Binding OpenDatabase}" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700px" Margin="0,140,0,0" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">Open Database</Button>
         <Button Command="{Binding ExitSystem}" Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="700px" Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
             <TextBlock VerticalAlignment="Center">Exit</TextBlock>
-        </Button>   
-        <Button Cursor="Hand" FontSize="50px" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50px" Height="60px" Background="Black" Foreground="WhiteSmoke">
+        </Button>
+        <Button Command="{Binding OpenDocumentation}" Cursor="Hand" FontSize="50px" HorizontalAlignment="Right" VerticalAlignment="Top" Width="50px" Height="60px" Background="Black" Foreground="WhiteSmoke">
             <TextBlock VerticalAlignment="Center">?</TextBlock>
         </Button>
-        <Button Width="50px" Height="60px" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,60,0" FontSize="25px" Background="Black" Foreground="WhiteSmoke">Test</Button>
+
+        <UserControl Background="#F2E8E8" Visibility="Visible">
+            <StackPanel>
+                <StackPanel Orientation="Vertical">
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="80px" Background="Black" Width="815px" Foreground="AliceBlue">Create your Database</TextBlock>
+                    <TextBox Text="{Binding DatabaseName, UpdateSourceTrigger=PropertyChanged}" Margin="0,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Medium" FontSize="70px" Background="Snow" BorderThickness="4px" BorderBrush="Black" Width="815px" Foreground="Black" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,40,0,0">
+                    <Label Content="...brouse" Cursor="Hand" Height="60px" Width="700px" FontSize="30px" FontWeight="ExtraLight" Background="AliceBlue" BorderBrush="Black" BorderThickness="4px"></Label>
+                    <Button Content="Brouse" FontWeight="Bold" FontSize="40px" Height="60px" Width="150px" Margin="10,0,0,0" BorderBrush="Black" BorderThickness="4px"></Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200px" Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
+                        <TextBlock VerticalAlignment="Center">Cancel</TextBlock>
+                    </Button>
+                    <Button Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200px" Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
+                        <TextBlock VerticalAlignment="Center">Enter</TextBlock>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </UserControl>
     </Grid>
 </Window>
