@@ -19,12 +19,16 @@ namespace CRM.ViewModels
         public ICommand ExitSystem { get; }
         public ICommand OpenDatabase { get; }
         public ICommand OpenDocumentation { get; }
+        public ICommand ConfirmDatabase { get; }
+        public string DatabaseName { get; set; }
+
         public MainWindowViewModel()
         {
             CreateDatabase = new RelayCommand(Click => CreateDB());
             ExitSystem = new RelayCommand(Click => System.Environment.Exit(0));
             OpenDatabase = new RelayCommand(Click => OpenDB());
             OpenDocumentation = new RelayCommand(Click => Documentation());
+            ConfirmDatabase = new RelayCommand(Click => ConfirmDatabaseName());
         }
         private void CreateDB()
         {
@@ -39,6 +43,15 @@ namespace CRM.ViewModels
             Process.Start(new ProcessStartInfo {
             FileName = ".\\Documentation.pdf",
             UseShellExecute = true });
+        }
+        private void ConfirmDatabaseName()
+        {
+            string text = DatabaseName;
+            if (!string.IsNullOrEmpty(text))
+            {
+                MessageBox.Show("Yee");
+            }
+
         }
     }
 }   
