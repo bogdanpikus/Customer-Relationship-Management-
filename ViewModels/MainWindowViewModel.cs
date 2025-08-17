@@ -20,7 +20,7 @@ namespace CRM.ViewModels
         public ICommand OpenDatabase { get; }
         public ICommand OpenDocumentation { get; }
         public ICommand ConfirmDatabase { get; }
-        public string DatabaseName { get; set; }
+        public string? DatabaseName { get; set; }
 
         public MainWindowViewModel()
         {
@@ -46,8 +46,7 @@ namespace CRM.ViewModels
         }
         private void ConfirmDatabaseName()
         {
-            string text = DatabaseName;
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(DatabaseName))
             {
                 MessageBox.Show("Yee");
             }

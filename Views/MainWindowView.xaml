@@ -32,7 +32,7 @@
                     <TextBox Template="{StaticResource TextBoxPheceholder}" Tag="Введите название базы данных" 
                         Text="{Binding DatabaseName, UpdateSourceTrigger=PropertyChanged}"
                         Margin="0,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        FontWeight="Medium" FontSize="50px" Width="815px" Height="70px" TextChanged="TextBox_TextChanged_1" />
+                        FontWeight="Medium" FontSize="50px" Width="815px" Height="70px"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,40,0,0">
                     <Label Content="...brouse" Cursor="Hand" Height="60px" Width="700px" FontSize="30px" FontWeight="ExtraLight"
