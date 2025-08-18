@@ -11,46 +11,63 @@
         WindowState="Maximized"
         ResizeMode="CanResize">
     <Grid Background="#F2E8E8">
-        <Button Command="{Binding CreateDatabase}" Content="Create Database" Cursor="Hand" HorizontalAlignment="Left"
-           VerticalAlignment="Top" Width="700px" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px"></Button>
-        <Button Command="{Binding OpenDatabase}" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" 
-           Width="700px" Margin="0,140,0,0" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">Open Database</Button>
-        <Button Command="{Binding ExitSystem}" Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="700px"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" VerticalAlignment="Top" Orientation="Horizontal">
+            <Button Command="{Binding CreateDatabase}" Content="Create Database" Cursor="Hand" HorizontalAlignment="Left"
+               Width="700" FontSize="80" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4">
+            </Button>
+            <Button Command="{Binding OpenDocumentation}" Cursor="Hand" FontSize="50" VerticalAlignment="Top"
+               Width="50" Height="60" Background="Black" Foreground="WhiteSmoke" HorizontalAlignment="Right">
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <Button Command="{Binding OpenDatabase}" Cursor="Hand" HorizontalAlignment="Left"
+           Width="700" FontSize="80" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">Open Database
+            </Button>
+        </StackPanel>
+        <Button Grid.Row="2" Command="{Binding ExitSystem}" Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="700px"
            Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
             <TextBlock VerticalAlignment="Center">Exit</TextBlock>
         </Button>
-        <Button Command="{Binding OpenDocumentation}" Cursor="Hand" FontSize="50px" HorizontalAlignment="Right" VerticalAlignment="Top"
-           Width="50px" Height="60px" Background="Black" Foreground="WhiteSmoke">
-            <TextBlock VerticalAlignment="Center">?</TextBlock>
-        </Button>
 
-        <UserControl Background="#F2E8E8" Visibility="Visible">
-            <StackPanel>
-                <StackPanel Orientation="Vertical">
-                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="80px" 
-                        Background="Black" Width="815px" Foreground="AliceBlue" Text="Create your Database"/>
-                    <TextBox Template="{StaticResource TextBoxPheceholder}" Tag="Введите название базы данных" 
-                        Text="{Binding DatabaseName, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="0,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
-                        FontWeight="Medium" FontSize="50px" Width="815px" Height="70px"/>
+        <UserControl Background="#F2E8E8" Visibility="Hidden">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="80" 
+                        Background="Black" MinWidth="815" Foreground="AliceBlue" Text="Create your Database"/>
+                <TextBox Grid.Row="1" Template="{StaticResource TextBoxPheceholder}" Tag="Введите название базы данных" Margin="0,20,0,0"
+                        Text="{Binding DatabaseName, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" VerticalAlignment="Top"
+                        FontWeight="Medium" FontSize="50" MinWidth="815" Height="70"/>
+                <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,20,0,0">
+                    <Button Content="...brouse"  Cursor="Hand" Height="60" Width="700" FontSize="30" FontWeight="ExtraLight" HorizontalAlignment="Left" VerticalAlignment="Top"
+                        HorizontalContentAlignment="Left" Background="AliceBlue">
+                    </Button>
+                    <Button Content="Brouse" FontWeight="Bold" FontSize="40" Height="60" Width="150"
+                        BorderBrush="Black" BorderThickness="4" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" >
+                    </Button>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,40,0,0">
-                    <Label Content="...brouse" Cursor="Hand" Height="60px" Width="700px" FontSize="30px" FontWeight="ExtraLight"
-                        Background="AliceBlue" BorderBrush="Black" BorderThickness="4px"></Label>
-                    <Button Content="Brouse" FontWeight="Bold" FontSize="40px" Height="60px" Width="150px" Margin="10,0,0,0"
-                        BorderBrush="Black" BorderThickness="4px" Background="White"></Button>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                        Width="200px" Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
+                <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    <Button Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Width="200" Height="100" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4">
                         <TextBlock VerticalAlignment="Center">Cancel</TextBlock>
                     </Button>
-                    <Button Command="{Binding ConfirmDatabase}" Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                        Width="200px" Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
+                    <Button Command="{Binding ConfirmDatabase}" Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                         Width="200" Height="100" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
                         <TextBlock VerticalAlignment="Center">Enter</TextBlock>
                     </Button>
                 </StackPanel>
-            </StackPanel>
+            </Grid>
         </UserControl>
     </Grid>
 </Window>
