@@ -12,17 +12,30 @@
         WindowState="Maximized"
         ResizeMode="CanResize">
     <Grid Background="#F2E8E8">
-        <Button Command="{Binding CreateDatabase}" Content="Create Database" Cursor="Hand" HorizontalAlignment="Left"
-           VerticalAlignment="Top" Width="700px" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px"></Button>
-        <Button Command="{Binding OpenDatabase}" Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" 
-           Width="700px" Margin="0,140,0,0" FontSize="80px" FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">Open Database</Button>
-        <Button Command="{Binding ExitSystem}" Cursor="Hand" FontSize="50px" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="700px"
-           Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
-            <TextBlock VerticalAlignment="Center">Exit</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="0" Command="{Binding CreateDatabase}" Content="Create Database"
+           Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700px" FontSize="80px"
+           FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px">
         </Button>
-        <Button Command="{Binding OpenDocumentation}" Cursor="Hand" FontSize="50px" HorizontalAlignment="Right" VerticalAlignment="Top"
+        <Button Grid.Row="0" Grid.Column="1" Command="{Binding OpenDocumentation}" Content="?" Cursor="Hand"
+           FontSize="50px" HorizontalAlignment="Right" VerticalAlignment="Top" HorizontalContentAlignment="Center"
            Width="50px" Height="60px" Background="Black" Foreground="WhiteSmoke">
-            <TextBlock VerticalAlignment="Center">?</TextBlock>
+        </Button>
+        <Button Grid.Row="1" Grid.Column="0" Command="{Binding OpenDatabase}" Cursor="Hand" HorizontalAlignment="Left"
+           VerticalAlignment="Top" Width="700px" FontSize="80px" FontWeight="Bold" Background="#00FF2F"
+           BorderBrush="Black" BorderThickness="4px">Open Database</Button>
+        <Button Grid.Row="2" Grid.Column="0" Command="{Binding ExitSystem}" Content="Exit" Cursor="Hand" FontSize="50px"
+           FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="700px"
+           Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
         </Button>
 
         <templates:CreateDatabaseControl Visibility="Hidden"/>
