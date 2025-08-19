@@ -11,7 +11,7 @@
         WindowStyle="ThreeDBorderWindow"
         WindowState="Maximized"
         ResizeMode="CanResize">
-    <Grid Background="#F2E8E8">
+    <Grid Background="#F2E8E8" ShowGridLines="True" Visibility="Hidden">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
@@ -39,5 +39,6 @@
         </Button>
 
         <templates:CreateDatabaseControl Visibility="Hidden"/>
+        <templates:OpenDatabaseConrtol Visibility="Visible" />
     </Grid>
 </Window>

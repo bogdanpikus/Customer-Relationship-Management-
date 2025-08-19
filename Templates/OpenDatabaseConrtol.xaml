@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="CRM.Templates.OpenDatabaseConrtol"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CRM.Templates"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#F2E8E8" ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" HorizontalAlignment="Left" FontWeight="Bold" FontSize="80" 
+            Background="Black" MinWidth="815" Foreground="AliceBlue" Text="Open your Database"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,20,0,0">
+            <Button Content="...brouse"  Cursor="Hand" Height="60" Width="700" FontSize="30" FontWeight="ExtraLight" 
+               HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" Background="AliceBlue">
+            </Button>
+            <Button Content="Brouse" FontWeight="Bold" FontSize="40" Height="60" Width="150"
+                BorderBrush="Black" BorderThickness="4" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            </Button>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Content="Cancel" Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+        Width="200" Height="100" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4"></Button>
+            <Button Content='Enter' Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+        Width="200" Height="100" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4"></Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
