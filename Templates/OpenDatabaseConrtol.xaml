@@ -8,13 +8,13 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#F2E8E8" ShowGridLines="True">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" HorizontalAlignment="Left" FontWeight="Bold" FontSize="80" 
-            Background="Black" MinWidth="815" Foreground="AliceBlue" Text="Open your Database"/>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="80" 
+             Background="Black" MinWidth="815" Foreground="AliceBlue" Text="Open your Database"/>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,20,0,0">
             <Button Content="...brouse"  Cursor="Hand" Height="60" Width="700" FontSize="30" FontWeight="ExtraLight" 
                HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" Background="AliceBlue">

@@ -4,12 +4,14 @@ using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 using System.Printing;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CRM.Commands;
+using CRM.Templates;
 
 namespace CRM.ViewModels
 {
@@ -20,19 +22,23 @@ namespace CRM.ViewModels
         public ICommand OpenDatabase { get; }
         public ICommand OpenDocumentation { get; }
         public ICommand ConfirmDatabase { get; }
-        public string? DatabaseName { get; set; }
+        public string? DatabaseName { get; }
+
+        public bool CreateDatabaseControlVisibility { get; set; }
+        public bool OpenDatabaseControlVisibility { get; set; }
 
         public MainWindowViewModel()
         {
             CreateDatabase = new RelayCommand(Click => CreateDB());
-            ExitSystem = new RelayCommand(Click => System.Environment.Exit(0));
             OpenDatabase = new RelayCommand(Click => OpenDB());
             OpenDocumentation = new RelayCommand(Click => Documentation());
+            ExitSystem = new RelayCommand(Click => System.Environment.Exit(0));
             ConfirmDatabase = new RelayCommand(Click => ConfirmDatabaseName());
+
         }
         private void CreateDB()
         {
-            MessageBox.Show("RelayCommand MessageBox");
+        CreateDatabaseControlVisibility = true;
         }
         private void OpenDB()
         {
