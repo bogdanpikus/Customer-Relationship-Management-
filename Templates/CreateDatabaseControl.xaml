@@ -27,7 +27,7 @@
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-            <Button Content="Cencel" Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+            <Button Command="{Binding GoToMainWindowFromCreateControl}" Content="Cancel" Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
         Width="200" Height="100" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4">
             </Button>
             <Button Command="{Binding ConfirmDatabase}" Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
