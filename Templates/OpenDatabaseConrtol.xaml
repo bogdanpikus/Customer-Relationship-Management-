@@ -14,12 +14,12 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Bold" FontSize="80" 
-             Background="Black" MinWidth="815" Foreground="AliceBlue" Text="Open your Database"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="0,20,0,0">
-            <Button Content="...brouse"  Cursor="Hand" Height="60" Width="700" FontSize="30" FontWeight="ExtraLight" 
+             Background="Black" MinWidth="815" Foreground="AliceBlue" Text="Open your Database" Margin="10,0,0,0"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="10,20,0,0">
+            <Button Content="...путь к файлу базы данных"  Cursor="Hand" Height="60" Width="815" FontSize="30" FontWeight="ExtraLight"
                HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" Background="AliceBlue">
             </Button>
-            <Button Content="Brouse" FontWeight="Bold" FontSize="40" Height="60" Width="150"
+            <Button Content="Brouse" Command="{Binding SearchDataBaseFileToOpen}" FontWeight="Bold" FontSize="40" Height="60" Width="150"
                 BorderBrush="Black" BorderThickness="4" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" >
             </Button>
         </StackPanel>

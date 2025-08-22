@@ -14,15 +14,15 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" FontSize="80" 
-        Background="Black" MinWidth="815" Foreground="AliceBlue" Text="Create your Database"/>
-        <TextBox Grid.Row="1" Template="{StaticResource TextBoxPheceholder}" Tag="Введите название базы данных" Margin="0,20,0,0"
+        Background="Black" MinWidth="815" Foreground="AliceBlue" Text="Create your Database" Margin="10,0,0,0"/>
+        <TextBox Grid.Row="1" Template="{StaticResource TextBoxPheceholder}" Tag="Введите название базы данных" Margin="10,20,0,0"
         Text="{Binding DatabaseName, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" VerticalAlignment="Top"
         FontWeight="Medium" FontSize="50" MinWidth="815" Height="70"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="0,20,0,0">
-            <Button Content="...brouse"  Cursor="Hand" Height="60" Width="700" FontSize="30" FontWeight="ExtraLight" HorizontalAlignment="Left" VerticalAlignment="Top"
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10,20,0,0">
+            <Button Content="...путь для сохранения файла базы данных"  Cursor="Hand" Height="60" Width="700" FontSize="30" FontWeight="ExtraLight" HorizontalAlignment="Left" VerticalAlignment="Top"
         HorizontalContentAlignment="Left" Background="AliceBlue">
             </Button>
-            <Button Content="Brouse" FontWeight="Bold" FontSize="40" Height="60" Width="150"
+            <Button Content="Brouse" Command="{Binding SearchPlaceForDataBase}" FontWeight="Bold" FontSize="40" Height="60" Width="150"
         BorderBrush="Black" BorderThickness="4" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" >
             </Button>
         </StackPanel>

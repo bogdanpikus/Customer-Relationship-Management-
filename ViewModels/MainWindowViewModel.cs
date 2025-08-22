@@ -25,6 +25,8 @@ namespace CRM.ViewModels
         public ICommand ConfirmDatabase { get; }
         public ICommand GoToMainWindowFromCreateControl { get; }
         public ICommand GoToMainWindowFromOpenControl { get; }
+        public ICommand SearchPlaceForDataBase { get; }
+        public ICommand SearchDataBaseFileToOpen { get; }
         public string? DatabaseName { get; set; }
 
         public bool CreateDatabaseControlVisibility { get; set; }
@@ -41,7 +43,9 @@ namespace CRM.ViewModels
             ConfirmDatabase = new RelayCommand(Click => ConfirmDatabaseName());
             GoToMainWindowFromCreateControl = new RelayCommand(Click => GoBackToMainWindowFromCreateControl());
             GoToMainWindowFromOpenControl = new RelayCommand(Click => GoBackToMainWindowFromOpenControl());
-
+            SearchPlaceForDataBase = new RelayCommand(Click => BrousePlaceForDataBase());
+            SearchDataBaseFileToOpen = new RelayCommand(Click => BrouseDataBaseFileToOpen());
+        
         }
         private void CreateDB()
         {
@@ -61,11 +65,7 @@ namespace CRM.ViewModels
         }
         private void ConfirmDatabaseName()
         {
-            if (!string.IsNullOrEmpty(DatabaseName))
-            {
-                MessageBox.Show("Yee");
-            }
-
+            MessageBox.Show("Submit Button Click");
         }
         private void GoBackToMainWindowFromCreateControl()
         {
@@ -77,7 +77,14 @@ namespace CRM.ViewModels
             OpenDatabaseControlVisibility = false;
             OnPropertyChange(nameof(OpenDatabaseControlVisibility));
         }
-
+        private void BrousePlaceForDataBase()
+        {
+            MessageBox.Show("BrousePlaceForDataBase");
+        }
+        private void BrouseDataBaseFileToOpen()
+        {
+            MessageBox.Show("BrouseDataBaseFileToOpen");
+        }
         protected void OnPropertyChange(string TrueOrFalse)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(TrueOrFalse));
