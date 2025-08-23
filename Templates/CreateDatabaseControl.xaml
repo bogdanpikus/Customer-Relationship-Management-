@@ -19,7 +19,7 @@
         Text="{Binding DatabaseName, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" VerticalAlignment="Top"
         FontWeight="Medium" FontSize="50" MinWidth="815" Height="70"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2" Margin="10,20,0,0">
-            <Button Content="...путь для сохранения файла базы данных"  Cursor="Hand" Height="60" Width="700" FontSize="30" FontWeight="ExtraLight" HorizontalAlignment="Left" VerticalAlignment="Top"
+            <Button Command="{Binding SearchPlaceForDataBase}" Content="{Binding SearchPlaceForDataBaseButtonLabel}"  Cursor="Hand" Height="60" Width="700" FontSize="30" FontWeight="ExtraLight" HorizontalAlignment="Left" VerticalAlignment="Top"
         HorizontalContentAlignment="Left" Background="AliceBlue">
             </Button>
             <Button Content="Brouse" Command="{Binding SearchPlaceForDataBase}" FontWeight="Bold" FontSize="40" Height="60" Width="150"

@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Diagnostics;
-using System.Linq;
-using System.Printing;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using CRM.Commands;
-using CRM.Templates;
+using Microsoft.Win32;
 
 namespace CRM.ViewModels
 {
@@ -28,6 +20,9 @@ namespace CRM.ViewModels
         public ICommand SearchPlaceForDataBase { get; }
         public ICommand SearchDataBaseFileToOpen { get; }
         public string? DatabaseName { get; set; }
+
+        public string SearchPlaceForDataBaseButtonLabel { get; set; } = "...путь для сохранения файла базы данных";
+        public string SearchDatabaseFileToOpenButtonLabel { get; set; } = "...путь где находится файл базы данных";
 
         public bool CreateDatabaseControlVisibility { get; set; }
         public bool OpenDatabaseControlVisibility { get; set; }
@@ -79,11 +74,26 @@ namespace CRM.ViewModels
         }
         private void BrousePlaceForDataBase()
         {
-            MessageBox.Show("BrousePlaceForDataBase");
+            OpenFolderDialog dialog = new OpenFolderDialog();
+            dialog.Title = "Confirm place for saving your database";
+            if (dialog.ShowDialog() == true)
+            {
+                SearchPlaceForDataBaseButtonLabel = $"{dialog.FolderName}"; //showing picking folder name for saving database CreateDatabaseControl
+                OnPropertyChange(nameof(SearchPlaceForDataBaseButtonLabel));
+            }
+            else { MessageBox.Show("Error saving file directory"); }
         }
         private void BrouseDataBaseFileToOpen()
         {
-            MessageBox.Show("BrouseDataBaseFileToOpen");
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Find your database file";
+            dialog.Filter = "Database files (*.duckdb) | *.duckdb";
+            if (dialog.ShowDialog() == true)
+            {
+                SearchDatabaseFileToOpenButtonLabel = $"{dialog.FileName}"; //showing picking database file in OpenDatabaseControl
+                OnPropertyChange(nameof(SearchDatabaseFileToOpenButtonLabel));
+            }
+            else { MessageBox.Show("Error picking database file"); }
         }
         protected void OnPropertyChange(string TrueOrFalse)
         {
