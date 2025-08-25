@@ -31,5 +31,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="DuckDB.NET.DATA.Full" Version="1.3.2" />
+  </ItemGroup>
 
 </Project>

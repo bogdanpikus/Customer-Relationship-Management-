@@ -1,0 +1,3 @@
+This project includes DuckDB, licensed under the MIT License.
+Copyright (c) 2018-2025 DuckDB Authors
+See third_party/DuckDB/LICENSE for details.
