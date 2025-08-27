@@ -1,18 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using CRM.Commands;
 using CRM.Models;
 using DuckDB.NET.Data;
+using DuckDB.NET.Native;
 using Microsoft.Win32;
 
 namespace CRM.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        //private DuckDB _duckdb;
+        private DuckDatabase _duckdb;
 
         public ICommand CreateDatabase { get; }
         public ICommand ExitSystem { get; }
@@ -65,15 +67,6 @@ namespace CRM.ViewModels
             FileName = ".\\Documentation.pdf",
             UseShellExecute = true });
         }
-        private void ConfirmDatabaseName(string? folderName, string? dataBaseName) // creating database file and open
-        {
-           // _duckdb = DuckDB(false, folderName);
-            MessageBox.Show($"ConfirmDatabaseName: {folderName}+{dataBaseName}");
-        }
-        private void OpenDuckDBFile() // opening database file 
-        {
-            MessageBox.Show("OpenDuckDBFile");
-        }
         private void GoBackToMainWindowFromCreateControl()
         {
             CreateDatabaseControlVisibility = false;
@@ -107,6 +100,14 @@ namespace CRM.ViewModels
                 OnPropertyChange(nameof(SearchDatabaseFileToOpenButtonLabel));
             }
             else { MessageBox.Show("Error picking database file"); }
+        }
+        private void ConfirmDatabaseName(string? folderName, string? dataBaseName) // creating database file and open
+        {
+           _duckdb = new DuckDatabase(false, folderName, dataBaseName);
+        }
+        private void OpenDuckDBFile() // opening database file 
+        {
+            MessageBox.Show("OpenDuckDBFile");
         }
         protected void OnPropertyChange(string TrueOrFalse)
         {
