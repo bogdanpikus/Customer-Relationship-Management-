@@ -26,7 +26,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
             <Button Command="{Binding GoToMainWindowFromOpenControl}" Content="Cancel" Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
         Width="200" Height="100" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4"></Button>
-            <Button Content='Enter' Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+            <Button Command="{Binding OpenDuckDatabaseFile}" Content='Enter' Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
         Width="200" Height="100" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4"></Button>
         </StackPanel>
     </Grid>

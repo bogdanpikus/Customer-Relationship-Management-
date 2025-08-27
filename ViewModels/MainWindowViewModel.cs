@@ -4,12 +4,16 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using CRM.Commands;
+using CRM.Models;
+using DuckDB.NET.Data;
 using Microsoft.Win32;
 
 namespace CRM.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
+        //private DuckDB _duckdb;
+
         public ICommand CreateDatabase { get; }
         public ICommand ExitSystem { get; }
         public ICommand OpenDatabase { get; }
@@ -19,6 +23,7 @@ namespace CRM.ViewModels
         public ICommand GoToMainWindowFromOpenControl { get; }
         public ICommand SearchPlaceForDataBase { get; }
         public ICommand SearchDataBaseFileToOpen { get; }
+        public ICommand OpenDuckDatabaseFile { get; }
         public string? DatabaseName { get; set; }
 
         public string SearchPlaceForDataBaseButtonLabel { get; set; } = "...путь для сохранения файла базы данных";
@@ -27,7 +32,9 @@ namespace CRM.ViewModels
         public bool CreateDatabaseControlVisibility { get; set; }
         public bool OpenDatabaseControlVisibility { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private readonly string? FolderName = null;
 
         public MainWindowViewModel()
         {
@@ -35,12 +42,12 @@ namespace CRM.ViewModels
             OpenDatabase = new RelayCommand(Click => OpenDB());
             OpenDocumentation = new RelayCommand(Click => Documentation());
             ExitSystem = new RelayCommand(Click => System.Environment.Exit(0));
-            ConfirmDatabase = new RelayCommand(Click => ConfirmDatabaseName());
+            ConfirmDatabase = new RelayCommand(Click => ConfirmDatabaseName(FolderName, DatabaseName));
             GoToMainWindowFromCreateControl = new RelayCommand(Click => GoBackToMainWindowFromCreateControl());
             GoToMainWindowFromOpenControl = new RelayCommand(Click => GoBackToMainWindowFromOpenControl());
             SearchPlaceForDataBase = new RelayCommand(Click => BrousePlaceForDataBase());
             SearchDataBaseFileToOpen = new RelayCommand(Click => BrouseDataBaseFileToOpen());
-        
+            OpenDuckDatabaseFile = new RelayCommand(Click => OpenDuckDBFile());
         }
         private void CreateDB()
         {
@@ -58,9 +65,14 @@ namespace CRM.ViewModels
             FileName = ".\\Documentation.pdf",
             UseShellExecute = true });
         }
-        private void ConfirmDatabaseName()
+        private void ConfirmDatabaseName(string? folderName, string? dataBaseName) // creating database file and open
         {
-            MessageBox.Show("Submit Button Click");
+           // _duckdb = DuckDB(false, folderName);
+            MessageBox.Show($"ConfirmDatabaseName: {folderName}+{dataBaseName}");
+        }
+        private void OpenDuckDBFile() // opening database file 
+        {
+            MessageBox.Show("OpenDuckDBFile");
         }
         private void GoBackToMainWindowFromCreateControl()
         {
@@ -80,6 +92,7 @@ namespace CRM.ViewModels
             {
                 SearchPlaceForDataBaseButtonLabel = $"{dialog.FolderName}"; //showing picking folder name for saving database CreateDatabaseControl
                 OnPropertyChange(nameof(SearchPlaceForDataBaseButtonLabel));
+                ConfirmDatabaseName(dialog.FolderName, DatabaseName);
             }
             else { MessageBox.Show("Error saving file directory"); }
         }
