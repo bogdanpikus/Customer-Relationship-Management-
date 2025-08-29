@@ -6,8 +6,6 @@ using System.Windows;
 using System.Windows.Input;
 using CRM.Commands;
 using CRM.Models;
-using DuckDB.NET.Data;
-using DuckDB.NET.Native;
 using Microsoft.Win32;
 
 namespace CRM.ViewModels
@@ -28,6 +26,9 @@ namespace CRM.ViewModels
         public ICommand OpenDuckDatabaseFile { get; }
         public string? DatabaseName { get; set; }
 
+        private string? createFolderPath { get; set; }
+        private string? openFilePath {  get; set; }
+
         public string SearchPlaceForDataBaseButtonLabel { get; set; } = "...путь для сохранения файла базы данных";
         public string SearchDatabaseFileToOpenButtonLabel { get; set; } = "...путь где находится файл базы данных";
 
@@ -36,20 +37,18 @@ namespace CRM.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        private readonly string? FolderName = null;
-
         public MainWindowViewModel()
         {
             CreateDatabase = new RelayCommand(Click => CreateDB());
             OpenDatabase = new RelayCommand(Click => OpenDB());
             OpenDocumentation = new RelayCommand(Click => Documentation());
             ExitSystem = new RelayCommand(Click => System.Environment.Exit(0));
-            ConfirmDatabase = new RelayCommand(Click => ConfirmDatabaseName(FolderName, DatabaseName));
+            ConfirmDatabase = new RelayCommand(Click => ConfirmDatabaseName(createFolderPath, DatabaseName));
             GoToMainWindowFromCreateControl = new RelayCommand(Click => GoBackToMainWindowFromCreateControl());
             GoToMainWindowFromOpenControl = new RelayCommand(Click => GoBackToMainWindowFromOpenControl());
             SearchPlaceForDataBase = new RelayCommand(Click => BrousePlaceForDataBase());
             SearchDataBaseFileToOpen = new RelayCommand(Click => BrouseDataBaseFileToOpen());
-            OpenDuckDatabaseFile = new RelayCommand(Click => OpenDuckDBFile());
+            OpenDuckDatabaseFile = new RelayCommand(Click => OpenDuckDBFile(openFilePath));
         }
         private void CreateDB()
         {
@@ -84,8 +83,8 @@ namespace CRM.ViewModels
             if (dialog.ShowDialog() == true)
             {
                 SearchPlaceForDataBaseButtonLabel = $"{dialog.FolderName}"; //showing picking folder name for saving database CreateDatabaseControl
+                createFolderPath = $"{dialog.FolderName}";
                 OnPropertyChange(nameof(SearchPlaceForDataBaseButtonLabel));
-                ConfirmDatabaseName(dialog.FolderName, DatabaseName);
             }
             else { MessageBox.Show("Error saving file directory"); }
         }
@@ -97,17 +96,34 @@ namespace CRM.ViewModels
             if (dialog.ShowDialog() == true)
             {
                 SearchDatabaseFileToOpenButtonLabel = $"{dialog.FileName}"; //showing picking database file in OpenDatabaseControl
+                openFilePath = $"{dialog.FileName}";
                 OnPropertyChange(nameof(SearchDatabaseFileToOpenButtonLabel));
             }
             else { MessageBox.Show("Error picking database file"); }
         }
-        private void ConfirmDatabaseName(string? folderName, string? dataBaseName) // creating database file and open
+        private void ConfirmDatabaseName(string? folderPath, string? dataBaseName) // creating database file and open
         {
-           _duckdb = new DuckDatabase(false, folderName, dataBaseName);
+            try
+            {
+                _duckdb = new DuckDatabase(false, false, folderPath, dataBaseName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
-        private void OpenDuckDBFile() // opening database file 
+        private void OpenDuckDBFile(string filePath) // opening database file 
         {
-            MessageBox.Show("OpenDuckDBFile");
+            string fileName = Path.GetFileNameWithoutExtension(filePath);
+            //MessageBox.Show(fileName);
+            try
+            {
+                _duckdb = new DuckDatabase(false, true, filePath, fileName);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         protected void OnPropertyChange(string TrueOrFalse)
         {
