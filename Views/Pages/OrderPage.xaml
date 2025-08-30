@@ -58,22 +58,53 @@
         </Button>
 
         <DockPanel Grid.Column="1" Grid.Row="0" LastChildFill="False">
-            <Button Content="Добавить" Width="110" Background="Snow"
+            <Button Content="Добавить" Width="120" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
-                    Margin="10,0,0,0" BorderBrush="Black" BorderThickness="2">
+                    BorderBrush="Black" BorderThickness="2">
             </Button>
-            <Button Content="Редактировать" Width="110" Background="Snow"
+            <Button Content="Редактировать" Width="150" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
-                    Margin="10,0,0,0" BorderBrush="Black" BorderThickness="2">
+                    BorderBrush="Black" BorderThickness="2">
             </Button>
-            <Button Content="Удалить" Width="110" Background="Snow"
+            <Button Content="Удалить" Width="120" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
-                    Margin="10,0,0,0" BorderBrush="Black" BorderThickness="2">
+                    BorderBrush="Black" BorderThickness="2">
             </Button>
-            <Button Content="Фильтр" Width="110" Background="Snow"
+            <Button Content="Фильтр" Width="120" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
-                    Margin="10,0,0,0" BorderBrush="Black" BorderThickness="2">
+                    BorderBrush="Black" BorderThickness="2">
             </Button>
+        </DockPanel>
+
+        <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="7" Background="Snow" Margin="5,5,0,0">
+            <DockPanel Grid.Row="0" Margin="5" DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="&lt;" Height="auto" Background="Snow" BorderBrush="Snow"/>
+                    <TextBlock Text="Июль" Width="auto" VerticalAlignment="Center" />
+                    <Button Content="&gt;" Height="auto" Background="Snow" BorderBrush="Snow"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Tag="поиск..." Width="200"
+                         Margin="10,0,0,0" Text="{Binding SearchInOrderPageTable, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="Поиск" Height="auto" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="auto">
+                    <TextBlock Width="50" Margin="5" Background="Aqua"/>
+                    <TextBlock Width="50" Margin="5" Background="Blue"/>
+                    <TextBlock Width="50" Margin="5" Background="BurlyWood"/>
+                    <TextBlock Width="50" Margin="5" Background="Crimson"/>
+                    <TextBlock Width="50" Margin="5" Background="Gold"/>
+                </StackPanel>
+            </DockPanel>
+
+            <DataGrid AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="№" Binding="{Binding Name}" Width="25"/>
+                    <DataGridTextColumn Header="Артикул" Binding="{Binding Age}" />
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding Position}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </DockPanel>
     </Grid>
 </Page> 
