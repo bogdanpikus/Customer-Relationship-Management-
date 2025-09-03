@@ -8,7 +8,8 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="OrderPage">
 
-    <Grid Background="#969696" ShowGridLines="True">
+    <Grid Background="#969696" ShowGridLines="False">
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="110"/>
             <ColumnDefinition Width="*"/>
@@ -75,10 +76,10 @@
                     BorderBrush="Black" BorderThickness="2">
             </Button>
         </DockPanel>
-
+        
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="7" Background="Snow" Margin="5,5,0,0">
             <DockPanel Grid.Row="0" Margin="5" DockPanel.Dock="Top">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Content="&lt;" Height="auto" Background="Snow" BorderBrush="Snow"/>
                     <TextBlock Text="Июль" Width="auto" VerticalAlignment="Center" />
                     <Button Content="&gt;" Height="auto" Background="Snow" BorderBrush="Snow"/>
@@ -89,20 +90,47 @@
                     <Button Content="Поиск" Height="auto" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="auto">
-                    <TextBlock Width="50" Margin="5" Background="Aqua"/>
-                    <TextBlock Width="50" Margin="5" Background="Blue"/>
-                    <TextBlock Width="50" Margin="5" Background="BurlyWood"/>
-                    <TextBlock Width="50" Margin="5" Background="Crimson"/>
-                    <TextBlock Width="50" Margin="5" Background="Gold"/>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <TextBlock Width="50" Margin="5" />
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <TextBlock Width="50" Margin="5"/>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <TextBlock Width="50" Margin="5" />
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <TextBlock Width="50" Margin="5" />
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <TextBlock Width="50" Margin="5" />
+                    </Border>
                 </StackPanel>
             </DockPanel>
 
-            <DataGrid AutoGenerateColumns="False">
+            <DataGrid AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible" BorderThickness="1" BorderBrush="Black">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
-                    <DataGridTextColumn Header="№" Binding="{Binding Name}" Width="25"/>
-                    <DataGridTextColumn Header="Артикул" Binding="{Binding Age}" />
-                    <DataGridTextColumn Header="Фамилия" Binding="{Binding Position}" />
+                    <DataGridTextColumn Header="+" Width="25" Binding="{Binding Choose}"/>
+                    <DataGridTextColumn Header="№" Width="25" Binding="{Binding Number}"/>
+                    <DataGridTextColumn Header="Артикул" Binding="{Binding Article}"/>
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}"/>
+                    <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding Surname}"/>
+                    <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}"/>
+                    <DataGridTextColumn Header="Товар" Width="45" Binding="{Binding Item}"/>
+                    <DataGridTextColumn Header="Колл товара" Binding="{Binding Amount}"/>
+                    <DataGridTextColumn Header="Цена" Width="40" Binding="{Binding Price}"/>
+                    <DataGridTextColumn Header="Себестоимость" Binding="{Binding PrimeCost}"/>
+                    <DataGridTextColumn Header="Оплата" Binding="{Binding Payment}"/>
+                    <DataGridTextColumn Header="Доставка" Binding="{Binding Delivery}"/>
+                    <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+                    <DataGridTextColumn Header="Затраты" Binding="{Binding Outlay}"/>
+                    <DataGridTextColumn Header="Оборот" Binding="{Binding ChashFlow}"/>
+                    <DataGridTextColumn Header="Прибыль" Binding="{Binding Gain}"/>
+                    <DataGridTextColumn Header="Организация" Binding="{Binding Organization}"/>
+                    <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>

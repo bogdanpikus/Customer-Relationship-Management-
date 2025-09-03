@@ -1,11 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using CRM.Commands;
 using CRM.Models;
+using CRM.ViewModels.Pages;
 using Microsoft.Win32;
 
 namespace CRM.ViewModels
@@ -111,11 +114,13 @@ namespace CRM.ViewModels
             {
                 MessageBox.Show(ex.Message);
             }
+
+            CreateDatabaseControlVisibility = false;
+            OnPropertyChange(nameof(CreateDatabaseControlVisibility));
         }
         private void OpenDuckDBFile(string filePath) // opening database file 
         {
             string fileName = Path.GetFileNameWithoutExtension(filePath);
-            //MessageBox.Show(fileName);
             try
             {
                 _duckdb = new DuckDatabase(false, true, filePath, fileName);
@@ -124,6 +129,9 @@ namespace CRM.ViewModels
             {
                 MessageBox.Show(ex.Message);
             }
+
+            OpenDatabaseControlVisibility = false;
+            OnPropertyChange(nameof(OpenDatabaseControlVisibility));
         }
         protected void OnPropertyChange(string TrueOrFalse)
         {

@@ -23,7 +23,7 @@
         </Button>
         <Button Grid.Row="0" Grid.Column="1" Command="{Binding OpenDocumentation}" Content="?" Cursor="Hand"
            FontSize="50px" HorizontalAlignment="Right" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-           Width="50px" Height="60px" Background="Black" Foreground="WhiteSmoke" >
+           Width="50px" Height="60px" Background="#F2E8E8" Foreground="Black" BorderThickness="0">
         </Button>
         <Button Grid.Row="1" Grid.Column="0" Command="{Binding OpenDatabase}" Cursor="Hand" HorizontalAlignment="Left"
            VerticalAlignment="Top" Width="700px" FontSize="80px" FontWeight="Bold" Background="#00FF2F" Margin="10,150,0,0"
