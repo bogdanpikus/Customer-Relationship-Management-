@@ -8,14 +8,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using CRM.Commands;
 using CRM.Models;
-using CRM.ViewModels.Pages;
+using CRM.Services;
 using Microsoft.Win32;
 
 namespace CRM.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : NotifyPropertyChange
     {
-        private DuckDatabase _duckdb;
+        private DuckDatabase? _duckdb;
 
         public ICommand CreateDatabase { get; }
         public ICommand ExitSystem { get; }
@@ -30,15 +30,13 @@ namespace CRM.ViewModels
         public string? DatabaseName { get; set; }
 
         private string? createFolderPath { get; set; }
-        private string? openFilePath {  get; set; }
+        private string? openFilePath { get; set; }
 
         public string SearchPlaceForDataBaseButtonLabel { get; set; } = "...путь для сохранения файла базы данных";
         public string SearchDatabaseFileToOpenButtonLabel { get; set; } = "...путь где находится файл базы данных";
 
         public bool CreateDatabaseControlVisibility { get; set; }
         public bool OpenDatabaseControlVisibility { get; set; }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         public MainWindowViewModel()
         {
@@ -132,11 +130,7 @@ namespace CRM.ViewModels
 
             OpenDatabaseControlVisibility = false;
             OnPropertyChange(nameof(OpenDatabaseControlVisibility));
-        }
-        protected void OnPropertyChange(string TrueOrFalse)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(TrueOrFalse));
-        }
+        }   
 
     }
 }   

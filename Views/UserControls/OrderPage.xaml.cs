@@ -1,12 +1,13 @@
-﻿using System;
+﻿using CRM.ViewModels;
+using System;
 using System.Windows.Controls;
 
-namespace CRM.ViewModels.Pages
+namespace CRM.Views.UserControls
 {
     /// <summary>
-    /// Логика взаимодействия для OrderPage.xaml
+    /// Логика взаимодействия для OrderPageControl.xaml
     /// </summary>
-    public partial class OrderPage : Page
+    public partial class OrderPage : UserControl
     {
         public OrderPage()
         {

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM"
-        xmlns:templates="clr-namespace:CRM.Templates"
+        xmlns:templates="clr-namespace:CRM.Views.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" 
         Icon="../Assets/logo_ico.ico"
