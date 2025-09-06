@@ -4,19 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM"
-        xmlns:templates="clr-namespace:CRM.Views.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" 
         Icon="../Assets/logo_ico.ico"
         WindowStyle="ThreeDBorderWindow"
         WindowState="Maximized"
         ResizeMode="CanResize">
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
-    </Window.Resources>
 
     <Grid Background="#F2E8E8" ShowGridLines="True">
-
         <Button Grid.Row="0" Grid.Column="0" Command="{Binding CreateDatabase}" Content="Create Database"
            Cursor="Hand" HorizontalAlignment="Left" VerticalAlignment="Top" Width="700px" FontSize="80px"
            FontWeight="Bold" Background="#00FF2F" BorderBrush="Black" BorderThickness="4px" Margin="10,0,0,0">
@@ -32,8 +27,7 @@
            FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="700px" Margin="10,0,0,0"
            Height="100px" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px">
         </Button>
-
-        <templates:CreateDatabaseControl Visibility="{Binding CreateDatabaseControlVisibility, Converter={StaticResource VisibilityConverter}}" />
-        <templates:OpenDatabaseConrtol Visibility="{Binding OpenDatabaseControlVisibility, Converter={StaticResource VisibilityConverter}}" />
+        
+        <ContentControl Content="{Binding CurrentViewModel}" />
     </Grid>
 </Window>

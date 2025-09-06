@@ -2,12 +2,21 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:CRM"
+             xmlns:views="clr-namespace:CRM.Views.UserControls"
+             xmlns:vm="clr-namespace:CRM.ViewModels"
              StartupUri="..\Views\MainWindowView.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Templates/TextBoxPlaceholder.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type vm:CreateDatabaseViewModel}">
+                <views:CreateDatabaseControl/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:OpenDatabaseViewModel}">
+                <views:OpenDatabaseConrtol/>
+            </DataTemplate>
+            <BooleanToVisibilityConverter x:Key="BooleanVisiabilityConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using CRM.ViewModels;
 
 namespace CRM.Views.UserControls
 {

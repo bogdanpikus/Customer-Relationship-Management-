@@ -1,42 +1,22 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CRM.Commands;
-using CRM.Models;
 using CRM.Services;
-using Microsoft.Win32;
 
 namespace CRM.ViewModels
 {
     public class MainWindowViewModel : NotifyPropertyChange
     {
-        private DuckDatabase? _duckdb;
+        public object? CurrentViewModel { get; set; }
 
         public ICommand CreateDatabase { get; }
-        public ICommand ExitSystem { get; }
         public ICommand OpenDatabase { get; }
+        public ICommand ExitSystem { get; }
         public ICommand OpenDocumentation { get; }
-        public ICommand ConfirmDatabase { get; }
-        public ICommand GoToMainWindowFromCreateControl { get; }
-        public ICommand GoToMainWindowFromOpenControl { get; }
-        public ICommand SearchPlaceForDataBase { get; }
-        public ICommand SearchDataBaseFileToOpen { get; }
-        public ICommand OpenDuckDatabaseFile { get; }
-        public string? DatabaseName { get; set; }
-
-        private string? createFolderPath { get; set; }
-        private string? openFilePath { get; set; }
-
-        public string SearchPlaceForDataBaseButtonLabel { get; set; } = "...путь для сохранения файла базы данных";
-        public string SearchDatabaseFileToOpenButtonLabel { get; set; } = "...путь где находится файл базы данных";
-
-        public bool CreateDatabaseControlVisibility { get; set; }
-        public bool OpenDatabaseControlVisibility { get; set; }
 
         public MainWindowViewModel()
         {
@@ -44,22 +24,16 @@ namespace CRM.ViewModels
             OpenDatabase = new RelayCommand(Click => OpenDB());
             OpenDocumentation = new RelayCommand(Click => Documentation());
             ExitSystem = new RelayCommand(Click => System.Environment.Exit(0));
-            ConfirmDatabase = new RelayCommand(Click => ConfirmDatabaseName(createFolderPath, DatabaseName));
-            GoToMainWindowFromCreateControl = new RelayCommand(Click => GoBackToMainWindowFromCreateControl());
-            GoToMainWindowFromOpenControl = new RelayCommand(Click => GoBackToMainWindowFromOpenControl());
-            SearchPlaceForDataBase = new RelayCommand(Click => BrousePlaceForDataBase());
-            SearchDataBaseFileToOpen = new RelayCommand(Click => BrouseDataBaseFileToOpen());
-            OpenDuckDatabaseFile = new RelayCommand(Click => OpenDuckDBFile(openFilePath));
         }
         private void CreateDB()
         {
-            CreateDatabaseControlVisibility = true;
-            OnPropertyChange(nameof(CreateDatabaseControlVisibility));
+            CurrentViewModel = new CreateDatabaseViewModel();
+            OnPropertyChange(nameof(CurrentViewModel));
         }
         private void OpenDB()
         {
-            OpenDatabaseControlVisibility = true;
-            OnPropertyChange(nameof(OpenDatabaseControlVisibility));
+            CurrentViewModel = new OpenDatabaseViewModel();
+            OnPropertyChange(nameof(CurrentViewModel));
         }
         private void Documentation()
         {
@@ -67,70 +41,5 @@ namespace CRM.ViewModels
             FileName = ".\\Documentation.pdf",
             UseShellExecute = true });
         }
-        private void GoBackToMainWindowFromCreateControl()
-        {
-            CreateDatabaseControlVisibility = false;
-            OnPropertyChange(nameof(CreateDatabaseControlVisibility));
-        }
-        private void GoBackToMainWindowFromOpenControl()
-        {
-            OpenDatabaseControlVisibility = false;
-            OnPropertyChange(nameof(OpenDatabaseControlVisibility));
-        }
-        private void BrousePlaceForDataBase()
-        {
-            OpenFolderDialog dialog = new OpenFolderDialog();
-            dialog.Title = "Confirm place for saving your database";
-            if (dialog.ShowDialog() == true)
-            {
-                SearchPlaceForDataBaseButtonLabel = $"{dialog.FolderName}"; //showing picking folder name for saving database CreateDatabaseControl
-                createFolderPath = $"{dialog.FolderName}";
-                OnPropertyChange(nameof(SearchPlaceForDataBaseButtonLabel));
-            }
-            else { MessageBox.Show("Error saving file directory"); }
-        }
-        private void BrouseDataBaseFileToOpen()
-        {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Title = "Find your database file";
-            dialog.Filter = "Database files (*.duckdb) | *.duckdb";
-            if (dialog.ShowDialog() == true)
-            {
-                SearchDatabaseFileToOpenButtonLabel = $"{dialog.FileName}"; //showing picking database file in OpenDatabaseControl
-                openFilePath = $"{dialog.FileName}";
-                OnPropertyChange(nameof(SearchDatabaseFileToOpenButtonLabel));
-            }
-            else { MessageBox.Show("Error picking database file"); }
-        }
-        private void ConfirmDatabaseName(string? folderPath, string? dataBaseName) // creating database file and open
-        {
-            try
-            {
-                _duckdb = new DuckDatabase(false, false, folderPath, dataBaseName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            CreateDatabaseControlVisibility = false;
-            OnPropertyChange(nameof(CreateDatabaseControlVisibility));
-        }
-        private void OpenDuckDBFile(string filePath) // opening database file 
-        {
-            string fileName = Path.GetFileNameWithoutExtension(filePath);
-            try
-            {
-                _duckdb = new DuckDatabase(false, true, filePath, fileName);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-            OpenDatabaseControlVisibility = false;
-            OnPropertyChange(nameof(OpenDatabaseControlVisibility));
-        }   
-
     }
 }   

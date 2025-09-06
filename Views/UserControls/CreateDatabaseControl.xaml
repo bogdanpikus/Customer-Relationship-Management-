@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:CRM.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#F2E8E8" ShowGridLines="True">
+
+    <Grid Background="#F2E8E8" ShowGridLines="True" Visibility="{Binding CreateDatabaseVisiability, Converter={StaticResource BooleanVisiabilityConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -34,5 +35,7 @@
          Width="200" Height="100" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4px" Content="Enter">
             </Button>
         </StackPanel>
+
+        <ContentControl Content="{Binding CurrentView}"/>
     </Grid>
 </UserControl>
