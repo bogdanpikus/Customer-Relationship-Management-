@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CRM.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#F2E8E8" ShowGridLines="True" Visibility="{Binding OpenDatabaseVisiability, Converter={StaticResource BooleanVisiabilityConverter}}">
+    <Grid Background="#F2E8E8" ShowGridLines="False" Visibility="{Binding OpenDatabaseVisiability, Converter={StaticResource BooleanVisiabilityConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="auto"/>
@@ -29,5 +29,6 @@
             <Button Command="{Binding OpenDuckDatabaseFile}" Content='Enter' Cursor="Hand" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Bottom"
         Width="200" Height="100" Background="AntiqueWhite" Foreground="Black" BorderBrush="Black" BorderThickness="4"></Button>
         </StackPanel>
+        <ContentControl Content="{Binding CurrentControl}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3"/>
     </Grid>
 </UserControl>

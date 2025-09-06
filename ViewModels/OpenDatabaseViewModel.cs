@@ -11,6 +11,8 @@ namespace CRM.ViewModels
 {
     public class OpenDatabaseViewModel : NotifyPropertyChange
     {
+        public object? CurrentControl { get; set; }
+
         private DuckDatabase? _duckdb;
 
         public ICommand GoToMainWindowFromOpenControl { get; }
@@ -52,6 +54,9 @@ namespace CRM.ViewModels
             {
                 MessageBox.Show(ex.Message);
             }
+
+            CurrentControl = new OrderPageViewModel();
+            OnPropertyChange(nameof(CurrentControl));
         }
         private void GoBackToMainWindowFromOpenControl()
         {

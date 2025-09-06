@@ -16,6 +16,9 @@
             <DataTemplate DataType="{x:Type vm:OpenDatabaseViewModel}">
                 <views:OpenDatabaseConrtol/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:OrderPageViewModel}">
+                <views:OrderPage />
+            </DataTemplate>
             <BooleanToVisibilityConverter x:Key="BooleanVisiabilityConverter"/>
         </ResourceDictionary>
     </Application.Resources>

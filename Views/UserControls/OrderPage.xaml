@@ -75,7 +75,7 @@
             </Button>
         </DockPanel>
 
-        <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="7" Background="Snow" Margin="5,5,0,0">
+        <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="7" Background="Snow" Margin="0,5,0,0">
             <DockPanel Grid.Row="0" Margin="5" DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Content="&lt;" Height="auto" Background="Snow" BorderBrush="Snow"/>

@@ -16,7 +16,7 @@ namespace CRM.ViewModels
     {
         private DuckDatabase? _duckdb;
 
-        public object? CurrentView { get; set; }
+        public object? CurrentControl { get; set; }
 
         public ICommand GoToMainWindowFromCreateControl { get; }
         public ICommand SearchPlaceForDataBase { get; }
@@ -58,6 +58,9 @@ namespace CRM.ViewModels
             {
                 MessageBox.Show(ex.Message);
             }
+
+            CurrentControl = new OrderPageViewModel();
+            OnPropertyChange(nameof(CurrentControl));
         }
         private void GoBackToMainWindowFromCreateControl()
         {
