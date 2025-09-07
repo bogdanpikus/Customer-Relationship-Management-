@@ -7,12 +7,12 @@ namespace CRM.Views.UserControls
     /// <summary>
     /// Логика взаимодействия для OrderPageControl.xaml
     /// </summary>
-    public partial class OrderPage : UserControl
+    public partial class OrderControl : UserControl
     {
-        public OrderPage()
+        public OrderControl()
         {
             InitializeComponent();
-            DataContext = new OrderPageViewModel();
+            DataContext = new OrderControlViewModel();
         }
     }
 }

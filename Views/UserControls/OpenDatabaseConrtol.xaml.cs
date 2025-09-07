@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CRM.ViewModels;
+using CRM.Services;
 
 namespace CRM.Views.UserControls
 {

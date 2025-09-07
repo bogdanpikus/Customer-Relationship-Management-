@@ -55,7 +55,7 @@ namespace CRM.ViewModels
                 MessageBox.Show(ex.Message);
             }
 
-            CurrentControl = new OrderPageViewModel();
+            CurrentControl = new OrderControlViewModel();
             OnPropertyChange(nameof(CurrentControl));
         }
         private void GoBackToMainWindowFromOpenControl()
