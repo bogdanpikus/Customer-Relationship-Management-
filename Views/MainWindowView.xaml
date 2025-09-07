@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="Open Customer Relationship Management" 
         Icon="../Assets/logo_ico.ico"
         WindowStyle="ThreeDBorderWindow"
         WindowState="Maximized"

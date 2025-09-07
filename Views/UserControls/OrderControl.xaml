@@ -13,6 +13,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
@@ -22,61 +23,70 @@
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
-
-        <Button Content="Заказы" Grid.Column="0" Grid.Row="0" Background="#00FF2F"
+        
+        <ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+            <ToolBar>
+                <Button Content="Создать"></Button>
+                <Button Content="Открыть"></Button>
+                <Button Content="Сохранить"></Button>
+                <Button Content="Сохранить как"></Button>
+            </ToolBar>
+        </ToolBarTray>
+        
+        <Button Content="Заказы" Grid.Column="0" Grid.Row="1" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" Cursor="Hand"
                 BorderBrush="Black" BorderThickness="1">
         </Button>
-        <Button Content="Аналитика" Grid.Column="0" Grid.Row="1" Background="#00FF2F"
+        <Button Content="Аналитика" Grid.Column="0" Grid.Row="2" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" Cursor="Hand"
                 BorderBrush="Black" BorderThickness="1">
         </Button>
-        <Button Content="Контакты" Grid.Column="0" Grid.Row="2" Background="#00FF2F"
+        <Button Content="Контакты" Grid.Column="0" Grid.Row="3" Background="#00FF2F"
                 Foreground="Black" BorderBrush="Black" BorderThickness="1"
                 FontSize="20" FontWeight="Medium">
         </Button>
-        <Button Content="Склад" Grid.Column="0" Grid.Row="3" Background="#00FF2F"
+        <Button Content="Склад" Grid.Column="0" Grid.Row="4" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1">
         </Button>
-        <Button Content="Документы" Grid.Column="0" Grid.Row="4" Background="#00FF2F"
+        <Button Content="Документы" Grid.Column="0" Grid.Row="5" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1">
         </Button>
-        <Button Content="Эспорт/Импорт"  Grid.Column="0" Grid.Row="5" Background="#00FF2F"
+        <Button Content="Эспорт/Импорт"  Grid.Column="0" Grid.Row="6" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1">
         </Button>
-        <Button Content="Натройки" Grid.Column="0" Grid.Row="6" Background="#00FF2F"
+        <Button Content="Натройки" Grid.Column="0" Grid.Row="7" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1">
         </Button>
-        <Button Command="{Binding Exit}" Content="Выйти" Grid.Column="0" Grid.Row="7" Background="#00FF2F"
+        <Button Command="{Binding Exit}" Content="Выйти" Grid.Column="0" Grid.Row="8" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1">
         </Button>
 
-        <DockPanel Grid.Column="1" Grid.Row="0" LastChildFill="False">
-            <Button Content="Добавить" Width="120" Background="Snow"
+        <DockPanel Grid.Column="1" Grid.Row="1" LastChildFill="False" VerticalAlignment="Top">
+            <Button Content="Добавить" Width="120" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2">
             </Button>
-            <Button Content="Редактировать" Width="150" Background="Snow"
+            <Button Content="Редактировать" Width="170" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2">
             </Button>
-            <Button Content="Удалить" Width="120" Background="Snow"
+            <Button Content="Удалить" Width="120" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2">
             </Button>
-            <Button Content="Фильтр" Width="120" Background="Snow"
+            <Button Content="Фильтр" Width="120" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2">
             </Button>
         </DockPanel>
 
-        <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="7" Background="Snow" Margin="0,5,0,0">
-            <DockPanel Grid.Row="0" Margin="5" DockPanel.Dock="Top">
+        <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="8" Background="Snow" Margin="0,60,0,0">
+            <DockPanel Grid.Row="0" Margin="5,5,17,5" DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Content="&lt;" Height="auto" Background="Snow" BorderBrush="Snow"/>
                     <TextBlock Text="Июль" Width="auto" VerticalAlignment="Center" />
