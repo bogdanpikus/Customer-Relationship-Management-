@@ -116,7 +116,8 @@
                 </StackPanel>
             </DockPanel>
 
-            <DataGrid AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <DataGrid AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
                       VerticalScrollBarVisibility="Visible" BorderThickness="1" BorderBrush="Black">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="+" Width="25" Binding="{Binding Choose}"/>
@@ -141,6 +142,7 @@
                     <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"/>
                 </DataGrid.Columns>
             </DataGrid>
+            </ScrollViewer>
         </DockPanel>
     </Grid>
 </UserControl>
