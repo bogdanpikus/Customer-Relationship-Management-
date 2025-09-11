@@ -67,7 +67,7 @@
         </Button>
 
         <DockPanel Grid.Column="1" Grid.Row="1" LastChildFill="False" VerticalAlignment="Top">
-            <Button Content="Добавить" Width="120" Height="50" Background="Snow"
+            <Button Command="{Binding AddOrderCommand}" Content="Добавить" Width="120" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2">
             </Button>
@@ -144,5 +144,7 @@
             </DataGrid>
             </ScrollViewer>
         </DockPanel>
+        
+        <ContentControl Content="{Binding CurrentView}"/>
     </Grid>
 </UserControl>

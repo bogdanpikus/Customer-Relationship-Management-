@@ -1,0 +1,173 @@
+﻿<Window x:Class="CRM.Views.ModalControls.OrderModalWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CRM.Views.ModalControls"
+        mc:Ignorable="d"
+        Title="Добавить заказ" Height="250" Width="200"
+        ResizeMode="CanResize">
+    <Grid Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Width="15" FontSize="10" Content="+"
+                BorderThickness="0" HorizontalAlignment="Right">
+        </Button>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,0,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Введите дату заказа..." FontSize="8" VerticalContentAlignment="Center"
+                     Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Введите фамилию..." FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Введите имя..." FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Введите отчество..." FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Введите телефон..." FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Выберите товар..." FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Количество товара..." FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Цена" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Себестоимость" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Оплата" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Доставка" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Адрес" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Статус" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Затраты" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Оборот" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Прибыль" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Организация" FontSize="8" VerticalContentAlignment="Center"
+              Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="1,5,0,0" Height="15" VerticalAlignment="Top">
+                    <TextBox Width="100" Tag="Комментарий" FontSize="8" VerticalContentAlignment="Center"
+                             Template="{StaticResource TextPlaceholderSquare}" HorizontalAlignment="Left" Height="auto">
+                    </TextBox>
+                    <Button Width="10" Background="WhiteSmoke" BorderThickness="0" VerticalContentAlignment="Center">
+                        <TextBlock VerticalAlignment="Center" Margin="0,0,0,3" Foreground="Red">x</TextBlock>
+                    </Button>
+                </StackPanel>
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Width="50" Height="20"></Button>
+                    <Button Width="50" Height="20"></Button>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
