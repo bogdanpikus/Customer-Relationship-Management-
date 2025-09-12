@@ -145,6 +145,6 @@
             </ScrollViewer>
         </DockPanel>
         
-        <ContentControl Content="{Binding CurrentView}"/>
+        <ContentControl Content="{Binding CurrentView}" Grid.Column="1"/>
     </Grid>
 </UserControl>

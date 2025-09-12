@@ -24,7 +24,7 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    
+
     <ControlTemplate x:Key="TextPlaceholderSquare" TargetType="{x:Type TextBox}">
         <Grid>
             <Border x:Name="BorderTextBox" Background="AliceBlue" BorderBrush="Black" BorderThickness="1" CornerRadius="0">
