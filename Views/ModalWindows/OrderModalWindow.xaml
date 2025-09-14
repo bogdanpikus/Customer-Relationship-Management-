@@ -64,9 +64,10 @@
                                  Height="50" Tag="Введите телефон заказчика" FontSize="20" Margin="0,10,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand"
-                                 Height="50" Tag="Выберете/укажите товар" FontSize="20" Margin="0,10,0,0"/>
+
+                        <ComboBox Width="400" VerticalContentAlignment="Center" Cursor="Hand" IsEditable="True"
+                                  Height="50" Tag="Выберете/укажите товар" FontSize="20" Margin="0,10,0,0">
+                        </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
