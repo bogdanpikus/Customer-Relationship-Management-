@@ -122,6 +122,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="+" Width="25" Binding="{Binding Choose}"/>
                     <DataGridTextColumn Header="№" Width="25" Binding="{Binding Number}"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Article}"/>
                     <DataGridTextColumn Header="Артикул" Binding="{Binding Article}"/>
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>

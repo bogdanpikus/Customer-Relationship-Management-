@@ -4,11 +4,13 @@
              xmlns:local="clr-namespace:CRM"
              xmlns:views="clr-namespace:CRM.Views.UserControls"
              xmlns:vm="clr-namespace:CRM.ViewModels"
+             xmlns:templates="crl-namespace:CRM.Templates"
              StartupUri="..\Views\MainWindowView.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Templates/TextBoxPlaceholder.xaml" />
+                <ResourceDictionary Source="/Templates/DatePickerTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type vm:CreateDatabaseViewModel}">
                 <views:CreateDatabaseControl/>
@@ -19,6 +21,9 @@
             <DataTemplate DataType="{x:Type vm:OrderControlViewModel}">
                 <views:OrderControl />
             </DataTemplate>
+            <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
+                <Setter Property="Template" Value="{StaticResource DatePickerTemplate}" />
+            </Style>
             <BooleanToVisibilityConverter x:Key="BooleanVisiabilityConverter"/>
         </ResourceDictionary>
     </Application.Resources>

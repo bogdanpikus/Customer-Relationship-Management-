@@ -8,5 +8,10 @@ namespace CRM.ViewModels
 {
     public class OrderModalViewModel
     {
+        public string? DateText { get; set; }
+
+        public OrderModalViewModel()
+        {
+        }
     }
 }
