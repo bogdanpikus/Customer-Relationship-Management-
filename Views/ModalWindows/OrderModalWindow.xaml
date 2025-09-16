@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM.Views.ModalControls"
+        xmlns:val="clr-namespace:CRM.ValidationRules"
         mc:Ignorable="d"
         Title="Добавить заказ" MaxHeight="700" Width="500"
         ResizeMode="NoResize"
@@ -59,14 +60,16 @@
                                  Height="50" Tag="Введите отчество заказчика" FontSize="20" Margin="0,10,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand"
-                                 Height="50" Tag="Введите телефон заказчика" FontSize="20" Margin="0,10,0,0"/>
+                        <TextBox Template="{StaticResource UkraineTextPhoneNumber}" ToolTip="Поле для указания номера заказчика"
+                                 Width="400" VerticalContentAlignment="Center" Cursor="Hand"
+                                 Height="50" Tag="(+380)63 321 5780" FontSize="20" Margin="0,10,0,0">
+                        </TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-
-                        <ComboBox Width="400" VerticalContentAlignment="Center" Cursor="Hand" IsEditable="True"
-                                  Height="50" Tag="Выберете/укажите товар" FontSize="20" Margin="0,10,0,0">
+                        <ComboBox Width="400" VerticalContentAlignment="Center"
+                                  Cursor="Hand" IsEditable="True" ItemsSource="{Binding Goods}"
+                                  Height="50" FontSize="20" Margin="0,10,0,0">
+                            <ComboBoxItem IsSelected="True">Введите/укажите товар</ComboBoxItem>
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
@@ -100,9 +103,11 @@
                                  Height="50" Tag="Укажите адрес доставки товара" FontSize="20" Margin="0,10,0,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand"
-                                 Height="50" Tag="Укажите статус заказа" FontSize="20" Margin="0,10,0,0"/>
+                        <ComboBox Width="400" VerticalContentAlignment="Center"
+                                  Cursor="Hand" IsEditable="True" ItemsSource="{Binding Statuses}"
+                                  Height="50" FontSize="20" Margin="0,10,0,0">
+                            <ComboBoxItem IsSelected="True">Нейтральный</ComboBoxItem>
+                        </ComboBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
@@ -117,7 +122,7 @@
                     <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                         <Label Content="Комментарий к заказу" FontSize="20" Target="{Binding ElementName=text}"/>
                         <TextBox Name="text" Width="400" VerticalContentAlignment="Top"
-                                 Cursor="Hand"
+                                 Cursor="Hand" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
                                  Height="150" FontSize="20" HorizontalAlignment="Left"/>
                     </StackPanel>
                 </StackPanel>
