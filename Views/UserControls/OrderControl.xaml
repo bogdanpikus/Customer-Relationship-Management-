@@ -122,8 +122,9 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="+" Width="25" Binding="{Binding Choose}"/>
                     <DataGridTextColumn Header="№" Width="25" Binding="{Binding Number}"/>
-                    <DataGridTextColumn Header="Дата" Binding="{Binding Article}"/>
-                    <DataGridTextColumn Header="Артикул" Binding="{Binding Article}"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Date}"/>
+                    <DataGridTextColumn Header="Артикул товара" Binding="{Binding Article}"/>
+                    <DataGridTextColumn Header="Идентификационный номер заказ" Binding="{Binding OrderID}"/>
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="Отчество" Binding="{Binding Surname}"/>
@@ -136,9 +137,8 @@
                     <DataGridTextColumn Header="Доставка" Binding="{Binding Delivery}"/>
                     <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
                     <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
-                    <DataGridTextColumn Header="Затраты" Binding="{Binding Outlay}"/>
-                    <DataGridTextColumn Header="Оборот" Binding="{Binding ChashFlow}"/>
-                    <DataGridTextColumn Header="Прибыль" Binding="{Binding Gain}"/>
+                        <DataGridTextColumn Header="Затраты" Binding="{Binding Spending}"/>
+                        <DataGridTextColumn Header="Прибыль" Binding="{Binding Income}"/>
                     <DataGridTextColumn Header="Организация" Binding="{Binding Organization}"/>
                     <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"/>
                 </DataGrid.Columns>

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace CRM.ValidationRules
@@ -12,9 +10,13 @@ namespace CRM.ValidationRules
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            if(value is string v && v.Length > 12)
+            string? text = value.ToString();
+            MessageBox.Show($"{text}");
+            Regex regex = new(@"^[\d]{12}$");
+
+            if (text.Length > 2)
             {
-                return new ValidationResult(false, "Значение толжно быть цифровым и не больше 12 символов");
+                return new ValidationResult(false, "Разрешен только ввод цифр");
             }
 
             return ValidationResult.ValidResult;

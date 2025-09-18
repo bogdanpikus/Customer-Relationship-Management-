@@ -1,23 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CRM.Models
 {
-    class Order
+    public class Order
     {
-        public bool isSelected;
-        public int atricul;
-        public string secondName = "undefined";
-        public string name = "undefined";
-        public string surname = "undefined";
+        public int Id { get; set; }               // PRIMARY KEY
+        public bool IsSelected {  get; set; } = false;
+        public DateTime OrderDate {  get; set; }
+        public int Atricul { get; set; }
+        public string? OrderID { get; set; }
+        public int CustomerID { get; set; }         // key
+        public Customer Customer { get; set; }       // object link Contact
+        public string? Item { get; set; }
+        public int Amount { get; set; }
+        public decimal Price { get; set; } 
+        public decimal PrimeCost { get; set; }
+        public string? PaymentWay { get; set; }
+        public string? DelivarWay { get; set; }
+        public string? DeliverAdress { get; set; }
+        public string? Status { get; set; }
+        public decimal Spending { get; set; }
+        public decimal Income { get; set; }
+        public string? Organization { get; set; }
+        public string? Comment { get; set; }
+    }
 
-        public void AddTable() //добавление в таблицу значений (еще не знаю как)
-        {
-            Console.WriteLine($"{atricul}:{secondName}:{name}:{surname}");
-        } 
+    public class Customer
+    {
+        public string? SecondName { get; set; }
+        public string? Name { get; set; }
+        public string? Surname { get; set; }
+        public string? Phone { get; set; }
+
+        // its variable
+        public int AmountOrders { get; set; }
     }
 }

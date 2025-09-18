@@ -1,4 +1,4 @@
-﻿using System;
+﻿using CRM.ViewModels;
 using System.Windows;
 
 namespace CRM.Views.ModalControls
@@ -11,6 +11,7 @@ namespace CRM.Views.ModalControls
         public OrderModalWindow()
         {
             InitializeComponent();
+            DataContext = new OrderModalViewModel();
         }
     }
 }
