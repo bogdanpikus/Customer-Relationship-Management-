@@ -1,7 +1,9 @@
 ﻿using CRM.Commands;
+using CRM.Models;
 using CRM.Services;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CRM.ViewModels
 {
@@ -9,7 +11,7 @@ namespace CRM.ViewModels
     {
         public ICommand Confirm {  get; }
 
-        public string? Date { get; set; }
+        public DateTime Date { get; set; }
         public string? Articul {  get; set; }
         public string? OrderID { get; set; }
         public string? Surname { get; set; }
@@ -17,7 +19,7 @@ namespace CRM.ViewModels
         public string? SecondName { get; set; }
         public string? Phone {  get; set; }
         public string? ItemName { get; set; }
-        public string? AmountItem { get; set; }
+        public int AmountItem { get; set; }
         public decimal? Price { get; set; }
         public decimal? PrimeCost { get; set; }
         public string? PaymentWay { get; set; }
@@ -35,7 +37,34 @@ namespace CRM.ViewModels
      
         private void ConfirmOrder()
         {
-            MessageBox.Show("Confirm Order Button");
+            var customer = new Customer
+            {
+                SecondName = SecondName,
+                Name = Name,
+                Surname = Surname,
+                Phone = Phone,
+                AmountOrders = 0
+            };
+            var orders = new Order
+            {
+                IsSelected = false,
+                OrderDate = Date,
+                Atricul = Articul,
+                OrderID = OrderID,
+                CustomerID = customer.Id,
+                Customer = customer,
+                Item = ItemName,
+                Amount = AmountItem,
+                Price = Price,
+                PrimeCost = PrimeCost,
+                PaymentWay = PaymentWay,
+                DelivarWay = DeliverWay,
+                DeliverAdress = DeliverAdress,
+                Status = Status,
+                Spending = Spending,
+                Income = Income,
+                Comment = Comment
+            };
         }
     }
 }
