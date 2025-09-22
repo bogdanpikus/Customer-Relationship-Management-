@@ -10,8 +10,6 @@ namespace CRM.ViewModels
 {
     public class CreateDatabaseViewModel : NotifyPropertyChange
     {
-        private DuckDatabase? _duckdb;
-
         public object? CurrentControl { get; set; }
 
         public ICommand GoToMainWindowFromCreateControl { get; }
@@ -48,7 +46,7 @@ namespace CRM.ViewModels
         {
             try
             {
-                _duckdb = new DuckDatabase(false, false, folderPath, dataBaseName);
+                DatabaseFactory.CreateDatabase(false, false, folderPath, dataBaseName);
             }
             catch (Exception ex)
             {

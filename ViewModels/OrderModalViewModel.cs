@@ -9,6 +9,7 @@ namespace CRM.ViewModels
 {
     public class OrderModalViewModel : NotifyPropertyChange
     {
+        private readonly DuckDatabase _db = DatabaseFactory.Instance;
         public ICommand Confirm {  get; }
 
         public DateTime Date { get; set; }
@@ -65,6 +66,7 @@ namespace CRM.ViewModels
                 Income = Income,
                 Comment = Comment
             };
+            _db.CreateTables();
         }
     }
 }

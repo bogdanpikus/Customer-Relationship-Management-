@@ -13,8 +13,6 @@ namespace CRM.ViewModels
     {
         public object? CurrentControl { get; set; }
 
-        private DuckDatabase? _duckdb;
-
         public ICommand GoToMainWindowFromOpenControl { get; }
         public ICommand SearchDataBaseFileToOpen { get; }
         public ICommand OpenDuckDatabaseFile { get; }
@@ -48,7 +46,7 @@ namespace CRM.ViewModels
             string fileName = Path.GetFileNameWithoutExtension(filePath);
             try
             {
-                _duckdb = new DuckDatabase(false, true, filePath, fileName);
+                DatabaseFactory.CreateDatabase(false, true, filePath, fileName);
             }
             catch (Exception ex)
             {
