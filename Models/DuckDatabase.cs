@@ -24,16 +24,18 @@ namespace CRM.Models
              string dbConnection = InMemory ? "Data Source=:memory:" : $"Data Source={dbFilePath}";
              _connection = new DuckDBConnection(dbConnection);
              _connection.Open();
+
+            using var command = _connection.CreateCommand();
+            command.CommandText = "CREATE TABLE IF NOT EXISTS customer (Id INTEGER)";
+            command.ExecuteNonQuery();
+            command.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER)";
+            command.ExecuteNonQuery();
         }
 
-        public void CreateTables()
+        public void InsertIntoTable(string table,string data)
         {
-            //using var command = _connection.CreateCommand();
-            //command.CommandText = "CREATE TABLE IF NOT EXISTS customer (Id INTEGER)";
-            //command.ExecuteNonQuery();
-            //command.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER)";
-            //command.ExecuteNonQuery();
-            MessageBox.Show("Database Opened and ready to Create Tables");
+            using var command = _connection.CreateCommand();
+            command.CommandText = $"INSERT INTO {table} VALUES ({data})";
         }
     }
 }

@@ -6,7 +6,7 @@ namespace CRM.Models
     {
         public bool IsSelected {  get; set; } = false;
         public DateTime OrderDate {  get; set; }
-        public string? Atricul { get; set; }
+        public string? Articul { get; set; }
         public string? OrderID { get; set; }
         public string CustomerID { get; set; }         // key
         public Customer Customer { get; set; }       // object link Contact

@@ -46,11 +46,12 @@ namespace CRM.ViewModels
                 Phone = Phone,
                 AmountOrders = 0
             };
+            _db.InsertIntoTable("customer", $"{customer.SecondName},{customer.Name},{customer.Surname},{customer.Phone},{customer.AmountOrders}");
             var orders = new Order
             {
                 IsSelected = false,
                 OrderDate = Date,
-                Atricul = Articul,
+                Articul = Articul,
                 OrderID = OrderID,
                 CustomerID = customer.Id,
                 Customer = customer,
@@ -66,7 +67,9 @@ namespace CRM.ViewModels
                 Income = Income,
                 Comment = Comment
             };
-            _db.CreateTables();
+            _db.InsertIntoTable("orders", $"{orders.IsSelected},{orders.OrderDate},{orders.Articul},{orders.OrderID}," +
+                $"{orders.CustomerID},{orders.Customer},{orders.Item},{orders.Amount},{orders.Price},{orders.PrimeCost},{orders.PaymentWay}," +
+                $"{orders.DelivarWay},{orders.DeliverAdress},{orders.Status},{orders.Spending},{orders.Income},{orders.Comment}");
         }
     }
 }
