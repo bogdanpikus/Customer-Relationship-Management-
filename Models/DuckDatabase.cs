@@ -25,17 +25,49 @@ namespace CRM.Models
              _connection = new DuckDBConnection(dbConnection);
              _connection.Open();
 
-            using var command = _connection.CreateCommand();
-            command.CommandText = "CREATE TABLE IF NOT EXISTS customer (Id INTEGER)";
-            command.ExecuteNonQuery();
-            command.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER)";
-            command.ExecuteNonQuery();
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"CREATE SEQUENCE IF NOT EXISTS seq_customers START 1";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customer (Id INTEGER DEFAULT nextval('seq_customers') PRIMARY KEY, SecondName VARCHAR," +
+                  " Name VARCHAR, Surname VARCHAR, Phone TINYINT, AmountOrders TINYINT)";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"CREATE SEQUENCE IF NOT EXISTS seq_orders START 1";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS order (Id INTEGER DEFAULT nextval('seq_orders') PRIMARY KEY, IsSelected BOOLEAN, OrderDate DATE, Articul VARCHAR," +
+                   "OrderID VARCHAR, Item VARCHAR, Amount TINYINT, Price FLOAT, Pricecost FLOAT, PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
+                   "Status VARCHAR, Spending FLOAT, Income FLOAT, Comment VARCHAR)";
+                cmd.ExecuteNonQuery();
+            }
         }
 
-        public void InsertIntoTable(string table,string data)
+        public void InsertCustomer(Customer customer)
         {
-            using var command = _connection.CreateCommand();
-            command.CommandText = $"INSERT INTO {table} VALUES ({data})";
+            using (var crm = _connection.CreateCommand())
+            {
+                crm.CommandText = @"INSERT INTO customer () VALUES ()";
+            }
+
+        }
+
+        public void InsertOrder(Order order)
+        {
+            using (var crm = _connection.CreateCommand())
+            {
+                crm.CommandText = @"INSERT INTO order () VALUES ()";
+            }
         }
     }
 }
