@@ -24,7 +24,7 @@ namespace CRM.ViewModels
         private void OpenOrderDialog()
         {
             service = new DialogService();
-            service.ShowDialog();
+            service.ShowDialog(true);
         }
     }
 }

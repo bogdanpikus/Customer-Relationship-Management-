@@ -1,9 +1,8 @@
 ﻿using CRM.Commands;
 using CRM.Models;
 using CRM.Services;
-using System.Windows;
 using System.Windows.Input;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualBasic;
 
 namespace CRM.ViewModels
 {
@@ -12,7 +11,7 @@ namespace CRM.ViewModels
         private readonly DuckDatabase _db = DatabaseFactory.Instance;
         public ICommand Confirm {  get; }
 
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now.Date;
         public string? Articul {  get; set; }
         public string? OrderID { get; set; }
         public string? Surname { get; set; }
@@ -44,9 +43,11 @@ namespace CRM.ViewModels
                 Name = Name,
                 Surname = Surname,
                 Phone = Phone,
-                AmountOrders = 0
+                AmountOrders = 1
             };
-            var orders = new Order
+            _db.InsertCustomer(customer);
+
+            var order = new Order
             {
                 IsSelected = false,
                 OrderDate = Date,
@@ -66,6 +67,7 @@ namespace CRM.ViewModels
                 Income = Income,
                 Comment = Comment
             };
+            _db.InsertOrder(order);
         }
     }
 }

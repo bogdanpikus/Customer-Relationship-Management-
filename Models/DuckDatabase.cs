@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.IO;
+using System.IO.Packaging;
 using System.Windows;
 using DuckDB.NET.Data;
 using DuckDB.NET.Native;
@@ -33,8 +34,8 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customer (Id INTEGER DEFAULT nextval('seq_customers') PRIMARY KEY, SecondName VARCHAR," +
-                  " Name VARCHAR, Surname VARCHAR, Phone TINYINT, AmountOrders TINYINT)";
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (Id INTEGER DEFAULT nextval('seq_customers') PRIMARY KEY, SecondName VARCHAR," +
+                  " Name VARCHAR, Surname VARCHAR, Phone VARCHAR, AmountOrders TINYINT)";
                 cmd.ExecuteNonQuery();
             }
 
@@ -46,8 +47,8 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS order (Id INTEGER DEFAULT nextval('seq_orders') PRIMARY KEY, IsSelected BOOLEAN, OrderDate DATE, Articul VARCHAR," +
-                   "OrderID VARCHAR, Item VARCHAR, Amount TINYINT, Price FLOAT, Pricecost FLOAT, PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER DEFAULT nextval('seq_orders') PRIMARY KEY, IsSelected BOOLEAN DEFAULT FALSE, OrderDate DATE, Articul VARCHAR," +
+                   "OrderID VARCHAR, CustomerID INTEGER, Item VARCHAR, Amount TINYINT, Price FLOAT, Pricecost FLOAT, PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
                    "Status VARCHAR, Spending FLOAT, Income FLOAT, Comment VARCHAR)";
                 cmd.ExecuteNonQuery();
             }
@@ -57,7 +58,13 @@ namespace CRM.Models
         {
             using (var crm = _connection.CreateCommand())
             {
-                crm.CommandText = @"INSERT INTO customer () VALUES ()";
+                crm.CommandText = @"INSERT INTO customers (SecondName, Name, Surname, Phone, AmountOrders) VALUES (?,?,?,?,?)";
+                crm.Parameters.Add(new DuckDBParameter { Value = customer.SecondName });
+                crm.Parameters.Add(new DuckDBParameter { Value = customer.Name });
+                crm.Parameters.Add(new DuckDBParameter { Value = customer.Surname });
+                crm.Parameters.Add(new DuckDBParameter { Value = customer.Phone });
+                crm.Parameters.Add(new DuckDBParameter { Value = customer.AmountOrders });
+                crm.ExecuteNonQuery();
             }
 
         }
@@ -66,7 +73,25 @@ namespace CRM.Models
         {
             using (var crm = _connection.CreateCommand())
             {
-                crm.CommandText = @"INSERT INTO order () VALUES ()";
+                crm.CommandText = @"INSERT INTO orders (OrderDate, Articul, OrderID, CustomerID, Item, Amount, Price,
+                    Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Comment) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+                crm.Parameters.Add(new DuckDBParameter { Value = order.OrderDate });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.Articul });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.OrderID });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.CustomerID });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.Item });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.Amount });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.Price });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.PrimeCost });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.PaymentWay });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.DelivarWay });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.DeliverAdress });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.Status });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.Spending });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.Income });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.Comment });
+                crm.ExecuteNonQuery();
             }
         }
     }

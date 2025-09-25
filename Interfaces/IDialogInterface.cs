@@ -5,6 +5,6 @@ namespace CRM.Interfaces
 {
     public interface IDialogInterface
     {
-        bool? ShowDialog();
+        bool? ShowDialog(bool True);
     }
 }
