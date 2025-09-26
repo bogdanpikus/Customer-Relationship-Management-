@@ -1,25 +1,31 @@
 ﻿using CRM.Interfaces;
+using CRM.ViewModels;
 using CRM.Views.ModalControls;
-using System;
-using System.Printing;
+using CRM.Views.ModalWindows;
 using System.Windows;
-using System.Windows.Automation.Peers;
 
 namespace CRM.Services
 {
     public class DialogService : IDialogInterface
     {
-        public bool? ShowDialog(bool True)
+        private static DialogService? _instance;
+        public static DialogService Instance => _instance ?? (_instance = new DialogService());
+        private readonly Dictionary<Type, Type> _mapping = new();
+
+        public DialogService()
         {
-            if (True)
-            {
-                OrderModalWindow window = new();
-                return window.ShowDialog();
-            }
-            else
-            {
-                return false;
-            }
+            _mapping[typeof(OrderModalViewModel)] = typeof(OrderModalWindow);
+            _mapping[typeof(EditingViewModal)] = typeof(EditingModalWindow);
+        }
+        public bool ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : class
+        {
+            if (!_mapping.TryGetValue(typeof(TViewModel), out var viewType))
+                throw new InvalidOperationException($"Нет View для {typeof(TViewModel).Name}");
+
+            var window = (Window)Activator.CreateInstance(viewType)!;
+            window.DataContext = viewModel;
+
+            return window.ShowDialog() ?? false;
         }
     }
 }

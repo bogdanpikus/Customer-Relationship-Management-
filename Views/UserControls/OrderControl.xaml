@@ -71,7 +71,7 @@
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2">
             </Button>
-            <Button Content="Редактировать" Width="170" Height="50" Background="Snow"
+            <Button Command="{Binding EditingCommand}" Content="Редактировать" Width="170" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2">
             </Button>
@@ -79,10 +79,12 @@
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2">
             </Button>
-            <Button Content="Фильтр" Width="120" Height="50" Background="Snow"
+            <ComboBox Text="Фильтр" Width="120" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
-                    BorderBrush="Black" BorderThickness="2">
-            </Button>
+                    BorderBrush="Black" BorderThickness="2" VerticalContentAlignment="Center"
+                      HorizontalContentAlignment="Center">
+                <ComboBoxItem IsSelected="True">Фильтр</ComboBoxItem>
+            </ComboBox>
         </DockPanel>
 
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="8" Background="Snow" Margin="0,60,0,0">
@@ -95,29 +97,24 @@
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <TextBox Template="{StaticResource TextPlaceholderSquare}" Tag="поиск..." Width="200"
                          Margin="10,0,0,0" Text="{Binding SearchInOrderPageTable, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Content="Поиск" Height="auto" />
+                    <Button Width="30" Height="auto" BorderBrush="Black"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="auto">
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <TextBlock Width="50" Margin="5" />
-                    </Border>
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <TextBlock Width="50" Margin="5"/>
-                    </Border>
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <TextBlock Width="50" Margin="5" />
-                    </Border>
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <TextBlock Width="50" Margin="5" />
-                    </Border>
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <TextBlock Width="50" Margin="5" />
-                    </Border>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="32">
+                    <TextBlock Width="50" Margin="2" Text="{Binding AllSpendings}" Background="LightGray"/>
+                    <TextBlock Width="50" Margin="2" Text="{Binding AllChashFlow}" Background="LightGray"/>
+                    <TextBlock Width="50" Margin="2" Text="{Binding AllIncome}" Background="LightGray"/>
+                    <ComboBox Width="57" Margin="2" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True">
+                        <ComboBoxItem IsSelected="True">None</ComboBoxItem>
+                        <ComboBoxItem>Обрабатывается</ComboBoxItem>
+                        <ComboBoxItem>Успешный</ComboBoxItem>
+                        <ComboBoxItem>Отмененный</ComboBoxItem>
+                    </ComboBox>
+                    <Button Width="50" Margin="2" BorderThickness="0" />
                 </StackPanel>
             </DockPanel>
 
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <DataGrid AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
+                <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
                       VerticalScrollBarVisibility="Visible" BorderThickness="1" BorderBrush="Black">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="+" Width="25" Binding="{Binding Choose}"/>

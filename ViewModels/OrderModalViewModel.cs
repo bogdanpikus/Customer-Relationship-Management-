@@ -37,6 +37,8 @@ namespace CRM.ViewModels
      
         private void ConfirmOrder()
         {
+            // TODO: где-то тут нужна проверка на типизацию и валидацию ввода данных
+
             var customer = new Customer
             {
                 SecondName = SecondName,

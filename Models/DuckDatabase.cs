@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.IO.Packaging;
+using System.Net;
 using System.Windows;
 using DuckDB.NET.Data;
 using DuckDB.NET.Native;
@@ -92,6 +94,48 @@ namespace CRM.Models
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Income });
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Comment });
                 crm.ExecuteNonQuery();
+            }
+        }
+
+        public void ExtractOrdersFromDatabase(ObservableCollection<Order> Orders) //вытягивания заказов из базы
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"SELECT OrderDate, Articul, OrderID, Item, Amount, Price,
+                    Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Comment FROM orders";
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var order = new Order
+                    {
+                        OrderDate = reader.GetFieldValue<DateTime>(0),
+                        Articul = reader.GetFieldValue<string>(1),
+                        OrderID = reader.GetFieldValue<string>(2),
+                        Item = reader.GetFieldValue<string>(3),
+                        Amount = reader.GetFieldValue<int>(4),
+                        Price = reader.GetFieldValue<decimal>(5),
+                        PrimeCost = reader.GetFieldValue<decimal>(6),
+                        PaymentWay = reader.GetFieldValue<string>(7),
+                        DelivarWay = reader.GetFieldValue<string>(8),
+                        DeliverAdress = reader.GetFieldValue<string>(9),
+                        Status = reader.GetFieldValue<string>(10),
+                        Spending = reader.GetFieldValue<decimal>(11),
+                        Income = reader.GetFieldValue<decimal>(12),
+                        Organization = reader.GetFieldValue<string>(13),
+                        Comment = reader.GetFieldValue<string>(14)
+                    };
+
+                    Orders.Add(order);
+                }
+            }
+        }
+
+        public void ExtractCustomersFromDatabase() //вытягивание заказчиков из базы
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"SELECT * FROM customers";
+                cmd.ExecuteNonQuery();
             }
         }
     }
