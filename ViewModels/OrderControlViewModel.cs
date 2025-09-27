@@ -28,7 +28,6 @@ namespace CRM.ViewModels
         }
         private void LoadOrdersFromDatabase()
         {
-            // TODO: тут будет загрузка данных из базы
              _db.ExtractOrdersFromDatabase(Orders);
         }
         private void OpenOrderDialog()

@@ -24,7 +24,7 @@
         HorizontalContentAlignment="Left" Background="AliceBlue">
             </Button>
             <Button Content="Brouse" Command="{Binding SearchPlaceForDataBase}" FontWeight="Bold" FontSize="40" Height="60" Width="150"
-        BorderBrush="Black" BorderThickness="4" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" >
+        BorderBrush="Black" BorderThickness="4" Background="White" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand" >
             </Button>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Bottom">

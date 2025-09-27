@@ -36,7 +36,7 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (Id INTEGER DEFAULT nextval('seq_customers') PRIMARY KEY, SecondName VARCHAR," +
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (SecondName VARCHAR," +
                   " Name VARCHAR, Surname VARCHAR, Phone VARCHAR, AmountOrders TINYINT)";
                 cmd.ExecuteNonQuery();
             }
@@ -49,9 +49,9 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER DEFAULT nextval('seq_orders') PRIMARY KEY, IsSelected BOOLEAN DEFAULT FALSE, OrderDate DATE, Articul VARCHAR," +
-                   "OrderID VARCHAR, CustomerID INTEGER, Item VARCHAR, Amount TINYINT, Price FLOAT, Pricecost FLOAT, PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
-                   "Status VARCHAR, Spending FLOAT, Income FLOAT, Comment VARCHAR)";
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS orders (IsSelected BOOLEAN DEFAULT FALSE, OrderDate DATE, Articul VARCHAR," +
+                   "OrderID VARCHAR, CustomerID INTEGER, Item VARCHAR, Amount TINYINT, Price DECIMAL(18,2), Pricecost DECIMAL(18,2), PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
+                   "Status VARCHAR, Spending DECIMAL(18,2), Income DECIMAL(18,2), Organization VARCHAR, Comment VARCHAR)";
                 cmd.ExecuteNonQuery();
             }
         }
@@ -76,7 +76,7 @@ namespace CRM.Models
             using (var crm = _connection.CreateCommand())
             {
                 crm.CommandText = @"INSERT INTO orders (OrderDate, Articul, OrderID, CustomerID, Item, Amount, Price,
-                    Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Comment) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                    Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Organization, Comment) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 crm.Parameters.Add(new DuckDBParameter { Value = order.OrderDate });
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Articul });
@@ -92,6 +92,7 @@ namespace CRM.Models
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Status });
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Spending });
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Income });
+                crm.Parameters.Add(new DuckDBParameter { Value = order.Organization });
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Comment });
                 crm.ExecuteNonQuery();
             }
@@ -101,28 +102,36 @@ namespace CRM.Models
         {
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = @"SELECT OrderDate, Articul, OrderID, Item, Amount, Price,
-                    Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Comment FROM orders";
+                cmd.CommandText = @"SELECT IsSelected, OrderDate, Articul, OrderID, Item, Amount, Price,
+                    Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Organization, Comment FROM orders";
                 using var reader = cmd.ExecuteReader();
+
+                if (!reader.HasRows)
+                {
+                    return;
+                }
+
+                // TODO: как-то вписать имя/фам/отч/тел из таблиццы customer
                 while (reader.Read())
                 {
                     var order = new Order
                     {
-                        OrderDate = reader.GetFieldValue<DateTime>(0),
-                        Articul = reader.GetFieldValue<string>(1),
-                        OrderID = reader.GetFieldValue<string>(2),
-                        Item = reader.GetFieldValue<string>(3),
-                        Amount = reader.GetFieldValue<int>(4),
-                        Price = reader.GetFieldValue<decimal>(5),
-                        PrimeCost = reader.GetFieldValue<decimal>(6),
-                        PaymentWay = reader.GetFieldValue<string>(7),
-                        DelivarWay = reader.GetFieldValue<string>(8),
-                        DeliverAdress = reader.GetFieldValue<string>(9),
-                        Status = reader.GetFieldValue<string>(10),
-                        Spending = reader.GetFieldValue<decimal>(11),
-                        Income = reader.GetFieldValue<decimal>(12),
-                        Organization = reader.GetFieldValue<string>(13),
-                        Comment = reader.GetFieldValue<string>(14)
+                        IsSelected = reader.GetBoolean(0),
+                        OrderDate = reader.IsDBNull(0) ? DateTime.Now : reader.GetFieldValue<DateTime>(1),
+                        Articul = reader.IsDBNull(1) ? null : reader.GetFieldValue<string>(2),
+                        OrderID = reader.IsDBNull(2) ? null : reader.GetFieldValue<string>(3),
+                        Item = reader.IsDBNull(3) ? null : reader.GetFieldValue<string>(4),
+                        Amount = reader.IsDBNull(4) ? 0 : reader.GetFieldValue<int>(5),
+                        Price = reader.IsDBNull(5) ? 0 : reader.GetFieldValue<decimal>(6),
+                        PrimeCost = reader.IsDBNull(6) ? 0 : reader.GetFieldValue<decimal>(7),
+                        PaymentWay = reader.IsDBNull(7) ? null : reader.GetFieldValue<string>(8),
+                        DelivarWay = reader.IsDBNull(8) ? null : reader.GetFieldValue<string>(9),
+                        DeliverAdress = reader.IsDBNull(9) ? null : reader.GetFieldValue<string>(10),
+                        Status = reader.IsDBNull(10) ? null : reader.GetFieldValue<string>(11),
+                        Spending = reader.IsDBNull(11) ? 0 : reader.GetFieldValue<decimal>(12),
+                        Income = reader.IsDBNull(12) ? 0 : reader.GetFieldValue<decimal>(13),
+                        Organization = reader.IsDBNull(13) ? null : reader.GetFieldValue<string>(14),
+                        Comment = reader.IsDBNull(14) ? null : reader.GetFieldValue<string>(15)
                     };
 
                     Orders.Add(order);

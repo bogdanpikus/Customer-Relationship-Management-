@@ -57,7 +57,7 @@
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1">
         </Button>
-        <Button Content="Натройки" Grid.Column="0" Grid.Row="7" Background="#00FF2F"
+        <Button Content="Наcтройки" Grid.Column="0" Grid.Row="7" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1">
         </Button>
@@ -69,33 +69,28 @@
         <DockPanel Grid.Column="1" Grid.Row="1" LastChildFill="False" VerticalAlignment="Top">
             <Button Command="{Binding AddOrderCommand}" Content="Добавить" Width="120" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
-                    BorderBrush="Black" BorderThickness="2">
+                    BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
             <Button Command="{Binding EditingCommand}" Content="Редактировать" Width="170" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
-                    BorderBrush="Black" BorderThickness="2">
+                    BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
             <Button Content="Удалить" Width="120" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
-                    BorderBrush="Black" BorderThickness="2">
+                    BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
             <ComboBox Text="Фильтр" Width="120" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2" VerticalContentAlignment="Center"
-                      HorizontalContentAlignment="Center">
-                <ComboBoxItem IsSelected="True">Фильтр</ComboBoxItem>
+                      HorizontalContentAlignment="Center" Cursor="Hand">
+                <ComboBoxItem IsSelected="True" Cursor="Hand">Фильтр</ComboBoxItem>
             </ComboBox>
         </DockPanel>
 
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="8" Background="Snow" Margin="0,60,0,0">
             <DockPanel Grid.Row="0" Margin="5,5,17,5" DockPanel.Dock="Top">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Content="&lt;" Height="auto" Background="Snow" BorderBrush="Snow"/>
-                    <TextBlock Text="Июль" Width="auto" VerticalAlignment="Center" />
-                    <Button Content="&gt;" Height="auto" Background="Snow" BorderBrush="Snow"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Tag="поиск..." Width="200"
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Tag="поиск..." Width="400"
                          Margin="10,0,0,0" Text="{Binding SearchInOrderPageTable, UpdateSourceTrigger=PropertyChanged}"/>
                     <Button Width="30" Height="auto" BorderBrush="Black"/>
                 </StackPanel>
@@ -103,11 +98,11 @@
                     <TextBlock Width="50" Margin="2" Text="{Binding AllSpendings}" Background="LightGray"/>
                     <TextBlock Width="50" Margin="2" Text="{Binding AllChashFlow}" Background="LightGray"/>
                     <TextBlock Width="50" Margin="2" Text="{Binding AllIncome}" Background="LightGray"/>
-                    <ComboBox Width="57" Margin="2" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True">
-                        <ComboBoxItem IsSelected="True">None</ComboBoxItem>
-                        <ComboBoxItem>Обрабатывается</ComboBoxItem>
-                        <ComboBoxItem>Успешный</ComboBoxItem>
-                        <ComboBoxItem>Отмененный</ComboBoxItem>
+                    <ComboBox Width="57" Margin="2" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" Cursor="Hand">
+                        <ComboBoxItem IsSelected="True" Cursor="Hand">None</ComboBoxItem>
+                        <ComboBoxItem Cursor="Hand">Обрабатывается</ComboBoxItem>
+                        <ComboBoxItem Cursor="Hand">Успешный</ComboBoxItem>
+                        <ComboBoxItem Cursor="Hand">Отмененный</ComboBoxItem>
                     </ComboBox>
                     <Button Width="50" Margin="2" BorderThickness="0" />
                 </StackPanel>
@@ -115,31 +110,41 @@
 
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
-                      VerticalScrollBarVisibility="Visible" BorderThickness="1" BorderBrush="Black">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="+" Width="25" Binding="{Binding Choose}"/>
-                    <DataGridTextColumn Header="№" Width="25" Binding="{Binding Number}"/>
-                    <DataGridTextColumn Header="Дата" Binding="{Binding Date}"/>
-                    <DataGridTextColumn Header="Артикул товара" Binding="{Binding Article}"/>
-                    <DataGridTextColumn Header="Идентификационный номер заказ" Binding="{Binding OrderID}"/>
-                    <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}"/>
-                    <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Отчество" Binding="{Binding Surname}"/>
-                    <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}"/>
-                    <DataGridTextColumn Header="Товар" Width="45" Binding="{Binding Item}"/>
-                    <DataGridTextColumn Header="Колл товара" Binding="{Binding Amount}"/>
-                    <DataGridTextColumn Header="Цена" Width="40" Binding="{Binding Price}"/>
-                    <DataGridTextColumn Header="Себестоимость" Binding="{Binding PrimeCost}"/>
-                    <DataGridTextColumn Header="Оплата" Binding="{Binding Payment}"/>
-                    <DataGridTextColumn Header="Доставка" Binding="{Binding Delivery}"/>
-                    <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
-                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
-                        <DataGridTextColumn Header="Затраты" Binding="{Binding Spending}"/>
-                        <DataGridTextColumn Header="Прибыль" Binding="{Binding Income}"/>
-                    <DataGridTextColumn Header="Организация" Binding="{Binding Organization}"/>
-                    <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                      VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" ColumnWidth="auto"
+                          FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
+                          GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
+                          RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
+                          EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
+                          SelectionMode="Single" SelectionUnit="Cell" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
+
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected}">
+                            <DataGridCheckBoxColumn.Header>
+                                <CheckBox />
+                            </DataGridCheckBoxColumn.Header>
+                        </DataGridCheckBoxColumn>
+                        <DataGridTextColumn Header="№" IsReadOnly="True" Binding="{Binding Number}"/>
+                        <DataGridTextColumn Header="Дата" IsReadOnly="True" Binding="{Binding OrderDate}"/>
+                        <DataGridTextColumn Header="Артикул товара" IsReadOnly="True" Binding="{Binding Articul}"/>
+                        <DataGridTextColumn Header="Идентификационный номер заказ" IsReadOnly="True" Binding="{Binding OrderID}"/>
+                        <DataGridTextColumn Header="Фамилия" IsReadOnly="True" Binding="{Binding SecondName}"/>
+                        <DataGridTextColumn Header="Имя" IsReadOnly="True" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="Отчество" IsReadOnly="True" Binding="{Binding Surname}"/>
+                        <DataGridTextColumn Header="Телефон" IsReadOnly="True" Binding="{Binding Phone}"/>
+                        <DataGridTextColumn Header="Товар" IsReadOnly="True" Width="45" Binding="{Binding Item}"/>
+                        <DataGridTextColumn Header="Колл товара" IsReadOnly="True" Binding="{Binding Amount}"/>
+                        <DataGridTextColumn Header="Цена" IsReadOnly="True" Binding="{Binding Price}"/>
+                        <DataGridTextColumn Header="Себестоимость" IsReadOnly="True" Binding="{Binding PrimeCost}"/>
+                        <DataGridTextColumn Header="Оплата" IsReadOnly="True" Binding="{Binding PaymentWay}"/>
+                        <DataGridTextColumn Header="Доставка" IsReadOnly="True" Binding="{Binding DelivarWay}"/>
+                        <DataGridTextColumn Header="Адрес" IsReadOnly="True" Binding="{Binding DeliverAdress}"/>
+                        <DataGridTextColumn Header="Статус" IsReadOnly="True" Binding="{Binding Status}"/>
+                        <DataGridTextColumn Header="Затраты" IsReadOnly="True" Binding="{Binding Spending}"/>
+                        <DataGridTextColumn Header="Прибыль" IsReadOnly="True" Binding="{Binding Income}"/>
+                        <DataGridTextColumn Header="Организация" IsReadOnly="True" Binding="{Binding Organization}"/>
+                        <DataGridTextColumn Header="Комментарий" IsReadOnly="True" Binding="{Binding Comment}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </ScrollViewer>
         </DockPanel>
         
