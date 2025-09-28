@@ -1,4 +1,5 @@
-﻿using CRM.ViewModels;
+﻿using CRM.Interfaces;
+using CRM.ViewModels;
 using System.Windows;
 
 namespace CRM.Views.ModalControls

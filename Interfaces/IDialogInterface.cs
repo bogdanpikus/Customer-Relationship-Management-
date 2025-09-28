@@ -6,5 +6,6 @@ namespace CRM.Interfaces
     public interface IDialogInterface
     {
         bool ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : class;
+        void CloseDialog();
     }
 }

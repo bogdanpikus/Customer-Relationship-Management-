@@ -115,7 +115,7 @@
                           GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
                           RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
                           EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
-                          SelectionMode="Single" SelectionUnit="Cell" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Hand" >
+                          SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Hand" >
 
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected}">

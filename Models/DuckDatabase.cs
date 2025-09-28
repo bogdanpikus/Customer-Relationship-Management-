@@ -109,10 +109,12 @@ namespace CRM.Models
                     Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Organization, Comment FROM orders";
                 using var reader = cmd.ExecuteReader();
 
-                if (!reader.HasRows)
-                {
+                /*
+                 if (!reader.HasRows)
+                 {
                     return;
-                }
+                 } 
+                */
 
                 // TODO: как-то вписать имя/фам/отч/тел из таблиццы customer
                 while (reader.Read())

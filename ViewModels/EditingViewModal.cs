@@ -38,7 +38,7 @@ namespace CRM.ViewModels
 
         private void ConfirmEdit()
         {
-            MessageBox.Show("Confirm Edit Button");
+            DialogService.Instance.CloseDialog();
         }
     }
 }

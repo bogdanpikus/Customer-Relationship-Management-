@@ -3,6 +3,8 @@ using CRM.Models;
 using CRM.Services;
 using System.Windows.Input;
 using Microsoft.VisualBasic;
+using System.Windows;
+using CRM.Views.ModalControls;
 
 namespace CRM.ViewModels
 {
@@ -76,6 +78,7 @@ namespace CRM.ViewModels
             };
             _db.InsertOrder(order);
             //TODO: закрытие окна и динамическое отображение в таблице
+            DialogService.Instance.CloseDialog();
         }
     }
 }
