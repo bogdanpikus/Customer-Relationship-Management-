@@ -7,9 +7,12 @@ namespace CRM.Models
         public bool IsSelected {  get; set; } = false;
         public DateTime OrderDate {  get; set; }
         public string? Articul { get; set; }
-        public string? OrderID { get; set; }
-        public string CustomerID { get; set; }         // key
-        public Customer Customer { get; set; }       // object link Contact
+        public string? OrderID { get; set; }   
+        public Customer Customer { get; set; }
+        public string? Name { get; set; }
+        public string? SecondName { get; set; }
+        public string? Surname { get; set; }
+        public string? Phone { get; set; }
         public string? Item { get; set; }
         public int Amount { get; set; }
         public decimal? Price { get; set; } 

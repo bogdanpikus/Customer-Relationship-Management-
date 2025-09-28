@@ -11,7 +11,7 @@ namespace CRM.ViewModels
         private readonly DuckDatabase _db = DatabaseFactory.Instance;
         public ICommand Confirm {  get; }
 
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now;
         public string? Articul {  get; set; }
         public string? OrderID { get; set; }
         public string? Surname { get; set; }
@@ -39,7 +39,6 @@ namespace CRM.ViewModels
         private void ConfirmOrder()
         {
             // TODO: где-то тут нужна проверка на типизацию и валидацию ввода данных
-            // TODO: при нажатии на кнопку - закрытия и отображение в базе
 
             var customer = new Customer
             {
@@ -57,8 +56,11 @@ namespace CRM.ViewModels
                 OrderDate = Date,
                 Articul = Articul,
                 OrderID = OrderID,
-                CustomerID = customer.Id,
                 Customer = customer,
+                Name = customer.Name,
+                SecondName = customer.SecondName,
+                Surname = customer.Surname,
+                Phone = customer.Phone,
                 Item = ItemName,
                 Amount = AmountItem,
                 Price = Price,
@@ -73,6 +75,7 @@ namespace CRM.ViewModels
                 Comment = Comment
             };
             _db.InsertOrder(order);
+            //TODO: закрытие окна и динамическое отображение в таблице
         }
     }
 }
