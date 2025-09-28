@@ -18,12 +18,14 @@ namespace CRM.ViewModels
         public ICommand Exit {  get; set; }
         public ICommand AddOrderCommand { get; set; }
         public ICommand EditingCommand { get; set; }
+        public ICommand DeleteOrder {  get; set; }
 
         public OrderControlViewModel()
         {   
             Exit = new RelayCommand(Click => System.Environment.Exit(0));
             AddOrderCommand = new RelayCommand(Click => OpenOrderDialog());
             EditingCommand = new RelayCommand(Click => OpenEditingDialog());
+            DeleteOrder = new RelayCommand(Click => DeleteOrderFromTableAndDatabase());
             LoadOrdersFromDatabase();
         }
         private void LoadOrdersFromDatabase()
@@ -32,11 +34,17 @@ namespace CRM.ViewModels
         }
         private void OpenOrderDialog()
         {
-            DialogService.Instance.ShowDialog(new OrderModalViewModel());
+            DialogService.Instance.ShowDialog(new OrderModalViewModel(Orders));
         }
         private void OpenEditingDialog()
         {
-            DialogService.Instance.ShowDialog(new EditingViewModal());
+            DialogService.Instance.ShowDialog(new EditingViewModal(Orders));
+        }
+        private void DeleteOrderFromTableAndDatabase()
+        {
+            //TODO: удаление заказа с таблицы и базы данных (динамическое)
+            //isSelected -> Database -> метод 
+            MessageBox.Show("DeleteOrderFromTableAndDatabase");
         }
     }
 }

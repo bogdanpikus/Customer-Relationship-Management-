@@ -12,7 +12,6 @@ namespace CRM.Views.ModalControls
         public OrderModalWindow()
         {
             InitializeComponent();
-            DataContext = new OrderModalViewModel();
         }
     }
 }

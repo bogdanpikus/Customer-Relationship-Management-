@@ -12,7 +12,6 @@ namespace CRM.Views.ModalWindows
         public EditingModalWindow()
         {
             InitializeComponent();
-            DataContext = new EditingViewModal();
         }
     }
 }

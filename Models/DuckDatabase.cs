@@ -143,7 +143,7 @@ namespace CRM.Models
                         Comment = reader.IsDBNull(14) ? null : reader.GetFieldValue<string>(19)
                     };
 
-                    Orders.Add(order);
+                    Orders.Insert(0,order);
                 }
             }
         }
@@ -153,6 +153,15 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = @"SELECT * FROM customers";
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public void DeleteOrderInDatabase()
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"DELETE FROM orders WHERE IsSelected = true";
                 cmd.ExecuteNonQuery();
             }
         }

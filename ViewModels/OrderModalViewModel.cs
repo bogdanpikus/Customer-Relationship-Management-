@@ -5,6 +5,7 @@ using System.Windows.Input;
 using Microsoft.VisualBasic;
 using System.Windows;
 using CRM.Views.ModalControls;
+using System.Collections.ObjectModel;
 
 namespace CRM.ViewModels
 {
@@ -33,12 +34,12 @@ namespace CRM.ViewModels
         public string? Organization {  get; set; }
         public string? Comment { get; set; }
 
-        public OrderModalViewModel()
+        public OrderModalViewModel(ObservableCollection<Order> orders)
         {
-            Confirm = new RelayCommand(Click => ConfirmOrder());
+            Confirm = new RelayCommand(Click => ConfirmOrder(orders));
         }
      
-        private void ConfirmOrder()
+        private void ConfirmOrder(ObservableCollection<Order> orders)
         {
             // TODO: где-то тут нужна проверка на типизацию и валидацию ввода данных
 
@@ -77,7 +78,7 @@ namespace CRM.ViewModels
                 Comment = Comment
             };
             _db.InsertOrder(order);
-            //TODO: закрытие окна и динамическое отображение в таблице
+            orders.Insert(0,order);
             DialogService.Instance.CloseDialog();
         }
     }
