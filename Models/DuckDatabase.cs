@@ -165,7 +165,7 @@ namespace CRM.Models
             {
                 foreach (var order in selectedOrder)
                 {
-                    cmd.CommandText = "DELETE FROM orders WHERE OrderID = ?";
+                    cmd.CommandText = "DELETE FROM orders WHERE OrderID = ?"; //TODO: надо id, который уникальный PRIMARY KEY и не может поменятся
                     cmd.Parameters.Clear();
                     cmd.Parameters.Add(new DuckDBParameter { Value = order.OrderID });
                     cmd.ExecuteNonQuery();
@@ -175,8 +175,9 @@ namespace CRM.Models
             }
         }
 
-        public bool UpdateOrder() //Возвращает true когда выполняется правильно и false, когда что-то идет не так
+        public bool UpdateOrder(Order order) //Возвращает true когда выполняется правильно и false, когда что-то идет не так
         {
+            // TODO: загрузка изменений в базу
             return true;
         }
     }

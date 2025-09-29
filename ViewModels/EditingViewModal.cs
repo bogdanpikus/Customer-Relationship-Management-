@@ -11,9 +11,10 @@ namespace CRM.ViewModels
 {
     public class EditingViewModal
     {
+        private readonly Order _order;
         private readonly DuckDatabase _duck = DatabaseFactory.Instance;
         public ICommand Confirm { get; }
-        
+
         public DateTime? Date { get; set; }
         public string? Articul { get; set; }
         public string? OrderID { get; set; }
@@ -33,39 +34,61 @@ namespace CRM.ViewModels
         public decimal? Income { get; set; }
         public string? Comment { get; set; }
 
-        public EditingViewModal(ObservableCollection<Order> orders,DateTime? orderDate, string? orderArticul, string? orderOrderID, string? orderSecondName,
-            string? orderName, string? orderSurname, string? orderPhone, string? orderItem, int orderAmount, decimal? orderPrimecost, decimal? orderPrice, string? orderDeliverWay,
-            string? orderDeliverAdress, string? orderPaymentWay, string? orderStatus, decimal? orderIncome, decimal? orderSpending, string? orderOrganization, string? orderComment)
+        public EditingViewModal(Order order)
         {
+            _order = order;
+
+            Date = order.OrderDate;
+            Articul = order.Articul;
+            OrderID = order.OrderID;
+            Surname = order.Surname;
+            Name = order.Name;
+            SecondName = order.SecondName;
+            Phone = order.Phone;
+            ItemName = order.Item;
+            AmountItem = order.Amount;
+            Price = order.Price;
+            PrimeCost = order.PrimeCost;
+            PaymentWay = order.PaymentWay;
+            DeliverWay = order.DelivarWay;
+            DeliverAdress = order.DeliverAdress;
+            Status = order.Status;
+            Spending = order.Spending;
+            Income = order.Income;
+            Comment = order.Comment;
+
             Confirm = new RelayCommand(Click => ConfirmEdit());
-            Date = orderDate;
-            Articul = orderArticul;
-            OrderID = orderOrderID;
-            Surname = orderSurname;
-            Name = orderName;
-            SecondName = orderSecondName;
-            Phone = orderPhone;
-            ItemName = orderItem;
-            AmountItem = orderAmount;
-            Price = orderPrice;
-            PrimeCost = orderPrimecost;
-            PaymentWay = orderPaymentWay;
-            DeliverWay = orderDeliverWay;
-            DeliverAdress = orderDeliverAdress;
-            Status = orderStatus;
-            Spending = orderSpending;
-            Income = orderIncome;
-            Comment = orderComment;
         }
 
         private void ConfirmEdit()
         {
-            if (_duck.UpdateOrder()) // return: true
+            _order.OrderDate = Date.Value;
+            _order.Articul = Articul;
+            _order.OrderID = OrderID;
+            _order.Surname = Surname;
+            _order.Name = Name;
+            _order.SecondName = SecondName;
+            _order.Phone = Phone;
+            _order.Item = ItemName;
+            _order.Amount = AmountItem;
+            _order.Price = Price;
+            _order.PrimeCost = PrimeCost;
+            _order.PaymentWay = PaymentWay;
+            _order.DelivarWay = DeliverWay;
+            _order.DeliverAdress = DeliverAdress;
+            _order.Status = Status;
+            _order.Spending = Spending;
+            _order.Income = Income;
+            _order.Comment = Comment;
+
+            if (_duck.UpdateOrder(_order)) // true = успешно
             {
                 DialogService.Instance.CloseDialog();
             }
-
-            MessageBox.Show("Error. Try again."); // return: false
+            else
+            {
+                MessageBox.Show("Error. Try again.");
+            }
         }
     }
 }

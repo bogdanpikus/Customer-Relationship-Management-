@@ -43,10 +43,7 @@ namespace CRM.ViewModels
             var selected = Orders.Where(order => order.IsSelected).ToList();
             foreach (var order in selected)
             {
-                DialogService.Instance.ShowDialog(new EditingViewModal(Orders, order.OrderDate, order.Articul, order.OrderID, 
-                    order.SecondName, order.Name, order.Surname, order.Phone, order.Item, order.Amount, order.PrimeCost,
-                    order.Price, order.DelivarWay, order.DeliverAdress, order.PaymentWay, order.Status, order.Income, order.Spending,
-                    order.Organization, order.Comment));
+                DialogService.Instance.ShowDialog(new EditingViewModal(order));
             }
         }
         private void DeleteOrderFromTableAndDatabase()
