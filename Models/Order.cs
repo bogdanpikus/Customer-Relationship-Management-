@@ -1,10 +1,11 @@
-﻿using System;
+﻿using CRM.Services;
+using System;
 
 namespace CRM.Models
 {
     public class Order
     {
-        public bool IsSelected {  get; set; } = false;
+        public bool IsSelected {  get; set; }
         public DateTime OrderDate {  get; set; }
         public string? Articul { get; set; }
         public string? OrderID { get; set; }   

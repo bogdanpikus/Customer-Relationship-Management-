@@ -157,13 +157,27 @@ namespace CRM.Models
             }
         }
 
-        public void DeleteOrderInDatabase()
+        public void DeleteOrderInDatabase(ObservableCollection<Order> orders)
         {
+            var selectedOrder = orders.Where(ordersItem => ordersItem.IsSelected).ToList();
+
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = @"DELETE FROM orders WHERE IsSelected = true";
-                cmd.ExecuteNonQuery();
+                foreach (var order in selectedOrder)
+                {
+                    cmd.CommandText = "DELETE FROM orders WHERE OrderID = ?";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.Add(new DuckDBParameter { Value = order.OrderID });
+                    cmd.ExecuteNonQuery();
+
+                    orders.Remove(order);
+                }
             }
+        }
+
+        public bool UpdateOrder() //Возвращает true когда выполняется правильно и false, когда что-то идет не так
+        {
+            return true;
         }
     }
 }

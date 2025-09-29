@@ -75,7 +75,7 @@
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
-            <Button Content="Удалить" Width="120" Height="50" Background="Snow"
+            <Button Command="{Binding DeleteOrder}" Content="Удалить" Width="120" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
@@ -118,7 +118,7 @@
                           SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Hand" >
 
                     <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected}">
+                        <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}">
                             <DataGridCheckBoxColumn.Header>
                                 <CheckBox />
                             </DataGridCheckBoxColumn.Header>

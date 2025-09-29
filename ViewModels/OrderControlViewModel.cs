@@ -5,6 +5,7 @@ using System.Windows.Input;
 using CRM.Models;
 using System.Windows;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace CRM.ViewModels
 {
@@ -14,6 +15,7 @@ namespace CRM.ViewModels
 
         public ObservableCollection<Order> Orders { get; } = new ObservableCollection<Order>();
         public object? CurrentView { get; set; }
+        public bool IsSelected { get; set; }
 
         public ICommand Exit {  get; set; }
         public ICommand AddOrderCommand { get; set; }
@@ -38,13 +40,18 @@ namespace CRM.ViewModels
         }
         private void OpenEditingDialog()
         {
-            DialogService.Instance.ShowDialog(new EditingViewModal(Orders));
+            var selected = Orders.Where(order => order.IsSelected).ToList();
+            foreach (var order in selected)
+            {
+                DialogService.Instance.ShowDialog(new EditingViewModal(Orders, order.OrderDate, order.Articul, order.OrderID, 
+                    order.SecondName, order.Name, order.Surname, order.Phone, order.Item, order.Amount, order.PrimeCost,
+                    order.Price, order.DelivarWay, order.DeliverAdress, order.PaymentWay, order.Status, order.Income, order.Spending,
+                    order.Organization, order.Comment));
+            }
         }
         private void DeleteOrderFromTableAndDatabase()
         {
-            //TODO: удаление заказа с таблицы и базы данных (динамическое)
-            //isSelected -> Database -> метод 
-            MessageBox.Show("DeleteOrderFromTableAndDatabase");
+            _db.DeleteOrderInDatabase(Orders);
         }
     }
 }
