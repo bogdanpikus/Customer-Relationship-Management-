@@ -106,7 +106,10 @@
                             <ComboBox Width="400" VerticalContentAlignment="Center"
                                       Cursor="Hand" IsEditable="True" ItemsSource="{Binding Statuses}"
                                       Height="50" FontSize="20" Margin="0,10,0,0" Text="{Binding Status}">
-                                <ComboBoxItem IsSelected="True">Нейтральный</ComboBoxItem>
+                                <ComboBoxItem IsSelected="True" Cursor="Hand">None</ComboBoxItem>
+                                <ComboBoxItem Cursor="Hand">Обрабатывается</ComboBoxItem>
+                                <ComboBoxItem Cursor="Hand">Успешный</ComboBoxItem>
+                                <ComboBoxItem Cursor="Hand">Отмененный</ComboBoxItem>
                             </ComboBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">

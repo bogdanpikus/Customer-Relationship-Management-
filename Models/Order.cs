@@ -28,7 +28,7 @@ namespace CRM.Models
         public string? Organization { get; set; }
         public string? Comment { get; set; }
         */
-
+        public int Id { get; set; }
         public bool IsSelected { get; set; }
         private DateTime _orderDate;
         public DateTime OrderDate
