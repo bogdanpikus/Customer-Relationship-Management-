@@ -30,43 +30,43 @@
                 <StackPanel VerticalAlignment="Top" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
                         <DatePicker Style="{StaticResource CustomDatePickerStyle}" Text="{Binding Date}" Width="400" 
-                                 VerticalContentAlignment="Center" Cursor="Hand" SelectedDate="{Binding Date}" 
-                                 Height="50" FontSize="20" Margin="0,5,0,0">
+                                 VerticalContentAlignment="Center" Cursor="Help" SelectedDate="{Binding Date}" 
+                                 Height="50" FontSize="20" Margin="0,5,0,0" ToolTip="Введите дату заказа">
                         </DatePicker>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding Articul}"
-                                 Height="50" Tag="Введите артикул товара" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Articul}"
+                                 Height="50" Tag="Введите артикул товара" FontSize="20" Margin="0,10,0,0" ToolTip="Введите артикул товара"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding OrderID}"
-                                 Height="50" Tag="Введите идентификационный номер заказа" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding OrderID}"
+                                 Height="50" Tag="Введите идентификационный номер заказа" FontSize="20" Margin="0,10,0,0" ToolTip="Введите идентификационный номер заказа"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding SecondName}"
-                                 Height="50" Tag="Введите фамилию заказчика" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding SecondName}"
+                                 Height="50" Tag="Введите фамилию заказчика" FontSize="20" Margin="0,10,0,0" ToolTip="Введите фамилию заказчика"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding Name}"
-                                 Height="50" Tag="Введите имя заказчика" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Name}"
+                                 Height="50" Tag="Введите имя заказчика" FontSize="20" Margin="0,10,0,0" ToolTip="Введите имя заказчика"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding Surname}"
-                                 Height="50" Tag="Введите отчество заказчика" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Surname}"
+                                 Height="50" Tag="Введите отчество заказчика" FontSize="20" Margin="0,10,0,0" ToolTip="Введите отчество заказчика"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBox ToolTip="Поле для указания номера заказчика" Tag="(+38)063 321 57 80" Template="{StaticResource UkraineTextPhoneNumber}"
-                                 Width="400" VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding Phone}"
-                                 Height="50" FontSize="20" Margin="0,10,0,0">
+                        <TextBox Tag="(+38)063 321 57 80" Template="{StaticResource UkraineTextPhoneNumber}"
+                                 Width="400" VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Phone}"
+                                 Height="50" FontSize="20" Margin="0,10,0,0" ToolTip="Поле для указания номера заказчика">
                         </TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <ComboBox Width="400" VerticalContentAlignment="Center"
+                        <ComboBox Width="400" VerticalContentAlignment="Center" ToolTip="Введите/укажите товар"
                                   Cursor="Hand" IsEditable="True" ItemsSource="{Binding Goods}"
                                   Height="50" FontSize="20" Margin="0,10,0,0" Text="{Binding ItemName}">
                             <ComboBoxItem IsSelected="True">Введите/укажите товар</ComboBoxItem>
@@ -74,37 +74,37 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding AmountItem}"
-                                 Height="50" Tag="Укажите колличество товара" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding AmountItem}"
+                                 Height="50" Tag="Укажите колличество товара" FontSize="20" Margin="0,10,0,0" ToolTip="Укажите колличество товара"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding Price}"
-                                  Height="50" Tag="Укажите цену товара" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Price}"
+                                  Height="50" Tag="Укажите цену товара" FontSize="20" Margin="0,10,0,0" ToolTip="Укажите цену товара"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding PrimeCost}"
-                                 Height="50" Tag="Укажите себестоимость" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding PrimeCost}"
+                                 Height="50" Tag="Укажите себестоимость" FontSize="20" Margin="0,10,0,0" ToolTip="Укажите себестоимость"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding PaymentWay}"
-                                 Height="50" Tag="Укажите способ оплаты товара" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding PaymentWay}"
+                                 Height="50" Tag="Укажите способ оплаты товара" FontSize="20" Margin="0,10,0,0" ToolTip="Укажите способ оплаты товара"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding DeliverWay}"
-                                 Height="50" Tag="Укажите способ доставки товара" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding DeliverWay}"
+                                 Height="50" Tag="Укажите способ доставки товара" FontSize="20" Margin="0,10,0,0" ToolTip="Укажите способ доставки товара"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding DeliverAdress}"
-                                 Height="50" Tag="Укажите адрес доставки товара" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding DeliverAdress}"
+                                 Height="50" Tag="Укажите адрес доставки товара" FontSize="20" Margin="0,10,0,0" ToolTip="Укажите адрес доставки товара"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <ComboBox Width="400" VerticalContentAlignment="Center"
-                                  Cursor="Hand" ItemsSource="{Binding Statuses}"
+                                  Cursor="Help" ItemsSource="{Binding Statuses}"
                                   Height="50" FontSize="20" Margin="0,10,0,0" Text="{Binding Status}"> 
                             <ComboBoxItem IsSelected="True">Нейтральный</ComboBoxItem>
                             <ComboBoxItem>Обрабатывается</ComboBoxItem>
@@ -115,24 +115,24 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding Spending}"
-                                 Height="50" Tag="Укажите затраты от заказа" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Spending}"
+                                 Height="50" Tag="Укажите затраты от заказа" FontSize="20" Margin="0,10,0,0" ToolTip="Укажите затраты от заказа"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding Income}"
-                                 Height="50" Tag="Укажите прибыль от заказа" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Income}"
+                                 Height="50" Tag="Укажите прибыль от заказа" FontSize="20" Margin="0,10,0,0" ToolTip="Укажите прибыль от заказа"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
-                                 VerticalContentAlignment="Center" Cursor="Hand" Text="{Binding Organization}"
-                                 Height="50" Tag="Укажите организацию" FontSize="20" Margin="0,10,0,0"/>
+                                 VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Organization}"
+                                 Height="50" Tag="Укажите организацию" FontSize="20" Margin="0,10,0,0" ToolTip="Укажите организацию"/>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Margin="0,10,0,0">
                         <Label Content="Комментарий к заказу" FontSize="20" Target="{Binding ElementName=text}"/>
                         <TextBox Name="text" Width="400" VerticalContentAlignment="Top" Text="{Binding Comment}"
-                                 Cursor="Hand" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
-                                 Height="150" FontSize="20" HorizontalAlignment="Left"/>
+                                 Cursor="Help" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"
+                                 Height="150" FontSize="20" HorizontalAlignment="Left" ToolTip="Комментарий к заказу"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200"

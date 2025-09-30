@@ -26,10 +26,10 @@
         
         <ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
             <ToolBar>
-                <Button Content="Создать"></Button>
-                <Button Content="Открыть"></Button>
-                <Button Content="Сохранить"></Button>
-                <Button Content="Сохранить как"></Button>
+                <Button Content="Создать" Cursor="Hand"></Button>
+                <Button Content="Открыть" Cursor="Hand"></Button>
+                <Button Content="Сохранить" Cursor="Hand"></Button>
+                <Button Content="Сохранить как" Cursor="Hand"></Button>
             </ToolBar>
         </ToolBarTray>
         
@@ -79,28 +79,27 @@
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
-            <ComboBox Text="Фильтр" Width="120" Height="50" Background="Snow"
+            <ComboBox Width="auto" Height="50" Background="Snow" ItemsSource="{Binding Filter}"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2" VerticalContentAlignment="Center"
-                      HorizontalContentAlignment="Center" Cursor="Hand">
-                <ComboBoxItem IsSelected="True" Cursor="Hand">Фильтр</ComboBoxItem>
+                    HorizontalContentAlignment="Center" Cursor="Hand" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}">
             </ComboBox>
         </DockPanel>
 
         <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="8" Background="LightGray" Margin="0,60,0,0">
             <DockPanel Grid.Row="0" Margin="5,5,17,5" DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
-                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Tag="поиск..." Width="400"
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Tag="поиск..." Width="400" Cursor="IBeam"
                          Margin="10,0,0,0" Text="{Binding SearchInOrderPageTable, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Width="30" Height="auto" BorderBrush="Black"/>
+                    <Button Width="30" Height="auto" BorderBrush="Black" Cursor="Hand"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="32">
                     <TextBox Width="50" Margin="2" Text="{Binding AllSpendings}" Background="Snow" IsReadOnly="True"
-                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Help" ToolTip="Все растраты"/>
                     <TextBox Width="50" Margin="2" Text="{Binding AllChashFlow}" Background="Snow" IsReadOnly="True"
-                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Help" ToolTip="Весь оборот денег"/>
                     <TextBox Width="50" Margin="2" Text="{Binding AllIncome}" Background="Snow" IsReadOnly="True"
-                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  />
+                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Help" ToolTip="Вся прибыль"/>
                     <ComboBox Width="57" Margin="2" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" Cursor="Hand">
                         <ComboBoxItem IsSelected="True" Cursor="Hand">None</ComboBoxItem>
                         <ComboBoxItem Cursor="Hand">Обрабатывается</ComboBoxItem>
@@ -109,7 +108,7 @@
                     </ComboBox>
                     <Button Width="50" Margin="2" BorderThickness="0" Background="Snow" Cursor="Hand"
                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-                        <Image Source="/Assets/Settings_ico.ico" />
+                        <Image Source="/Assets/Settings_ico.ico" Width="44" Height="24" Stretch="Uniform"/>
                     </Button>
                 </StackPanel>
             </DockPanel>

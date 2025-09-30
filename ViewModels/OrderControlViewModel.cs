@@ -3,9 +3,7 @@ using CRM.Services;
 using CRM.Commands;
 using System.Windows.Input;
 using CRM.Models;
-using System.Windows;
 using System.Collections.ObjectModel;
-using System.Windows.Controls;
 
 namespace CRM.ViewModels
 {
@@ -33,6 +31,7 @@ namespace CRM.ViewModels
             EditingCommand = new RelayCommand(Click => OpenEditingDialog());
             DeleteOrder = new RelayCommand(Click => DeleteOrderFromTableAndDatabase());
             LoadOrdersFromDatabase();
+
         }
         private void LoadOrdersFromDatabase()
         {

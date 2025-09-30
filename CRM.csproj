@@ -11,10 +11,12 @@
   <ItemGroup>
     <None Remove="Assets\Documentation.pdf" />
     <None Remove="logo_ico.ico" />
+	<None Remove="settings_ico.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Assets\logo_ico.ico" />
+	<Resource Include="Assets\settings_ico.ico" />
   </ItemGroup>
 
 	<ItemGroup>
