@@ -95,16 +95,22 @@
                     <Button Width="30" Height="auto" BorderBrush="Black"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="32">
-                    <TextBlock Width="50" Margin="2" Text="{Binding AllSpendings}" Background="Snow"/>
-                    <TextBlock Width="50" Margin="2" Text="{Binding AllChashFlow}" Background="Snow"/>
-                    <TextBlock Width="50" Margin="2" Text="{Binding AllIncome}" Background="Snow"/>
+                    <TextBox Width="50" Margin="2" Text="{Binding AllSpendings}" Background="Snow" IsReadOnly="True"
+                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <TextBox Width="50" Margin="2" Text="{Binding AllChashFlow}" Background="Snow" IsReadOnly="True"
+                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <TextBox Width="50" Margin="2" Text="{Binding AllIncome}" Background="Snow" IsReadOnly="True"
+                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center"  />
                     <ComboBox Width="57" Margin="2" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" Cursor="Hand">
                         <ComboBoxItem IsSelected="True" Cursor="Hand">None</ComboBoxItem>
                         <ComboBoxItem Cursor="Hand">Обрабатывается</ComboBoxItem>
                         <ComboBoxItem Cursor="Hand">Успешный</ComboBoxItem>
                         <ComboBoxItem Cursor="Hand">Отмененный</ComboBoxItem>
                     </ComboBox>
-                    <Button Width="50" Margin="2" BorderThickness="0" Background="Snow" Cursor="Hand" />
+                    <Button Width="50" Margin="2" BorderThickness="0" Background="Snow" Cursor="Hand"
+                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                        <Image Source="/Assets/Settings_ico.ico" />
+                    </Button>
                 </StackPanel>
             </DockPanel>
 

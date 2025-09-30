@@ -22,6 +22,10 @@ namespace CRM.ViewModels
         public ICommand EditingCommand { get; set; }
         public ICommand DeleteOrder {  get; set; }
 
+        public int AllSpendings { get; set; } = 0;
+        public int AllChashFlow { get; set; } = 0;
+        public int AllIncome { get; set; } = 0;
+
         public OrderControlViewModel()
         {   
             Exit = new RelayCommand(Click => System.Environment.Exit(0));
