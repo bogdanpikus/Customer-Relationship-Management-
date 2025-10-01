@@ -33,11 +33,11 @@
             </ToolBar>
         </ToolBarTray>
         
-        <Button Content="Заказы" Grid.Column="0" Grid.Row="1" Background="#00FF2F"
+        <Button Command="{Binding OrderPage}" Content="Заказы" Grid.Column="0" Grid.Row="1" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" Cursor="Hand"
                 BorderBrush="Black" BorderThickness="1">
         </Button>
-        <Button Content="Аналитика" Grid.Column="0" Grid.Row="2" Background="#00FF2F"
+        <Button Command="{Binding AnalizePage}" Content="Аналитика" Grid.Column="0" Grid.Row="2" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" Cursor="Hand"
                 BorderBrush="Black" BorderThickness="1">
         </Button>
@@ -153,6 +153,6 @@
             </ScrollViewer>
         </DockPanel>
         
-        <ContentControl Content="{Binding CurrentView}" Grid.Column="1"/>
+        <ContentControl Visibility="{Binding ControlsVisiability, Converter={StaticResource BooleanVisiabilityConverter}}" Content="{Binding CurrentView}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="8"/>
     </Grid>
 </UserControl>

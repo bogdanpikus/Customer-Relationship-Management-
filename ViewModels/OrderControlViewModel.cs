@@ -13,12 +13,15 @@ namespace CRM.ViewModels
 
         public ObservableCollection<Order> Orders { get; } = new ObservableCollection<Order>();
         public object? CurrentView { get; set; }
+        public bool ControlsVisiability { get; set; }
         public bool IsSelected { get; set; }
 
         public ICommand Exit {  get; set; }
         public ICommand AddOrderCommand { get; set; }
         public ICommand EditingCommand { get; set; }
         public ICommand DeleteOrder {  get; set; }
+        public ICommand OrderPage {  get; set; }
+        public ICommand AnalizePage { get ; set; }
 
         public int AllSpendings { get; set; } = 0;
         public int AllChashFlow { get; set; } = 0;
@@ -30,8 +33,9 @@ namespace CRM.ViewModels
             AddOrderCommand = new RelayCommand(Click => OpenOrderDialog());
             EditingCommand = new RelayCommand(Click => OpenEditingDialog());
             DeleteOrder = new RelayCommand(Click => DeleteOrderFromTableAndDatabase());
+            OrderPage = new RelayCommand(Click => OpenOrderPage());
+            AnalizePage = new RelayCommand(Click => OpenAnalizePage());
             LoadOrdersFromDatabase();
-
         }
         private void LoadOrdersFromDatabase()
         {
@@ -53,5 +57,18 @@ namespace CRM.ViewModels
         {
             _db.DeleteOrderInDatabase(Orders);
         }
+        private void OpenOrderPage()
+        {
+            ControlsVisiability = false;
+            OnPropertyChange(nameof(ControlsVisiability));
+        }
+        private void OpenAnalizePage()
+        {
+            CurrentView = new AnalizeViewModel();
+            ControlsVisiability = true;
+            OnPropertyChange(nameof(ControlsVisiability));
+            OnPropertyChange(nameof(CurrentView));
+        }
+
     }
 }

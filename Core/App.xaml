@@ -22,6 +22,9 @@
             <DataTemplate DataType="{x:Type vm:OrderControlViewModel}">
                 <views:OrderControl />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:AnalizeViewModel}">
+                <views:AnalizeControl />
+            </DataTemplate>
             <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
                 <Setter Property="Template" Value="{StaticResource DatePickerTemplate}" />
             </Style>
