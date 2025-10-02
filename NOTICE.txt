@@ -1,3 +1,11 @@
 This project includes DuckDB, licensed under the MIT License.
 Copyright (c) 2018-2025 DuckDB Authors
 See third_party/DuckDB/LICENSE for details.
+
+This project includes OxyPlot, licensed under the MIT License.
+Copyright (c) 2014 OxyPlot contributors
+See third_party/OxyPlot/LICENSE for details.
+
+This project includes Microsoft.Extensions.DependencyInjection, licensed under the MIT License.
+Copyright (c) .NET Foundation and contributors
+See third_party/Microsoft.Extensions.DependencyInjection/LICENSE for details.
