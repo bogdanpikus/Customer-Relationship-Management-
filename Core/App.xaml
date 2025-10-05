@@ -25,6 +25,21 @@
             <DataTemplate DataType="{x:Type vm:AnalizeViewModel}">
                 <views:AnalizeControl />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ContactsViewModel}">
+                <views:ContactsControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:StorageViewModel}">
+                <views:StorageControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:DocumentsViewModel}">
+                <views:DocumentsControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ExportImportViewModel}">
+                <views:ExportImportControl />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
+                <views:SettingsControl />
+            </DataTemplate>
             <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
                 <Setter Property="Template" Value="{StaticResource DatePickerTemplate}" />
             </Style>

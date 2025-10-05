@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CRM.Views.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="890">
     <Grid Background="#969696" ShowGridLines="False">
 
         <Grid.ColumnDefinitions>
@@ -41,23 +41,23 @@
                 Foreground="Black" FontWeight="Medium" FontSize="20" Cursor="Hand"
                 BorderBrush="Black" BorderThickness="1">
         </Button>
-        <Button Content="Контакты" Grid.Column="0" Grid.Row="3" Background="#00FF2F"
+        <Button Command="{Binding Contacts}" Content="Контакты" Grid.Column="0" Grid.Row="3" Background="#00FF2F"
                 Foreground="Black" BorderBrush="Black" BorderThickness="1"
                 FontSize="20" FontWeight="Medium" Cursor="Hand">
         </Button>
-        <Button Content="Склад" Grid.Column="0" Grid.Row="4" Background="#00FF2F"
+        <Button Command="{Binding Storage}" Content="Склад" Grid.Column="0" Grid.Row="4" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1" Cursor="Hand">
         </Button>
-        <Button Content="Документы" Grid.Column="0" Grid.Row="5" Background="#00FF2F"
+        <Button Command="{Binding Documents}" Content="Документы" Grid.Column="0" Grid.Row="5" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1" Cursor="Hand">
         </Button>
-        <Button Content="Эспорт/Импорт"  Grid.Column="0" Grid.Row="6" Background="#00FF2F"
+        <Button Command="{Binding ExportImport}" Content="Эспорт/Импорт"  Grid.Column="0" Grid.Row="6" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1" Cursor="Hand">
         </Button>
-        <Button Content="Наcтройки" Grid.Column="0" Grid.Row="7" Background="#00FF2F"
+        <Button Command="{Binding Settings}" Content="Наcтройки" Grid.Column="0" Grid.Row="7" Background="#00FF2F"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1" Cursor="Hand">
         </Button>
