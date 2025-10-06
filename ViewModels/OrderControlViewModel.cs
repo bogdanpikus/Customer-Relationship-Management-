@@ -29,9 +29,45 @@ namespace CRM.ViewModels
         public ICommand Settings { get; set; }
         public ICommand Exit { get; set; }
 
-        public int AllSpendings { get; set; } = 0;
-        public int AllChashFlow { get; set; } = 0;
-        public int AllIncome { get; set; } = 0;
+        private decimal? _allSpendings;
+        public decimal? AllSpendings
+        {
+            get => _allSpendings;
+            set
+            {
+                if(_allSpendings != value)
+                {
+                    _allSpendings = value;
+                    OnPropertyChange(nameof(AllSpendings));
+                }
+            }
+        }
+        private decimal? _allChachFlow;
+        public decimal? AllChashFlow
+        {
+            get => _allChachFlow;
+            set
+            {
+                if(_allChachFlow != value)
+                {
+                    _allChachFlow = value;
+                    OnPropertyChange(nameof(AllChashFlow));
+                }
+            }
+        }
+        private decimal? _allIncome;
+        public decimal? AllIncome
+        {
+            get => _allIncome;
+            set
+            {
+                if(_allIncome != value)
+                {
+                    _allIncome = value;
+                    OnPropertyChange(nameof(AllIncome));
+                }
+            }
+        }
 
         public OrderControlViewModel()
         {   
@@ -49,13 +85,27 @@ namespace CRM.ViewModels
             Settings = new RelayCommand(Click => OpenSettingsPage());
             LoadOrdersFromDatabase();
         }
+        private void Sum()
+        {
+            AllIncome = Orders.Sum(o => o.Income);
+            AllChashFlow = Orders.Sum(o => o.Price);
+            AllSpendings = Orders.Sum(o => o.Spending);
+        }
         private void LoadOrdersFromDatabase()
         {
-             _db.ExtractOrdersFromDatabase(Orders);
+            _db.ExtractOrdersFromDatabase(Orders);
+            var count = Orders.Count;
+            foreach(var order in Orders)
+            {
+                order.PersonalNumber = count--;
+            }
+
+            Sum();
         }
         private void OpenOrderDialog()
         {
             DialogService.Instance.ShowDialog(new OrderModalViewModel(Orders));
+            Sum();
         }
         private void OpenEditingDialog()
         {
@@ -64,10 +114,19 @@ namespace CRM.ViewModels
             {
                 DialogService.Instance.ShowDialog(new EditingViewModal(order));
             }
+
+            Sum();
         }
         private void DeleteOrderFromTableAndDatabase()
         {
             _db.DeleteOrderInDatabase(Orders);
+            var count = Orders.Count; // count of all orders
+            foreach (var order in Orders)
+            {
+                order.PersonalNumber = count--;
+            }
+
+            Sum();
         }
         private void OpenOrderPage()
         {

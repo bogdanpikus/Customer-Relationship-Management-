@@ -28,6 +28,20 @@ namespace CRM.Models
         public string? Organization { get; set; }
         public string? Comment { get; set; }
         */
+        private int _personalNumber;
+        public int PersonalNumber
+        {
+            get => _personalNumber;
+            set
+            {
+                if(_personalNumber != value)
+                {
+                    _personalNumber = value;
+                    OnPropertyChange(nameof(PersonalNumber));
+                }
+            }
+        }
+
         public int Id { get; set; }
         public bool IsSelected { get; set; }
         private DateTime _orderDate;

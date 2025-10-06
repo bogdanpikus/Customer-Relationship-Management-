@@ -2,12 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
-using System.IO.Packaging;
-using System.Net;
-using System.Security.Cryptography;
-using System.Windows;
 using DuckDB.NET.Data;
-using DuckDB.NET.Native;
 
 namespace CRM.Models
 {
@@ -110,14 +105,6 @@ namespace CRM.Models
                     Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Organization, Comment FROM orders";
                 using var reader = cmd.ExecuteReader();
 
-                /*
-                 if (!reader.HasRows)
-                 {
-                    return;
-                 } 
-                */
-
-                // TODO: как-то вписать имя/фам/отч/тел из таблиццы customer
                 while (reader.Read())
                 {
                     var order = new Order

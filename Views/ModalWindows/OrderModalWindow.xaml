@@ -21,7 +21,7 @@
 
         <ToolBarTray Grid.Row="0">
             <ToolBar Cursor="Hand">
-                <Button Height="50" Width="50" FontSize="30" Content="+"/>
+                <Button Command="{Binding TestOrder}" Height="50" Width="50" FontSize="30" Content="+"/>
             </ToolBar>
         </ToolBarTray>
 

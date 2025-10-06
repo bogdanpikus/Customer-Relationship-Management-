@@ -6,6 +6,8 @@ using Microsoft.VisualBasic;
 using System.Windows;
 using CRM.Views.ModalControls;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+using DuckDB.NET.Native;
 
 namespace CRM.ViewModels
 {
@@ -13,6 +15,7 @@ namespace CRM.ViewModels
     {
         private readonly DuckDatabase _db = DatabaseFactory.Instance;
         public ICommand Confirm {  get; }
+        public ICommand TestOrder { get; set; }
 
         public DateTime Date { get; set; } = DateTime.Now;
         public string? Articul {  get; set; }
@@ -37,11 +40,14 @@ namespace CRM.ViewModels
         public OrderModalViewModel(ObservableCollection<Order> orders)
         {
             Confirm = new RelayCommand(Click => ConfirmOrder(orders));
+            TestOrder = new RelayCommand(Click => AddTestOrderMackup(orders));
         }
      
         private void ConfirmOrder(ObservableCollection<Order> orders)
         {
             // TODO: где-то тут нужна проверка на типизацию и валидацию ввода данных
+
+            int count = orders.Count;
 
             var customer = new Customer
             {
@@ -55,6 +61,7 @@ namespace CRM.ViewModels
 
             var order = new Order
             {
+                PersonalNumber = count + 1,
                 IsSelected = false,
                 OrderDate = Date,
                 Articul = Articul,
@@ -80,6 +87,36 @@ namespace CRM.ViewModels
             _db.InsertOrder(order);
             orders.Insert(0,order);
             DialogService.Instance.CloseDialog();
+        }
+        private void AddTestOrderMackup(ObservableCollection<Order> orders)
+        {
+            int count = orders.Count;
+            var order = new Order
+            {
+                PersonalNumber = count + 1,
+                IsSelected = false,
+                OrderDate = DateAndTime.Now,
+                Articul = "1001",
+                OrderID = "5001",
+                Name = "Bogdan",
+                SecondName = "Pikus",
+                Surname = "Vladimirovic",
+                Phone = "0633215780",
+                Item = "Яблоко",
+                Amount = 1,
+                Price = 100,
+                PrimeCost = 0,
+                PaymentWay = "PrivatBank",
+                DelivarWay = "Nova Poshta",
+                DeliverAdress = "Dnipro",
+                Spending = 0,
+                Income = 100,
+                Organization = "Valley",
+                Comment = "-"
+            };
+
+            _db.InsertOrder(order);
+            orders.Insert(0,order);
         }
     }
 }
