@@ -1,24 +1,37 @@
 ﻿using System;
+using CRM.Models;
 using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 
 namespace CRM.ViewModels
 {
     public class AnalizeViewModel
     {
-        public PlotModel MyPlotModel { get; set; }
+        public PlotModel WeekPlotModel { get; set; } 
+
         public AnalizeViewModel()
         {
-            MyPlotModel = new PlotModel { Title = "Test" };
-            MyPlotModel.Series.Add(new LineSeries
+            WeekPlotModel = new PlotModel { Title = "Заказы по деням за неделю" };
+
+            var yAxis = new LinearAxis
             {
-                ItemsSource = new List<DataPoint>
+                Position = AxisPosition.Left,
+                Minimum = 0,
+                Maximum = 10,
+                MajorStep = 1
+            };
+            var xAxis = new LinearAxis
             {
-                new DataPoint(0,0),
-                new DataPoint(1,2),
-                new DataPoint(2,4)
-            }
-            });
+                Position = AxisPosition.Bottom,
+                Minimum = 0,
+                Maximum = 7,
+                Title = "Дни недели",
+                MajorStep = 1
+            };
+
+            WeekPlotModel.Axes.Add(yAxis);
+            WeekPlotModel.Axes.Add(xAxis);
         }
     }
 }

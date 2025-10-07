@@ -14,16 +14,17 @@
             <RowDefinition Height="300"/>
             <RowDefinition Height="300"/>
         </Grid.RowDefinitions>
-        <oxp:PlotView Model="{Binding MyPlotModel}" Width="1000" Grid.Row="0"
-                      HorizontalAlignment="Left" Height="300" VerticalAlignment="Top"/>
+        <oxp:PlotView Model="{Binding WeekPlotModel}" Width="980" Grid.Row="0"
+                      HorizontalAlignment="Left" Height="300" VerticalAlignment="Top"
+                      IsEnabled="False"/>
         <oxp:PlotView Width="423" HorizontalAlignment="Right" Background="Aquamarine" Grid.Row="0" />
         <oxp:PlotView Width="1000" Height="300" VerticalAlignment="Bottom" Grid.Row="1"
                       HorizontalAlignment="Left" Background="BlueViolet"/>
         <oxp:PlotView Width="423" HorizontalAlignment="Right" Background="DarkMagenta" Grid.Row="1" />
-        <oxp:PlotView Grid.Row="2" Width="468" Height="200" Background="DarkKhaki" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <oxp:PlotView Grid.Row="2" Width="468" Height="100" Background="Pink" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-        <oxp:PlotView Grid.Row="2" Width="468" Background="Chocolate" HorizontalAlignment="Center"/>
-        <oxp:PlotView Grid.Row="2" Width="468" Background="Chartreuse" HorizontalAlignment="Right"/>
+        <oxp:PlotView Grid.Row="2" Width="469" Height="180" Background="DarkKhaki" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <oxp:PlotView Grid.Row="2" Width="469" Height="120" Background="Pink" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+        <oxp:PlotView Grid.Row="2" Width="469" Background="Chocolate" HorizontalAlignment="Center"/>
+        <oxp:PlotView Grid.Row="2" Width="469" Background="Chartreuse" HorizontalAlignment="Right"/>
     </Grid>
     </ScrollViewer>
 </UserControl>
