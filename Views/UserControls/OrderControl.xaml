@@ -129,7 +129,7 @@
                             </DataGridCheckBoxColumn.Header>
                         </DataGridCheckBoxColumn>
                         <DataGridTextColumn Header="№" IsReadOnly="True" Binding="{Binding PersonalNumber}"/>
-                        <DataGridTextColumn Header="Дата" IsReadOnly="True" Binding="{Binding OrderDate}"/>
+                        <DataGridTextColumn Header="Дата" IsReadOnly="True" Binding="{Binding OrderDate, StringFormat=\{0:dd.MM.yy\}}"/>
                         <DataGridTextColumn Header="Артикул товара" IsReadOnly="True" Binding="{Binding Articul}"/>
                         <DataGridTextColumn Header="Идентификационный номер заказ" IsReadOnly="True" Binding="{Binding OrderID}"/>
                         <DataGridTextColumn Header="Фамилия" IsReadOnly="True" Binding="{Binding SecondName}"/>

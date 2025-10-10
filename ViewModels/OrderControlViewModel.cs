@@ -4,6 +4,7 @@ using CRM.Commands;
 using System.Windows.Input;
 using CRM.Models;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace CRM.ViewModels
 {
@@ -94,6 +95,8 @@ namespace CRM.ViewModels
         private void LoadOrdersFromDatabase()
         {
             _db.ExtractOrdersFromDatabase(Orders);
+            
+            // считаються номера заказов
             var count = Orders.Count;
             foreach(var order in Orders)
             {
@@ -109,7 +112,7 @@ namespace CRM.ViewModels
         }
         private void OpenEditingDialog()
         {
-            var selected = Orders.Where(order => order.IsSelected).ToList();
+            var selected = Orders.Where(order => order.IsSelected);
             foreach (var order in selected)
             {
                 DialogService.Instance.ShowDialog(new EditingViewModal(order));

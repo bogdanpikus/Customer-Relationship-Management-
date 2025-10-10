@@ -18,17 +18,15 @@ namespace CRM.Models
                 }
             }
         }
-
         public int Id { get; set; }
         public bool IsSelected { get; set; }
-        private DateTime _orderDate;
-        public DateTime OrderDate
+        private DateTime? _orderDate;
+        public DateTime? OrderDate
         {
             get => _orderDate;
             set
             {
-                if (_orderDate != value) 
-                {
+                if (_orderDate != value) {
                 _orderDate = value;
                 OnPropertyChange(nameof(OrderDate));
                 }

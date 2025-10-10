@@ -9,13 +9,13 @@ using System.Windows.Input;
 
 namespace CRM.ViewModels
 {
-    public class EditingViewModal
+    public class EditingViewModal : NotifyPropertyChange
     {
         private readonly Order _order;
         private readonly DuckDatabase _duck = DatabaseFactory.Instance;
         public ICommand Confirm { get; }
 
-        public DateTime? Date { get; set; }
+        public DateTime? EditDate {  get; set; }
         public string? Articul { get; set; }
         public string? OrderID { get; set; }
         public string? Surname { get; set; }
@@ -32,13 +32,14 @@ namespace CRM.ViewModels
         public string? Status { get; set; }
         public decimal? Spending { get; set; }
         public decimal? Income { get; set; }
+        public string? Organization {  get; set; }
         public string? Comment { get; set; }
 
         public EditingViewModal(Order order)
         {
             _order = order;
 
-            Date = order.OrderDate;
+            EditDate = order.OrderDate;
             Articul = order.Articul;
             OrderID = order.OrderID;
             Surname = order.Surname;
@@ -55,6 +56,7 @@ namespace CRM.ViewModels
             Status = order.Status;
             Spending = order.Spending;
             Income = order.Income;
+            Organization = order.Organization;
             Comment = order.Comment;
 
             Confirm = new RelayCommand(Click => ConfirmEdit());
@@ -62,7 +64,7 @@ namespace CRM.ViewModels
 
         private void ConfirmEdit()
         {
-            _order.OrderDate = Date.Value;
+            _order.OrderDate = EditDate;
             _order.Articul = Articul;
             _order.OrderID = OrderID;
             _order.Surname = Surname;
@@ -79,6 +81,7 @@ namespace CRM.ViewModels
             _order.Status = Status;
             _order.Spending = Spending;
             _order.Income = Income;
+            _order.Organization = Organization;
             _order.Comment = Comment;
 
             if (_duck.UpdateOrder(_order)) // true = успешно
