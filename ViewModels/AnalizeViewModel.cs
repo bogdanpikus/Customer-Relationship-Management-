@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
 using CRM.Commands;
+using CRM.Models;
 using CRM.Services;
 using OxyPlot;
 using OxyPlot.Axes;
@@ -10,6 +13,8 @@ namespace CRM.ViewModels
 {
     public class AnalizeViewModel: NotifyPropertyChange
     {
+        private readonly DuckDatabase _db = DatabaseFactory.Instance;
+        public ObservableCollection<OrdersPerDay> ordersPerDay { get; } = new(); // принимает вытягиваемые данные из базы данных в модель дата | колличество
         public PlotModel WeekPlotModel { get; set; } 
         public ICommand PreviousWeek {  get; set; }
         public ICommand NextWeek { get; set; }
@@ -48,16 +53,28 @@ namespace CRM.ViewModels
             NextWeek = new RelayCommand(Click => GoToNextWeek());
 
             WeekPlotModel = new PlotModel();
+            ExtractDataFromDatabase();
             WeekPlotModelGraff();
         }
-
+        private void ExtractDataFromDatabase()
+        {
+            _db.SelectDataToWeekGraff(ordersPerDay);
+        }
         private void WeekPlotModelGraff() //самый верхний левый графф
         {
             //WeekPlotModel.Series.Add(new FunctionSeries(Math.Cos, 0, 10, 0.1, "cos(x)")); // пример создания графика
             WeekPlotModel.Series.Add(new LineSeries
             {
                 Title = "Линия",
-                Color = OxyPlot.OxyColors.Black
+                Color = OxyPlot.OxyColors.Black,
+                StrokeThickness = 2, 
+                Points =
+                {
+                    // функция if, смотрим сколько за определенную дату заказов и подставляем значения (сколько заказов за дату, за какое число)
+                    new DataPoint(0,0),
+                    new DataPoint(1,1),
+                    new DataPoint(2,3),
+                }
             });
 
             var yAxis = new LinearAxis

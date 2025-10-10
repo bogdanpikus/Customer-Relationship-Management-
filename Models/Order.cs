@@ -5,29 +5,6 @@ namespace CRM.Models
 {
     public class Order : NotifyPropertyChange
     {
-        /*
-        public bool IsSelected {  get; set; }
-        public DateTime OrderDate {  get; set; }
-        public string? Articul { get; set; }
-        public string? OrderID { get; set; }   
-        public Customer Customer { get; set; }
-        public string? Name { get; set; }
-        public string? SecondName { get; set; }
-        public string? Surname { get; set; }
-        public string? Phone { get; set; }
-        public string? Item { get; set; }
-        public int Amount { get; set; }
-        public decimal? Price { get; set; } 
-        public decimal? PrimeCost { get; set; }
-        public string? PaymentWay { get; set; }
-        public string? DelivarWay { get; set; }
-        public string? DeliverAdress { get; set; }
-        public string? Status { get; set; }
-        public decimal? Spending { get; set; }
-        public decimal? Income { get; set; }
-        public string? Organization { get; set; }
-        public string? Comment { get; set; }
-        */
         private int _personalNumber;
         public int PersonalNumber
         {

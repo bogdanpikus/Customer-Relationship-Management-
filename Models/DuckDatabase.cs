@@ -153,7 +153,7 @@ namespace CRM.Models
             {
                 foreach (var order in selectedOrder)
                 {
-                    cmd.CommandText = "DELETE FROM orders WHERE Id = ?"; //TODO: надо id, который уникальный PRIMARY KEY и не может поменятся
+                    cmd.CommandText = "DELETE FROM orders WHERE Id = ?";
                     cmd.Parameters.Clear();
                     cmd.Parameters.Add(new DuckDBParameter { Value = order.Id });
                     cmd.ExecuteNonQuery();
@@ -165,7 +165,6 @@ namespace CRM.Models
 
         public bool UpdateOrder(Order order) //Возвращает true когда выполняется правильно и false, когда что-то идет не так
         {
-            // TODO: загрузка изменений в базу
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = @"UPDATE orders SET OrderDate = ?, Articul = ?, OrderID = ?, SecondName = ?, Name = ?,
@@ -196,6 +195,24 @@ namespace CRM.Models
                 cmd.Parameters.Add(new DuckDBParameter { Value = order.Id });
 
                 return cmd.ExecuteNonQuery()>0;
+            }
+        }
+        public void SelectDataToWeekGraff(ObservableCollection<OrdersPerDay> ordersPerDay)
+        {
+            using(var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"SELECT OrderDate, COUNT(*) AS TotalOrdersForDay FROM orders GROUP BY OrderDate ORDER BY OrderDate";
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var ordersPerDayItem = new OrdersPerDay
+                    {
+                        Date = reader.GetDateTime(0),
+                        Count = reader.GetInt32(1)
+                    };
+
+                    ordersPerDay.Add(ordersPerDayItem);
+                }
             }
         }
     }
