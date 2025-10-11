@@ -197,11 +197,13 @@ namespace CRM.Models
                 return cmd.ExecuteNonQuery()>0;
             }
         }
-        public void SelectDataToWeekGraff(ObservableCollection<OrdersPerDay> ordersPerDay)
+        public void SelectDataToWeekGraff(ObservableCollection<OrdersPerDay> ordersPerDay, DateTime startOfRangeDate, DateTime endOfRangeDate)
         {
             using(var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = @"SELECT OrderDate, COUNT(*) AS TotalOrdersForDay FROM orders GROUP BY OrderDate ORDER BY OrderDate";
+                cmd.CommandText = @"SELECT OrderDate, COUNT(*) AS TotalOrdersForDay FROM orders WHERE OrderDate BETWEEN ? AND ? GROUP BY OrderDate ORDER BY OrderDate";
+                cmd.Parameters.Add(new DuckDBParameter { Value = startOfRangeDate });
+                cmd.Parameters.Add(new DuckDBParameter { Value = endOfRangeDate });
                 using var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Ink;
 using System.Windows.Input;
 using CRM.Commands;
 using CRM.Models;
@@ -8,14 +9,15 @@ using CRM.Services;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using OxyPlot.Wpf;
 
 namespace CRM.ViewModels
 {
     public class AnalizeViewModel: NotifyPropertyChange
     {
         private readonly DuckDatabase _db = DatabaseFactory.Instance;
-        public ObservableCollection<OrdersPerDay> ordersPerDay { get; } = new(); // принимает вытягиваемые данные из базы данных в модель дата | колличество
-        public PlotModel WeekPlotModel { get; set; } 
+        public ObservableCollection<OrdersPerDay> ordersPerDay { get; } = new(); // принимает вытягиваемые данные из базы данных в модель (дата | колличество заказов)
+        public PlotModel WeekPlotModel { get; set; }
         public ICommand PreviousWeek {  get; set; }
         public ICommand NextWeek { get; set; }
 
@@ -58,24 +60,27 @@ namespace CRM.ViewModels
         }
         private void ExtractDataFromDatabase()
         {
-            _db.SelectDataToWeekGraff(ordersPerDay);
+            _db.SelectDataToWeekGraff(ordersPerDay, CenterOfWeek.AddDays(-3), CenterOfWeek.AddDays(3)); // формирование данных типо: (дата | колличество заказов)
         }
-        private void WeekPlotModelGraff() //самый верхний левый графф
+        private void WeekPlotModelGraff()
         {
-            //WeekPlotModel.Series.Add(new FunctionSeries(Math.Cos, 0, 10, 0.1, "cos(x)")); // пример создания графика
-            WeekPlotModel.Series.Add(new LineSeries
+            WeekPlotModel.Series.Clear();
+
+            var lineSeries = new LineSeries
             {
                 Title = "Линия",
-                Color = OxyPlot.OxyColors.Black,
-                StrokeThickness = 2, 
-                Points =
-                {
-                    // функция if, смотрим сколько за определенную дату заказов и подставляем значения (сколько заказов за дату, за какое число)
-                    new DataPoint(0,0),
-                    new DataPoint(1,1),
-                    new DataPoint(2,3),
-                }
-            });
+                MarkerType = MarkerType.Circle,
+                Color = OxyPlot.OxyColors.BlueViolet,
+                LineStyle = LineStyle.Solid,
+                StrokeThickness = 2,
+                TrackerFormatString = "X = {2:0}, Y = {4:0}"
+            };
+
+            foreach(var order in ordersPerDay)
+            {
+                // MessageBox.Show($"{order.Date.ToShortDateString()} — {order.Count}");
+                lineSeries.Points.Add(new DataPoint((double)order.Date.DayOfWeek, order.Count));
+            }
 
             var yAxis = new LinearAxis
             {
@@ -112,6 +117,7 @@ namespace CRM.ViewModels
             UpdateTitle();
             WeekPlotModel.Axes.Add(yAxis);
             WeekPlotModel.Axes.Add(xAxis);
+            WeekPlotModel.Series.Add(lineSeries);
         }
         private void UpdateTitle() // обновления UI Plot Title при переключении +1 -1 от сегодняшнего дня
         {
