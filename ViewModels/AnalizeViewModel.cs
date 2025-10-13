@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows;
-using System.Windows.Ink;
 using System.Windows.Input;
 using CRM.Commands;
 using CRM.Models;
@@ -9,7 +9,6 @@ using CRM.Services;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using OxyPlot.Wpf;
 
 namespace CRM.ViewModels
 {
@@ -20,6 +19,8 @@ namespace CRM.ViewModels
         public PlotModel WeekPlotModel { get; set; }
         public ICommand PreviousWeek {  get; set; }
         public ICommand NextWeek { get; set; }
+        public ICommand TodayWeekGraff { get; set; }
+        public ICommand ReloadWeekGraff { get; set; }
 
 
         private int _yAxisHeight = 5; // изначально высота оси Y = 5 с шагом 1
@@ -53,34 +54,39 @@ namespace CRM.ViewModels
         {
             PreviousWeek = new RelayCommand(Click => GoToPreviousWeek());
             NextWeek = new RelayCommand(Click => GoToNextWeek());
+            TodayWeekGraff = new RelayCommand(Click => BackToTodayWeekGraff());
+            ReloadWeekGraff = new RelayCommand(Click => ReloadGraffWeek());
 
             WeekPlotModel = new PlotModel();
             ExtractDataFromDatabase();
             WeekPlotModelGraff();
         }
+
         private void ExtractDataFromDatabase()
         {
-            _db.SelectDataToWeekGraff(ordersPerDay, CenterOfWeek.AddDays(-3), CenterOfWeek.AddDays(3)); // формирование данных типо: (дата | колличество заказов)
+            ordersPerDay.Clear();
+            _db.SelectDataToWeekGraff(ordersPerDay, CenterOfWeek.AddDays(-3), CenterOfWeek.AddDays(3)); // формирование данных типо: (дата | колличество заказов), в диапазоне []
         }
         private void WeekPlotModelGraff()
         {
             WeekPlotModel.Series.Clear();
+            int maxOrdersValue = ordersPerDay.Max(x => x.Count);
+            if (YAxisHeight < maxOrdersValue)
+            {
+                YAxisHeight = maxOrdersValue + 1;
+            }
 
             var lineSeries = new LineSeries
             {
                 Title = "Линия",
                 MarkerType = MarkerType.Circle,
-                Color = OxyPlot.OxyColors.BlueViolet,
+                MarkerSize = 5,
+                MarkerFill = OxyPlot.OxyColors.IndianRed,
+                Color = OxyPlot.OxyColors.Black,
                 LineStyle = LineStyle.Solid,
                 StrokeThickness = 2,
                 TrackerFormatString = "X = {2:0}, Y = {4:0}"
             };
-
-            foreach(var order in ordersPerDay)
-            {
-                // MessageBox.Show($"{order.Date.ToShortDateString()} — {order.Count}");
-                lineSeries.Points.Add(new DataPoint((double)order.Date.DayOfWeek, order.Count));
-            }
 
             var yAxis = new LinearAxis
             {
@@ -115,9 +121,19 @@ namespace CRM.ViewModels
             };
 
             UpdateTitle();
+            CalculateWeekGraffPosition(lineSeries);
             WeekPlotModel.Axes.Add(yAxis);
             WeekPlotModel.Axes.Add(xAxis);
             WeekPlotModel.Series.Add(lineSeries);
+        }
+        private void CalculateWeekGraffPosition(LineSeries lineSeries)
+        {
+            foreach (var order in ordersPerDay)
+            {
+                int x = (int)((order.Date - CenterOfWeek.AddDays(-3)).TotalDays + 1);
+                double y = order.Count;
+                lineSeries.Points.Add(new DataPoint(x + 1, y));
+            }
         }
         private void UpdateTitle() // обновления UI Plot Title при переключении +1 -1 от сегодняшнего дня
         {
@@ -129,12 +145,29 @@ namespace CRM.ViewModels
         private void GoToPreviousWeek()
         {
             CenterOfWeek = CenterOfWeek.AddDays(-1);
-            UpdateTitle();
+            ExtractDataFromDatabase(); // каждый раз должен? вытягивает свой диапазон [дат]
+            WeekPlotModelGraff(); //перерисовка графика
+            UpdateTitle(); // обновляем title
         }
         private void GoToNextWeek()
         {
             CenterOfWeek = CenterOfWeek.AddDays(1);
+            ExtractDataFromDatabase();
+            WeekPlotModelGraff();
             UpdateTitle();
+        }
+        private void BackToTodayWeekGraff()
+        {
+            CenterOfWeek = DateTime.Now;
+            ExtractDataFromDatabase();
+            WeekPlotModelGraff();
+            UpdateTitle();
+        }
+        private void ReloadGraffWeek()
+        {
+            ExtractDataFromDatabase();
+            WeekPlotModelGraff();
+            WeekPlotModel.InvalidatePlot(true);
         }
     }
 }

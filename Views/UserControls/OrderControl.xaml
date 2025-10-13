@@ -113,9 +113,9 @@
                 </StackPanel>
             </DockPanel>
 
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Background="Transparent" Width="auto" CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
-                      VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" ColumnWidth="auto"
+                          VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" ColumnWidth="auto"
                           FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
                           GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
                           RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"

@@ -22,15 +22,23 @@
             <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
                 <Button Command="{Binding PreviousWeek}" Content="&lt;" FontSize="30" Width="50" Height="50"
                         HorizontalAlignment="Left" VerticalAlignment="Top" Background="WhiteSmoke" 
-                        BorderBrush="WhiteSmoke" FontWeight="Light" ToolTip="Previous day"/>
+                        BorderBrush="WhiteSmoke" FontWeight="Light" ToolTip="Previous day" Cursor="Hand"/>
                 <oxp:PlotView Model="{Binding WeekPlotModel}" Width="980"
                               HorizontalAlignment="Left" Height="300" VerticalAlignment="Top"
-                              IsEnabled="False" Background="WhiteSmoke" />
+                              IsEnabled="False" Background="WhiteSmoke" ToolTip="Колличество продаж по дню" />
                 <Button Command="{Binding NextWeek}" Content="&gt;" FontSize="30" Width="50" Height="50"
                         HorizontalAlignment="Left" VerticalAlignment="Top" Background="WhiteSmoke" 
-                        BorderBrush="WhiteSmoke" FontWeight="Light" ToolTip="Next day"/>
+                        BorderBrush="WhiteSmoke" FontWeight="Light" ToolTip="Next day" Cursor="Hand"/>
                 <oxp:PlotView Width="427" HorizontalAlignment="Right" Background="Aquamarine" Grid.Row="0" />
             </StackPanel>
+
+            <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Width="auto" HorizontalAlignment="Right">
+                <Button Command="{Binding TodayWeekGraff}" Width="100" Height="30" Background="WhiteSmoke" Content="Сегодня" VerticalAlignment="Top" 
+                        Margin="8" FontSize="18" BorderThickness="1" Cursor="Hand"/>
+                <Button Command="{Binding ReloadWeekGraff}" Width="100" Height="30" Background="WhiteSmoke" Content="Обновить" VerticalAlignment="Top" 
+                        Margin="8" FontSize="18" BorderThickness="1" Cursor="Hand"/>
+            </StackPanel>
+
             <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal">
                 <oxp:PlotView Width="1080" Height="300" VerticalAlignment="Bottom"
                               HorizontalAlignment="Left" Background="BlueViolet"/>
