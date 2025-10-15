@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using DuckDB.NET.Data;
 
@@ -97,8 +98,9 @@ namespace CRM.Models
             }
         }
 
-        public void ExtractOrdersFromDatabase(ObservableCollection<Order> Orders) //вытягивания заказов из базы
+        public void ExtractOrdersFromDatabase(ObservableCollection<Order> Orders) 
         {
+            // REFUCTOR: долго Datagrid отображает ObservableCollection<Order> Orders
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = @"SELECT Id, OrderDate, Articul, OrderID, SecondName, Name, Surname, Phone, Item, Amount, Price,

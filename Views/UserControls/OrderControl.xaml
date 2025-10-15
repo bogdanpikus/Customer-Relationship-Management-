@@ -113,44 +113,45 @@
                 </StackPanel>
             </DockPanel>
 
-            <ScrollViewer Background="Transparent" Width="auto" CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
-                          VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" ColumnWidth="auto"
-                          FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
-                          GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
-                          RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
-                          EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
-                          SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Hand" >
 
-                    <DataGrid.Columns>
-                        <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}">
-                            <DataGridCheckBoxColumn.Header>
-                                <CheckBox />
-                            </DataGridCheckBoxColumn.Header>
-                        </DataGridCheckBoxColumn>
-                        <DataGridTextColumn Header="№" IsReadOnly="True" Binding="{Binding PersonalNumber}"/>
-                        <DataGridTextColumn Header="Дата" IsReadOnly="True" Binding="{Binding OrderDate, StringFormat=\{0:dd.MM.yy\}}"/>
-                        <DataGridTextColumn Header="Артикул товара" IsReadOnly="True" Binding="{Binding Articul}"/>
-                        <DataGridTextColumn Header="Идентификационный номер заказ" IsReadOnly="True" Binding="{Binding OrderID}"/>
-                        <DataGridTextColumn Header="Фамилия" IsReadOnly="True" Binding="{Binding SecondName}"/>
-                        <DataGridTextColumn Header="Имя" IsReadOnly="True" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="Отчество" IsReadOnly="True" Binding="{Binding Surname}"/>
-                        <DataGridTextColumn Header="Телефон" IsReadOnly="True" Binding="{Binding Phone}"/>
-                        <DataGridTextColumn Header="Товар" IsReadOnly="True" Width="45" Binding="{Binding Item}"/>
-                        <DataGridTextColumn Header="Колл товара" IsReadOnly="True" Binding="{Binding Amount}"/>
-                        <DataGridTextColumn Header="Цена" IsReadOnly="True" Binding="{Binding Price}"/>
-                        <DataGridTextColumn Header="Себестоимость" IsReadOnly="True" Binding="{Binding PrimeCost}"/>
-                        <DataGridTextColumn Header="Оплата" IsReadOnly="True" Binding="{Binding PaymentWay}"/>
-                        <DataGridTextColumn Header="Доставка" IsReadOnly="True" Binding="{Binding DelivarWay}"/>
-                        <DataGridTextColumn Header="Адрес" IsReadOnly="True" Binding="{Binding DeliverAdress}"/>
-                        <DataGridTextColumn Header="Статус" IsReadOnly="True" Binding="{Binding Status}"/>
-                        <DataGridTextColumn Header="Затраты" IsReadOnly="True" Binding="{Binding Spending}"/>
-                        <DataGridTextColumn Header="Прибыль" IsReadOnly="True" Binding="{Binding Income}"/>
-                        <DataGridTextColumn Header="Организация" IsReadOnly="True" Binding="{Binding Organization}"/>
-                        <DataGridTextColumn Header="Комментарий" IsReadOnly="True" Binding="{Binding Comment}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </ScrollViewer>
+            <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
+                      GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
+                      RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
+                      EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
+                      VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
+                      SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Hand" >
+
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}">
+                        <DataGridCheckBoxColumn.Header>
+                            <CheckBox />
+                        </DataGridCheckBoxColumn.Header>
+                    </DataGridCheckBoxColumn>
+                    <DataGridTextColumn Header="№" IsReadOnly="True" Binding="{Binding PersonalNumber}"/>
+                    <DataGridTextColumn Header="Дата" IsReadOnly="True" Binding="{Binding OrderDate, StringFormat=\{0:dd.MM.yy\}}"/>
+                    <DataGridTextColumn Header="Артикул товара" IsReadOnly="True" Binding="{Binding Articul}"/>
+                    <DataGridTextColumn Header="Идентификационный номер заказ" IsReadOnly="True" Binding="{Binding OrderID}"/>
+                    <DataGridTextColumn Header="Фамилия" IsReadOnly="True" Binding="{Binding SecondName}"/>
+                    <DataGridTextColumn Header="Имя" IsReadOnly="True" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Отчество" IsReadOnly="True" Binding="{Binding Surname}"/>
+                    <DataGridTextColumn Header="Телефон" IsReadOnly="True" Binding="{Binding Phone}"/>
+                    <DataGridTextColumn Header="Товар" IsReadOnly="True" Width="45" Binding="{Binding Item}"/>
+                    <DataGridTextColumn Header="Колл товара" IsReadOnly="True" Binding="{Binding Amount}"/>
+                    <DataGridTextColumn Header="Цена" IsReadOnly="True" Binding="{Binding Price}"/>
+                    <DataGridTextColumn Header="Себестоимость" IsReadOnly="True" Binding="{Binding PrimeCost}"/>
+                    <DataGridTextColumn Header="Оплата" IsReadOnly="True" Binding="{Binding PaymentWay}"/>
+                    <DataGridTextColumn Header="Доставка" IsReadOnly="True" Binding="{Binding DelivarWay}"/>
+                    <DataGridTextColumn Header="Адрес" IsReadOnly="True" Binding="{Binding DeliverAdress}"/>
+                    <DataGridTextColumn Header="Статус" IsReadOnly="True" Binding="{Binding Status}"/>
+                    <DataGridTextColumn Header="Затраты" IsReadOnly="True" Binding="{Binding Spending}"/>
+                    <DataGridTextColumn Header="Прибыль" IsReadOnly="True" Binding="{Binding Income}"/>
+                    <DataGridTextColumn Header="Маркетплейс" IsReadOnly="True" Binding="{Binding Organization}"/>
+                    <DataGridTextColumn Header="Комментарий" IsReadOnly="True" Binding="{Binding Comment}"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </DockPanel>
         
         <ContentControl Visibility="{Binding ControlsVisiability, Converter={StaticResource BooleanVisiabilityConverter}}" Content="{Binding CurrentView}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="8"/>

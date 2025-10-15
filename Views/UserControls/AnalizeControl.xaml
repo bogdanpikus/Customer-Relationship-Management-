@@ -8,7 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="890">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid Background="WhiteSmoke" ShowGridLines="False">
+        <Grid Background="WhiteSmoke" ShowGridLines="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="300"/>
                 <RowDefinition Height="300"/>
@@ -20,34 +20,80 @@
                 <ColumnDefinition Width="469"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal">
-                <Button Command="{Binding PreviousWeek}" Content="&lt;" FontSize="30" Width="50" Height="50"
-                        HorizontalAlignment="Left" VerticalAlignment="Top" Background="WhiteSmoke" 
-                        BorderBrush="WhiteSmoke" FontWeight="Light" ToolTip="Previous day" Cursor="Hand"/>
-                <oxp:PlotView Model="{Binding WeekPlotModel}" Width="980"
+                <oxp:PlotView Model="{Binding WeekPlotModel}" Width="1030"
                               HorizontalAlignment="Left" Height="300" VerticalAlignment="Top"
                               IsEnabled="False" Background="WhiteSmoke" ToolTip="Колличество продаж по дню" />
-                <Button Command="{Binding NextWeek}" Content="&gt;" FontSize="30" Width="50" Height="50"
-                        HorizontalAlignment="Left" VerticalAlignment="Top" Background="WhiteSmoke" 
-                        BorderBrush="WhiteSmoke" FontWeight="Light" ToolTip="Next day" Cursor="Hand"/>
-                <oxp:PlotView Width="427" HorizontalAlignment="Right" Background="Aquamarine" Grid.Row="0" />
+                <oxp:PlotView Model="{Binding PieGraff}" Width="327" HorizontalAlignment="Left"  Background="WhiteSmoke" Grid.Row="0" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="0" Grid.Column="0" Width="auto" Orientation="Horizontal" HorizontalAlignment="Left" Margin="40,0,0,0">
+                <Button Command="{Binding PreviousWeek}" Content="&lt;" FontSize="30" Width="50" Height="47"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Background="WhiteSmoke" VerticalContentAlignment="Top" 
+                        BorderBrush="WhiteSmoke" FontWeight="Light" ToolTip="Previous day" Cursor="Hand"/>
             </StackPanel>
 
             <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Width="auto" HorizontalAlignment="Right">
-                <Button Command="{Binding TodayWeekGraff}" Width="100" Height="30" Background="WhiteSmoke" Content="Сегодня" VerticalAlignment="Top" 
-                        Margin="8" FontSize="18" BorderThickness="1" Cursor="Hand"/>
-                <Button Command="{Binding ReloadWeekGraff}" Width="100" Height="30" Background="WhiteSmoke" Content="Обновить" VerticalAlignment="Top" 
+                <Button Command="{Binding TodayWeekGraff}" Width="90" Height="30" Background="WhiteSmoke" Content="Сегодня" VerticalAlignment="Top" 
                         Margin="8" FontSize="18" BorderThickness="1" Cursor="Hand"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal">
-                <oxp:PlotView Width="1080" Height="300" VerticalAlignment="Bottom"
-                              HorizontalAlignment="Left" Background="BlueViolet"/>
-                <oxp:PlotView Width="407" HorizontalAlignment="Right" Background="DarkMagenta"/>
+            <StackPanel Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left">
+                <Button Command="{Binding NextWeek}" Content="&gt;" FontSize="30" Width="50" Height="47"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Background="WhiteSmoke" 
+                        BorderBrush="WhiteSmoke" FontWeight="Light" ToolTip="Next day" Cursor="Hand"/>
             </StackPanel>
-            <oxp:PlotView Grid.Row="3" Grid.Column="0" Width="469" Height="180" Background="DarkKhaki" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <oxp:PlotView Grid.Row="3" Grid.Column="0" Width="469" Height="120" Background="Pink" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-            <oxp:PlotView Grid.Row="3" Grid.Column="1" Width="469" Background="Chocolate" HorizontalAlignment="Center"/>
-            <oxp:PlotView Grid.Row="3" Grid.Column="2" Width="469" Background="Chartreuse" HorizontalAlignment="Right"/>
-    </Grid>
+            
+            <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" Orientation="Horizontal">
+                <oxp:PlotView Model="{Binding IncomeByMonthBar}" Width="1010" Height="300" VerticalAlignment="Bottom"
+                              HorizontalAlignment="Left" Background="WhiteSmoke" IsEnabled="False"/>
+                <oxp:PlotView Model="{Binding SpendingAnalize}" Width="400" Background="WhiteSmoke" HorizontalAlignment="Right" IsEnabled="False"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Top">
+                <DataGrid ItemsSource="{Binding OrdersSourse}" Width="469" Height="180" Background="WhiteSmoke"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                          EnableColumnVirtualization="True" EnableRowVirtualization="True"
+                          Focusable="False" RowDetailsVisibilityMode="Visible" IsEnabled="False"
+                          FontSize="10" FontFamily="Arial" RowBackground="Snow">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Колличество заказов" Width="234.5" Binding="{Binding CountOrders}"/>
+                        <DataGridTextColumn Header="Источник заказов" Width="234.5" Binding="{Binding SourseOfOrders}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="469" 
+                        ToolTip="% отмененных заказов за ваш месяц" Cursor="Help">
+                <Button Content="&lt;" Background="WhiteSmoke" BorderThickness="0" FontSize="30" Width="30" ToolTip="На месяц назад" />
+                <TextBox  Width="409"  Text="Июль: 12%" IsEnabled="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                              Height="120" Background="WhiteSmoke" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="50" FontWeight="Medium"
+                              Foreground="Black" BorderThickness="0" FontFamily="Arial" />
+                <Button Content="&gt;" Background="WhiteSmoke" BorderThickness="0" FontSize="30" Width="30" ToolTip="На месяц вперед" />
+            </StackPanel>
+            <StackPanel Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="3" Orientation="Horizontal">
+                <DataGrid Width="469" Background="WhiteSmoke" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                          HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="DarkBlue"
+                          EnableColumnVirtualization="True" EnableRowVirtualization="True"
+                          Focusable="False" RowDetailsVisibilityMode="Visible" IsEnabled="False"
+                          FontSize="10" FontFamily="Arial" RowBackground="Snow">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="234.5" Header="" />
+                        <DataGridTextColumn Width="234.5" Header=""/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <DataGrid ItemsSource="{Binding ABC_Analize}" Width="469" HorizontalAlignment="Right" Background="WhiteSmoke" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                          HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="DarkRed"
+                          EnableColumnVirtualization="True" EnableRowVirtualization="True"
+                          Focusable="False" RowDetailsVisibilityMode="Visible" IsEnabled="False"
+                          FontSize="10" FontFamily="Arial" RowBackground="Snow">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Товар" Width="203.5" IsReadOnly="True" Binding="{Binding Item}"/>
+                        <DataGridTextColumn Header="ABC анализ" Width="203.5" IsReadOnly="True" Binding="{Binding ABC_Analize}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
     </ScrollViewer>
 </UserControl>

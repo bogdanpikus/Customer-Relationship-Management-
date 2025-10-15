@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Windows;
 using System.Windows.Input;
 using CRM.Commands;
 using CRM.Models;
@@ -17,14 +15,17 @@ namespace CRM.ViewModels
         private readonly DuckDatabase _db = DatabaseFactory.Instance;
         public ObservableCollection<OrdersPerDay> ordersPerDay { get; } = new(); // принимает вытягиваемые данные из базы данных в модель (дата | колличество заказов)
         public PlotModel WeekPlotModel { get; set; }
+        public PlotModel PieGraff {  get; set; }
+        public PlotModel IncomeByMonthBar { get; set; }
+        public PlotModel SpendingAnalize { get; set; }
+
         public ICommand PreviousWeek {  get; set; }
         public ICommand NextWeek { get; set; }
         public ICommand TodayWeekGraff { get; set; }
-        public ICommand ReloadWeekGraff { get; set; }
 
-
-        private int _yAxisHeight = 5; // изначально высота оси Y = 5 с шагом 1
-        private int YAxisHeight // присваеваем значение 10, если заказов становится или было вытянуто 5 или > 5 и т.д
+        private int? maxOrdersValue { get; set; }
+        private int? _yAxisHeight = 5; // изначально высота оси Y = 5 с шагом 1
+        private int? YAxisHeight // присваеваем значение 10, если заказов становится или было вытянуто 5 или > 5 и т.д
         {
             get => _yAxisHeight;
             set
@@ -55,11 +56,16 @@ namespace CRM.ViewModels
             PreviousWeek = new RelayCommand(Click => GoToPreviousWeek());
             NextWeek = new RelayCommand(Click => GoToNextWeek());
             TodayWeekGraff = new RelayCommand(Click => BackToTodayWeekGraff());
-            ReloadWeekGraff = new RelayCommand(Click => ReloadGraffWeek());
 
             WeekPlotModel = new PlotModel();
+            PieGraff = new PlotModel();
+            IncomeByMonthBar = new PlotModel();
+            SpendingAnalize = new PlotModel();
             ExtractDataFromDatabase();
             WeekPlotModelGraff();
+            PieModelGraff();
+            IncomeBarGraff();
+            SpendingAnalizeGraff();
         }
 
         private void ExtractDataFromDatabase()
@@ -70,7 +76,7 @@ namespace CRM.ViewModels
         private void WeekPlotModelGraff()
         {
             WeekPlotModel.Series.Clear();
-            int maxOrdersValue = ordersPerDay.Max(x => x.Count);
+            maxOrdersValue = ordersPerDay.Max(x => x.Count);
             if (YAxisHeight < maxOrdersValue)
             {
                 YAxisHeight = maxOrdersValue + 1;
@@ -85,14 +91,14 @@ namespace CRM.ViewModels
                 Color = OxyPlot.OxyColors.Black,
                 LineStyle = LineStyle.Solid,
                 StrokeThickness = 2,
-                TrackerFormatString = "X = {2:0}, Y = {4:0}"
+                TrackerFormatString = "X = {2}, Y = {4}"
             };
 
             var yAxis = new LinearAxis
             {
                 Position = AxisPosition.Left,
                 Minimum = 0,
-                Maximum = YAxisHeight,
+                Maximum = (double)YAxisHeight,
                 MajorStep = 1
             };
             var xAxis = new LinearAxis
@@ -139,7 +145,7 @@ namespace CRM.ViewModels
         {
             var startDate = CenterOfWeek.AddDays(-3);
             var endDate = CenterOfWeek.AddDays(3);
-            WeekPlotModel.Title = $"{startDate.ToString("dd.MM.yyy")} - {CenterOfWeek.ToString("d MMMM")} - {endDate.ToString("dd.MM.yyy")}";
+            WeekPlotModel.Title = $"Колличество заказов в диапазоне: {startDate.ToString("dd.MM.yyy")} - {CenterOfWeek.ToString("d MMMM")} - {endDate.ToString("dd.MM.yyy")}";
             WeekPlotModel.InvalidatePlot(true);
         }
         private void GoToPreviousWeek()
@@ -163,11 +169,53 @@ namespace CRM.ViewModels
             WeekPlotModelGraff();
             UpdateTitle();
         }
-        private void ReloadGraffWeek()
+
+        private void PieModelGraff()
         {
-            ExtractDataFromDatabase();
-            WeekPlotModelGraff();
-            WeekPlotModel.InvalidatePlot(true);
+            PieGraff.Series.Clear();
+
+            var pieSeries = new PieSeries
+            {
+                TickHorizontalLength = 0,
+                TickRadialLength = 0,
+                InsideLabelPosition = 0.7,
+                AngleSpan = 360,
+                StartAngle = 0,
+                OutsideLabelFormat = "",
+                InsideLabelFormat = "{0}%"
+            };
+
+            pieSeries.Slices.Clear();
+            pieSeries.Slices.Add(new PieSlice("Product 1", 40) { Fill = OxyColors.Cornsilk });
+            pieSeries.Slices.Add(new PieSlice("Продукт B", 25) { Fill = OxyColors.Orange });
+            pieSeries.Slices.Add(new PieSlice("Продукт C", 35) { Fill = OxyColors.LightGreen });
+
+            PieGraff.Series.Add(pieSeries);
+        }
+
+        private void IncomeBarGraff()
+        {
+            IncomeByMonthBar.Series.Clear();
+            IncomeByMonthBar.Title = "Столбиковая диаграмма прибыли по месяцам";
+            var barSeries = new BarSeries
+            {
+                BarWidth = 100
+            };
+            
+
+            IncomeByMonthBar.Series.Add(barSeries);
+        }
+
+        private void SpendingAnalizeGraff()
+        {
+            SpendingAnalize.Series.Clear();
+            SpendingAnalize.Title = "Анализ убытков";
+            var series = new BarSeries
+            {
+                BarWidth = 100
+            };
+
+            SpendingAnalize.Series.Add(series);
         }
     }
 }

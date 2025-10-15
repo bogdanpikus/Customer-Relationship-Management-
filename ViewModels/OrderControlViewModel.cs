@@ -5,6 +5,7 @@ using System.Windows.Input;
 using CRM.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Diagnostics;
 
 namespace CRM.ViewModels
 {
@@ -91,11 +92,20 @@ namespace CRM.ViewModels
             AllIncome = Orders.Sum(o => o.Income);
             AllChashFlow = Orders.Sum(o => o.Price);
             AllSpendings = Orders.Sum(o => o.Spending);
+
+            var canceled = Orders.Where(c => c.Status == "Отмененный");
+            foreach (var order in canceled)
+            {
+                AllIncome -= order.Income;
+                AllChashFlow -= order.Price;
+                AllSpendings -= order.Spending;
+            }
+
         }
         private void LoadOrdersFromDatabase()
         {
             _db.ExtractOrdersFromDatabase(Orders);
-            
+
             // считаються номера заказов
             var count = Orders.Count;
             foreach(var order in Orders)
