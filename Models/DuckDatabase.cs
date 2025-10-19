@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
 using System.IO;
-using System.Security.AccessControl;
 using DuckDB.NET.Data;
 
 namespace CRM.Models
@@ -99,7 +97,7 @@ namespace CRM.Models
             }
         }
 
-        public void ExtractOrdersFromDatabase(ObservableCollection<Order> Orders) 
+        public List<Order> ExtractOrdersFromDatabase() 
         {
             // REFUCTOR: долго Datagrid отображает ObservableCollection<Order> Orders
             using (var cmd = _connection.CreateCommand())
@@ -108,6 +106,7 @@ namespace CRM.Models
                     Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Organization, Comment FROM orders";
                 using var reader = cmd.ExecuteReader();
 
+                var orders  = new List<Order>();
                 while (reader.Read())
                 {
                     var order = new Order
@@ -134,8 +133,9 @@ namespace CRM.Models
                         Comment = reader.IsDBNull(19) ? null : reader.GetFieldValue<string>(19)
                     };
 
-                    Orders.Insert(0,order);
+                    orders.Add(order);
                 }
+                return orders;
             }
         }
 

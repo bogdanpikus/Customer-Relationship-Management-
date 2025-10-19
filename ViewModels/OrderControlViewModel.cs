@@ -12,6 +12,7 @@ namespace CRM.ViewModels
     public class OrderControlViewModel : NotifyPropertyChange
     {
         private readonly DuckDatabase _db = DatabaseFactory.Instance;
+        private readonly SQLService _sqlService = new SQLService();
 
         public ObservableCollection<Order> Orders { get; } = new ObservableCollection<Order>();
         public object? CurrentView { get; set; }
@@ -86,6 +87,17 @@ namespace CRM.ViewModels
             ExportImport = new RelayCommand(Click => OpenExportImportPage());
             Settings = new RelayCommand(Click => OpenSettingsPage());
             LoadOrdersFromDatabase();
+            NumberOfOrders();
+            Sum();
+        }
+        private void NumberOfOrders()
+        {
+            // считаються номера заказов
+            var count = Orders.Count;
+            foreach (var order in Orders)
+            {
+                order.PersonalNumber = count--;
+            }
         }
         private void Sum()
         {
@@ -104,16 +116,12 @@ namespace CRM.ViewModels
         }
         private void LoadOrdersFromDatabase()
         {
-            _db.ExtractOrdersFromDatabase(Orders);
-
-            // считаються номера заказов
-            var count = Orders.Count;
-            foreach(var order in Orders)
+            Orders.Clear();
+            var ordersFromDB = _sqlService.LoadOrdersFromDatabase();
+            foreach(var order in ordersFromDB)
             {
-                order.PersonalNumber = count--;
+                Orders.Add(order);
             }
-
-            Sum();
         }
         private void OpenOrderDialog()
         {
