@@ -11,7 +11,6 @@ namespace CRM.ViewModels
 {
     public class OrderControlViewModel : NotifyPropertyChange
     {
-        private readonly DuckDatabase _db = DatabaseFactory.Instance;
         private readonly SQLService _sqlService = new SQLService();
 
         public ObservableCollection<Order> Orders { get; } = new ObservableCollection<Order>();
@@ -140,13 +139,14 @@ namespace CRM.ViewModels
         }
         private void DeleteOrderFromTableAndDatabase()
         {
-            _db.DeleteOrderInDatabase(Orders);
-            var count = Orders.Count; // count of all orders
-            foreach (var order in Orders)
+            var selectedOrder = Orders.Where(o => o.IsSelected).ToList();
+            foreach (var order in selectedOrder)
             {
-                order.PersonalNumber = count--;
+                _sqlService.DeleteOrderInDatabase(order.Id); // возвращает true, если удалено
+                Orders.Remove(order);
             }
 
+            NumberOfOrders();
             Sum();
         }
         private void OpenOrderPage()

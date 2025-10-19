@@ -99,7 +99,6 @@ namespace CRM.Models
 
         public List<Order> ExtractOrdersFromDatabase() 
         {
-            // REFUCTOR: долго Datagrid отображает ObservableCollection<Order> Orders
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = @"SELECT Id, OrderDate, Articul, OrderID, SecondName, Name, Surname, Phone, Item, Amount, Price,
@@ -148,21 +147,15 @@ namespace CRM.Models
             }
         }
 
-        public void DeleteOrderInDatabase(ObservableCollection<Order> orders)
+        public bool DeleteOrderInDatabase(int id)
         {
-            var selectedOrder = orders.Where(ordersItem => ordersItem.IsSelected).ToList();
-
             using (var cmd = _connection.CreateCommand())
             {
-                foreach (var order in selectedOrder)
-                {
-                    cmd.CommandText = "DELETE FROM orders WHERE Id = ?";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.Add(new DuckDBParameter { Value = order.Id });
-                    cmd.ExecuteNonQuery();
-
-                    orders.Remove(order);
-                }
+                cmd.CommandText = "DELETE FROM orders WHERE Id = ?";
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add(new DuckDBParameter { Value = id });
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
             }
         }
 

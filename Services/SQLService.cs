@@ -11,5 +11,9 @@ namespace CRM.Services
         {
             return _db.ExtractOrdersFromDatabase();
         }
+        public bool DeleteOrderInDatabase(int id)
+        {
+            return _db.DeleteOrderInDatabase(id);
+        }
     }
 }
