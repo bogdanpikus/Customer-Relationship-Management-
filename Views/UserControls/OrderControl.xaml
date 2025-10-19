@@ -94,12 +94,12 @@
                     <Button Width="30" Height="auto" BorderBrush="Black" Cursor="Hand"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="32">
-                    <TextBox Width="50" Margin="2" Text="{Binding AllSpendings}" Background="Snow" IsReadOnly="True"
-                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Help" ToolTip="Все растраты"/>
-                    <TextBox Width="50" Margin="2" Text="{Binding AllChashFlow}" Background="Snow" IsReadOnly="True"
-                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Help" ToolTip="Весь оборот денег"/>
                     <TextBox Width="50" Margin="2" Text="{Binding AllIncome}" Background="Snow" IsReadOnly="True"
                              VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Help" ToolTip="Вся прибыль"/>
+                    <TextBox Width="50" Margin="2" Text="{Binding AllChashFlow}" Background="Snow" IsReadOnly="True"
+                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Help" ToolTip="Весь оборот денег"/>
+                    <TextBox Width="50" Margin="2" Text="{Binding AllSpendings}" Background="Snow" IsReadOnly="True"
+                             VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Help" ToolTip="Все растраты"/>
                     <ComboBox Width="57" Margin="2" VerticalContentAlignment="Center" ScrollViewer.CanContentScroll="True" Cursor="Hand">
                         <ComboBoxItem IsSelected="True" Cursor="Hand">None</ComboBoxItem>
                         <ComboBoxItem Cursor="Hand">Обрабатывается</ComboBoxItem>

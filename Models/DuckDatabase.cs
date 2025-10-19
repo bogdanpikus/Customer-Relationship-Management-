@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Security.AccessControl;
 using DuckDB.NET.Data;
 
 namespace CRM.Models
@@ -199,7 +200,7 @@ namespace CRM.Models
                 return cmd.ExecuteNonQuery()>0;
             }
         }
-        public void SelectDataToWeekGraff(ObservableCollection<OrdersPerDay> ordersPerDay, DateTime startOfRangeDate, DateTime endOfRangeDate)
+        public void SelectDataToWeekGraff(ObservableCollection<RangeWithOrders> rangeWithOrders, DateTime startOfRangeDate, DateTime endOfRangeDate)
         {
             using(var cmd = _connection.CreateCommand())
             {
@@ -209,13 +210,75 @@ namespace CRM.Models
                 using var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    var ordersPerDayItem = new OrdersPerDay
+                    var ordersPerDayItem = new RangeWithOrders
                     {
                         Date = reader.GetDateTime(0),
                         Count = reader.GetInt32(1)
                     };
 
-                    ordersPerDay.Add(ordersPerDayItem);
+                    rangeWithOrders.Add(ordersPerDayItem);
+                }
+            }
+        }
+        private string GetMonthName(string monthName)
+        {
+            return monthName switch
+            {
+                "01" => "Январь",
+                "02" => "Февраль",
+                "03" => "Март",
+                "04" => "Апрель",
+                "05" => "Май",
+                "06" => "Июнь",
+                "07" => "Июль",
+                "08" => "Август",
+                "09" => "Сентябрь",
+                "10" => "Октябрь",
+                "11" => "Ноябрь",
+                "12" => "Декабрь",
+                _ => "НЕИЗВЕСТНО"
+            };
+        }
+        public void SelectAllPriceByMonth(ObservableCollection<PriceByMonth> priceByMonths) // месяц | сумма оборота
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"SELECT strftime('%m', OrderDate) AS Month,
+                                    SUM(Price) AS Total From orders WHERE OrderDate IS NOT NULL AND
+                                    EXTRACT(YEAR FROM OrderDate) = EXTRACT(YEAR FROM CURRENT_DATE)
+                                    GROUP BY strftime('%m', OrderDate) ORDER BY Month";
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var month = reader.GetString(0);
+                    var total = reader.IsDBNull(1) ? 0m : reader.GetDecimal(1);
+
+                    priceByMonths.Add(new PriceByMonth
+                    {
+                        Month = GetMonthName(month),
+                        SumOfPriceByMonth = (double)total
+                    });
+                }
+            }
+        }
+        public void LoadSourseCountToDataGtid(ObservableCollection<SourseCount> sourceCount, int month)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"SELECT Organization, COUNT(*) AS CountTotal FROM orders WHERE strftime('%m', OrderDate) = ? 
+                                   AND Organization IS NOT NULL
+                                   GROUP BY Organization ORDER BY Organization";
+                cmd.Parameters.Add(new DuckDBParameter { Value = month });
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var sourseModel = new SourseCount
+                    {
+                        Sourse = reader.IsDBNull(0) ? null : reader.GetString(0),
+                        Count = reader.GetInt32(1)
+                    };
+
+                    sourceCount.Add(sourseModel);
                 }
             }
         }
