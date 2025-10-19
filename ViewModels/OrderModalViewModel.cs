@@ -13,7 +13,8 @@ namespace CRM.ViewModels
 {
     public class OrderModalViewModel : NotifyPropertyChange
     {
-        private readonly DuckDatabase _db = DatabaseFactory.Instance;
+        private readonly SQLService _sqlService = new SQLService();
+
         public ICommand Confirm {  get; }
         public ICommand TestOrder { get; set; }
 
@@ -57,7 +58,7 @@ namespace CRM.ViewModels
                 Phone = Phone,
                 AmountOrders = 1
             };
-            _db.InsertCustomer(customer);
+            _sqlService.InsertCustomer(customer);
 
             var order = new Order
             {
@@ -84,7 +85,7 @@ namespace CRM.ViewModels
                 Organization = Organization,
                 Comment = Comment
             };
-            _db.InsertOrder(order);
+            _sqlService.InsertOrder(order);
             orders.Insert(0,order);
             DialogService.Instance.CloseDialog();
         }
@@ -115,7 +116,7 @@ namespace CRM.ViewModels
                 Comment = "-"
             };
 
-            _db.InsertOrder(order);
+            _sqlService.InsertOrder(order);
             orders.Insert(0,order);
         }
     }

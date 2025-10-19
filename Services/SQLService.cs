@@ -15,5 +15,13 @@ namespace CRM.Services
         {
             return _db.DeleteOrderInDatabase(id);
         }
+        public bool InsertOrder(Order order)
+        {
+            return _db.InsertOrder(order);
+        }
+        public bool InsertCustomer(Customer customer)
+        {
+            return _db.InsertCustomer(customer);
+        }
     }
 }

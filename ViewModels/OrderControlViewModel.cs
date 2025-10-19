@@ -119,7 +119,7 @@ namespace CRM.ViewModels
             var ordersFromDB = _sqlService.LoadOrdersFromDatabase();
             foreach(var order in ordersFromDB)
             {
-                Orders.Add(order);
+                Orders.Insert(0,order);
             }
         }
         private void OpenOrderDialog()

@@ -52,22 +52,23 @@ namespace CRM.Models
             }
         }
 
-        public void InsertCustomer(Customer customer)
+        public bool InsertCustomer(Customer customer)
         {
-            using (var crm = _connection.CreateCommand())
+            using (var cmd = _connection.CreateCommand())
             {
-                crm.CommandText = @"INSERT INTO customers (SecondName, Name, Surname, Phone, AmountOrders) VALUES (?,?,?,?,?)";
-                crm.Parameters.Add(new DuckDBParameter { Value = customer.SecondName });
-                crm.Parameters.Add(new DuckDBParameter { Value = customer.Name });
-                crm.Parameters.Add(new DuckDBParameter { Value = customer.Surname });
-                crm.Parameters.Add(new DuckDBParameter { Value = customer.Phone });
-                crm.Parameters.Add(new DuckDBParameter { Value = customer.AmountOrders });
-                crm.ExecuteNonQuery();
+                cmd.CommandText = @"INSERT INTO customers (SecondName, Name, Surname, Phone, AmountOrders) VALUES (?,?,?,?,?)";
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.SecondName });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Name });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Surname });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Phone });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.AmountOrders });
+
+                return cmd.ExecuteNonQuery() > 0;
             }
 
         }
 
-        public void InsertOrder(Order order)
+        public bool InsertOrder(Order order)
         {
             using (var crm = _connection.CreateCommand())
             {
@@ -94,6 +95,8 @@ namespace CRM.Models
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Organization });
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Comment });
                 order.Id = Convert.ToInt32(crm.ExecuteScalar());
+
+                return true;
             }
         }
 

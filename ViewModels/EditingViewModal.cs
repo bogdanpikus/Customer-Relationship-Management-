@@ -12,7 +12,8 @@ namespace CRM.ViewModels
     public class EditingViewModal : NotifyPropertyChange
     {
         private readonly Order _order;
-        private readonly DuckDatabase _duck = DatabaseFactory.Instance;
+        private SQLService _sqlService = new SQLService();
+        private readonly DuckDatabase _duck = DatabaseFactory.Instance; //REFUCTOR PATTERN SRP
         public ICommand Confirm { get; }
 
         public DateTime? EditDate {  get; set; }
@@ -84,7 +85,7 @@ namespace CRM.ViewModels
             _order.Organization = Organization;
             _order.Comment = Comment;
 
-            if (_duck.UpdateOrder(_order)) // true = успешно
+            if (_duck.UpdateOrder(_order)) //REFUCTOR PATTERN SRP // true = успешно
             {
                 DialogService.Instance.CloseDialog();
             }
