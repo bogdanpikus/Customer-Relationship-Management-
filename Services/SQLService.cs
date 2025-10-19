@@ -23,5 +23,9 @@ namespace CRM.Services
         {
             return _db.InsertCustomer(customer);
         }
+        public bool UpdateOrder(Order order)
+        {
+            return _db.UpdateOrder(order);
+        }
     }
 }
