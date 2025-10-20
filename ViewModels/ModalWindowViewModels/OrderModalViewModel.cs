@@ -3,11 +3,7 @@ using CRM.Models;
 using CRM.Services;
 using System.Windows.Input;
 using Microsoft.VisualBasic;
-using System.Windows;
-using CRM.Views.ModalControls;
 using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
-using DuckDB.NET.Native;
 
 namespace CRM.ViewModels
 {
