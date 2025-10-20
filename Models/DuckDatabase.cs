@@ -237,10 +237,11 @@ namespace CRM.Models
                 _ => "НЕИЗВЕСТНО"
             };
         }
-        public void SelectAllPriceByMonth(ObservableCollection<PriceByMonth> priceByMonths) // месяц | сумма оборота
+        public List<PriceByMonth> SelectAllPriceByMonth() // месяц | сумма оборота
         {
             using (var cmd = _connection.CreateCommand())
             {
+                var priceList = new List<PriceByMonth>();
                 cmd.CommandText = @"SELECT strftime('%m', OrderDate) AS Month,
                                     SUM(Price) AS Total From orders WHERE OrderDate IS NOT NULL AND
                                     EXTRACT(YEAR FROM OrderDate) = EXTRACT(YEAR FROM CURRENT_DATE)
@@ -251,12 +252,14 @@ namespace CRM.Models
                     var month = reader.GetString(0);
                     var total = reader.IsDBNull(1) ? 0m : reader.GetDecimal(1);
 
-                    priceByMonths.Add(new PriceByMonth
+                    priceList.Add(new PriceByMonth
                     {
                         Month = GetMonthName(month),
                         SumOfPriceByMonth = (double)total
                     });
                 }
+
+                return priceList;
             }
         }
         public List<SourseCount> LoadSourseCountToDataGtid(int month)

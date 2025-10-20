@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Security.AccessControl;
 using System.Windows.Input;
 using CRM.Commands;
 using CRM.Models;
@@ -15,10 +16,8 @@ namespace CRM.ViewModels
     public class AnalizeViewModel : NotifyPropertyChange
     {
         private readonly SQLService _sqlService = new SQLService(); // сервис запросов SQL
-        private readonly DuckDatabase _db = DatabaseFactory.Instance;
-
         public ObservableCollection<RangeWithOrders> OrdersInRange { get; } = new(); // принимает вытягиваемые данные из базы данных в модель (дата | колличество заказов)
-        public ObservableCollection<PriceByMonth> priceByMonths { get; } = new();
+        public ObservableCollection<PriceByMonth> PriceMonthCollection { get; } = new();
         public ObservableCollection<SourseCount> OrdersSourseCount { get; } = new();
         public PlotModel WeekPlotModel { get; set; }
         public PlotModel PieGraff { get; set; }
@@ -186,6 +185,16 @@ namespace CRM.ViewModels
             TodayOrdersCount = $"Заказов за сегодня: 10";
             TodayOrdersIncame = $"Прибыль за сегодня: 50000";
         }
+        private int? CalculateYAxisAmount() 
+        {
+            maxOrdersValue = OrdersInRange.Max(x => x.Count);
+            if (YAxisHeight < maxOrdersValue)
+            {
+                YAxisHeight = maxOrdersValue + 1;
+            }
+
+            return YAxisHeight;
+        }
         private void LoadSourseToDataGrid()
         {
             OrdersSourseCount.Clear();
@@ -207,11 +216,7 @@ namespace CRM.ViewModels
         private void WeekPlotModelGraff()
         {
             WeekPlotModel.Series.Clear();
-            maxOrdersValue = OrdersInRange.Max(x => x.Count);
-            if (YAxisHeight < maxOrdersValue)
-            {
-                YAxisHeight = maxOrdersValue + 1;
-            }
+            CalculateYAxisAmount();
 
             var lineSeries = new LineSeries
             {
@@ -301,12 +306,19 @@ namespace CRM.ViewModels
             UpdateTitle();
         }
 
+        private void LoadPriceMonthPie()
+        {
+            var priceList = _sqlService.SelectAllPriceByMonth();
+            foreach (var price in priceList)
+            {
+                PriceMonthCollection.Add(price);
+            }
+        }
         private void PieModelGraff()
         {
-            _db.SelectAllPriceByMonth(priceByMonths);
-           //Debug.WriteLine($"{orders.Month}: {orders.SumOfPriceByMonth}"); // Октябрь: 2481, Ноябрь: 601, Декабрь: 3000
-
             PieGraff.Series.Clear();
+            LoadPriceMonthPie();
+
             PieGraff.Title = "Оборот по месяцам за год";
 
             var pieSeries = new PieSeries
@@ -326,7 +338,7 @@ namespace CRM.ViewModels
 
             pieSeries.Slices.Clear();
 
-            foreach(var month in priceByMonths)
+            foreach(var month in PriceMonthCollection)
             {
                 pieSeries.Slices.Add(new PieSlice(month.Month, month.SumOfPriceByMonth) { Fill = OxyColors.WhiteSmoke });
             }
@@ -337,7 +349,7 @@ namespace CRM.ViewModels
 
         {
             PieGraff.Series.Clear();
-            priceByMonths.Clear();
+            PriceMonthCollection.Clear();
             PieModelGraff();
             PieGraff.InvalidatePlot(true);
         }

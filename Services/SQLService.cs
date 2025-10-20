@@ -35,5 +35,9 @@ namespace CRM.Services
         {
             return _db.SelectDataToWeekGraff(start, end);
         }
+        public List<PriceByMonth> SelectAllPriceByMonth()
+        {
+            return _db.SelectAllPriceByMonth();
+        }
     }
 }
