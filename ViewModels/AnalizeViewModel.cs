@@ -16,7 +16,7 @@ namespace CRM.ViewModels
     public class AnalizeViewModel : NotifyPropertyChange
     {
         private readonly SQLService _sqlService = new SQLService(); // сервис запросов SQL
-        public ObservableCollection<RangeWithOrders> OrdersInRange { get; } = new(); // принимает вытягиваемые данные из базы данных в модель (дата | колличество заказов)
+        public ObservableCollection<RangeWithOrders> OrdersInRange { get; } = new();
         public ObservableCollection<PriceByMonth> PriceMonthCollection { get; } = new();
         public ObservableCollection<SourseCount> OrdersSourseCount { get; } = new();
         public PlotModel WeekPlotModel { get; set; }
@@ -27,9 +27,9 @@ namespace CRM.ViewModels
         public ICommand PreviousWeek { get; set; }
         public ICommand NextWeek { get; set; }
         public ICommand TodayWeekGraff { get; set; }
-        public ICommand ReloadPieGraff { get; set; }
         public ICommand GoBackPerSource { get; set; }
         public ICommand GoForwardPerSource { get; set; }
+        public ICommand ReloadPage { get; set; }
 
         private int? maxOrdersValue { get; set; }
         private int? _yAxisHeight = 5; // изначально высота оси Y = 5 с шагом 1
@@ -156,16 +156,16 @@ namespace CRM.ViewModels
             PreviousWeek = new RelayCommand(Click => GoToPreviousWeek());
             NextWeek = new RelayCommand(Click => GoToNextWeek());
             TodayWeekGraff = new RelayCommand(Click => BackToTodayWeekGraff());
-            ReloadPieGraff = new RelayCommand(Click => ReloadPie());
             GoBackPerSource = new RelayCommand(Click => GoBackPercentSours());
             GoForwardPerSource = new RelayCommand(Click => GoForwardPercentSource());
+            ReloadPage = new RelayCommand(Click => ReloadAnaliticsPage());
 
             WeekPlotModel = new PlotModel();
             PieGraff = new PlotModel();
             IncomeByMonthBar = new PlotModel();
             SpendingAnalize = new PlotModel();
-            LoadTodayData();
-            LoadMonthData();
+            FieldTodayData();
+            FieldMonthData();
             LoadSourseToDataGrid();
             ExtractDataFromDatabase();
             WeekPlotModelGraff();
@@ -174,17 +174,28 @@ namespace CRM.ViewModels
             SpendingAnalizeGraff();
             RejectionPercent();
         }
-        private void LoadMonthData()
+        private void ReloadAnaliticsPage()
+        {
+            BackToTodayWeekGraff();
+            ReloadPie();
+            ReloadSourseDataGrid();
+        }
+        private void FieldMonthData()
         {
             MonthOrderCount = $"Заказов за месяц: 300";
             MonthCancelledCount = $"Отказов за месяц: 3";
             MonthIncome = $"Прибыль за месяц: 20000";
         }
-        private void LoadTodayData()
+        private void FieldTodayData()
         {
-            TodayOrdersCount = $"Заказов за сегодня: 10";
-            TodayOrdersIncame = $"Прибыль за сегодня: 50000";
+            var todayDate = _sqlService.LoadTodayOrdersIncomeData();
+            foreach( var item in todayDate )
+            {
+                TodayOrdersCount = $"Заказов за сегодня: {item.TodayOrdersCount}";
+                TodayOrdersIncame = $"Прибыль за сегодня: {item.TodayIncome}";
+            }
         }
+
         private int? CalculateYAxisAmount() 
         {
             maxOrdersValue = OrdersInRange.Max(x => x.Count);
@@ -194,15 +205,6 @@ namespace CRM.ViewModels
             }
 
             return YAxisHeight;
-        }
-        private void LoadSourseToDataGrid()
-        {
-            OrdersSourseCount.Clear();
-            var sourseList = _sqlService.LoadSourseCountToDataGtid(_Today.Month);
-            foreach(var sourse in sourseList)
-            {
-                OrdersSourseCount.Add(sourse);
-            }
         }
         private void ExtractDataFromDatabase()
         {
@@ -375,6 +377,15 @@ namespace CRM.ViewModels
             IncomeByMonthBar.Series.Add(barSeries);
         }
 
+        private void LoadSourseToDataGrid()
+        {
+            OrdersSourseCount.Clear();
+            var sourseList = _sqlService.LoadSourseCountToDataGtid(_Today.Month);
+            foreach (var sourse in sourseList)
+            {
+                OrdersSourseCount.Add(sourse);
+            }
+        }
         private void RejectionPercent()
         {
             PercentageOfRejections = $"{_Today.ToString("MMMM yyy")}";
@@ -390,6 +401,13 @@ namespace CRM.ViewModels
             _Today = _Today.AddMonths(1);
             RejectionPercent();
             LoadSourseToDataGrid();
+        }
+        private void ReloadSourseDataGrid()
+        {
+            DateTime _staticTodayMonth = DateTime.Now;
+            _Today = _staticTodayMonth;
+            LoadSourseToDataGrid();
+            RejectionPercent();
         }
 
         private void SpendingAnalizeGraff()

@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
+using System.Security.Cryptography;
 using DuckDB.NET.Data;
 
 namespace CRM.Models
@@ -284,6 +285,28 @@ namespace CRM.Models
                 }
 
                 return sourceList;
+            }
+        }
+        public List<TodayAnalizeData> LoadTodayOrdersIncomeData()
+        {
+            using(var cmd = _connection.CreateCommand())
+            {
+                var todayDataList = new List<TodayAnalizeData>();
+                cmd.CommandText = @"SELECT COUNT(*) AS TotalOrders, COALESCE(SUM(Income), 0) AS TotalIncome FROM orders WHERE DATE(OrderDate) = CURRENT_DATE"; 
+                //(посчитать все даты за сегодня) 2 заказа за сегодня : 300 прибыли за сегодня
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var todayList = new TodayAnalizeData
+                    {
+                        TodayOrdersCount = reader.GetInt32(0), // ERROR: ПЫТАЕТСЯ ЗАПИСАТЬ DateTime в Int(32)
+                        TodayIncome = reader.GetDecimal(1)
+                    };
+
+                    todayDataList.Add(todayList);
+                }
+
+                return todayDataList;
             }
         }
     }
