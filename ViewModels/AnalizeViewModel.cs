@@ -11,10 +11,13 @@ using OxyPlot.Series;
 
 namespace CRM.ViewModels
 {
+    // REFUCTOR: rule SRP, вынос построение графиков в отдельные файлы
     public class AnalizeViewModel : NotifyPropertyChange
     {
+        private readonly SQLService _sqlService = new SQLService(); // сервис запросов SQL
         private readonly DuckDatabase _db = DatabaseFactory.Instance;
-        public ObservableCollection<RangeWithOrders> rangeWithOrders { get; } = new(); // принимает вытягиваемые данные из базы данных в модель (дата | колличество заказов)
+
+        public ObservableCollection<RangeWithOrders> OrdersInRange { get; } = new(); // принимает вытягиваемые данные из базы данных в модель (дата | колличество заказов)
         public ObservableCollection<PriceByMonth> priceByMonths { get; } = new();
         public ObservableCollection<SourseCount> OrdersSourseCount { get; } = new();
         public PlotModel WeekPlotModel { get; set; }
@@ -186,17 +189,25 @@ namespace CRM.ViewModels
         private void LoadSourseToDataGrid()
         {
             OrdersSourseCount.Clear();
-            _db.LoadSourseCountToDataGtid(OrdersSourseCount, _Today.Month);
+            var sourseList = _sqlService.LoadSourseCountToDataGtid(_Today.Month);
+            foreach(var sourse in sourseList)
+            {
+                OrdersSourseCount.Add(sourse);
+            }
         }
         private void ExtractDataFromDatabase()
         {
-            rangeWithOrders.Clear();
-            _db.SelectDataToWeekGraff(rangeWithOrders, CenterOfWeek.AddDays(-3), CenterOfWeek.AddDays(3)); // формирование данных типо: (дата | колличество заказов), в диапазоне []
+            OrdersInRange.Clear();
+            var ordersInRange = _sqlService.SelectDataToWeekGraff(CenterOfWeek.AddDays(-3), CenterOfWeek.AddDays(3));
+            foreach(var order in ordersInRange)
+            {
+                OrdersInRange.Add(order);
+            }
         }
         private void WeekPlotModelGraff()
         {
             WeekPlotModel.Series.Clear();
-            maxOrdersValue = rangeWithOrders.Max(x => x.Count);
+            maxOrdersValue = OrdersInRange.Max(x => x.Count);
             if (YAxisHeight < maxOrdersValue)
             {
                 YAxisHeight = maxOrdersValue + 1;
@@ -254,7 +265,7 @@ namespace CRM.ViewModels
         }
         private void CalculateWeekGraffPosition(LineSeries lineSeries)
         {
-            foreach (var order in rangeWithOrders)
+            foreach (var order in OrdersInRange)
             {
                 int x = (int)((order.Date - CenterOfWeek.AddDays(-3)).TotalDays + 1);
                 double y = order.Count;

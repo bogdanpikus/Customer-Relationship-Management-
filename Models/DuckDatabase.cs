@@ -196,13 +196,14 @@ namespace CRM.Models
                 return cmd.ExecuteNonQuery()>0;
             }
         }
-        public void SelectDataToWeekGraff(ObservableCollection<RangeWithOrders> rangeWithOrders, DateTime startOfRangeDate, DateTime endOfRangeDate)
+        public List<RangeWithOrders> SelectDataToWeekGraff(DateTime start, DateTime end)
         {
             using(var cmd = _connection.CreateCommand())
             {
+                var rangeList = new List<RangeWithOrders>();
                 cmd.CommandText = @"SELECT OrderDate, COUNT(*) AS TotalOrdersForDay FROM orders WHERE OrderDate BETWEEN ? AND ? GROUP BY OrderDate ORDER BY OrderDate";
-                cmd.Parameters.Add(new DuckDBParameter { Value = startOfRangeDate });
-                cmd.Parameters.Add(new DuckDBParameter { Value = endOfRangeDate });
+                cmd.Parameters.Add(new DuckDBParameter { Value = start });
+                cmd.Parameters.Add(new DuckDBParameter { Value = end });
                 using var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -212,8 +213,9 @@ namespace CRM.Models
                         Count = reader.GetInt32(1)
                     };
 
-                    rangeWithOrders.Add(ordersPerDayItem);
+                    rangeList.Add(ordersPerDayItem);
                 }
+                return rangeList;
             }
         }
         private string GetMonthName(string monthName)
@@ -257,10 +259,11 @@ namespace CRM.Models
                 }
             }
         }
-        public void LoadSourseCountToDataGtid(ObservableCollection<SourseCount> sourceCount, int month)
+        public List<SourseCount> LoadSourseCountToDataGtid(int month)
         {
             using (var cmd = _connection.CreateCommand())
             {
+                var sourceList = new List<SourseCount>();
                 cmd.CommandText = @"SELECT Organization, COUNT(*) AS CountTotal FROM orders WHERE strftime('%m', OrderDate) = ? 
                                    AND Organization IS NOT NULL
                                    GROUP BY Organization ORDER BY Organization";
@@ -274,8 +277,10 @@ namespace CRM.Models
                         Count = reader.GetInt32(1)
                     };
 
-                    sourceCount.Add(sourseModel);
+                    sourceList.Add(sourseModel);
                 }
+
+                return sourceList;
             }
         }
     }
