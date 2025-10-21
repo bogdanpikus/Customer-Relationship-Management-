@@ -263,15 +263,16 @@ namespace CRM.Models
                 return priceList;
             }
         }
-        public List<SourseCount> LoadSourseCountToDataGtid(int month)
+        public List<SourseCount> LoadSourseCountToDataGtid(int month, int year)
         {
             using (var cmd = _connection.CreateCommand())
             {
                 var sourceList = new List<SourseCount>();
                 cmd.CommandText = @"SELECT Organization, COUNT(*) AS CountTotal FROM orders WHERE strftime('%m', OrderDate) = ? 
-                                   AND Organization IS NOT NULL
+                                   AND strftime('%Y', OrderDate) = ? AND Organization IS NOT NULL
                                    GROUP BY Organization ORDER BY Organization";
                 cmd.Parameters.Add(new DuckDBParameter { Value = month });
+                cmd.Parameters.Add(new DuckDBParameter { Value =  year });
                 using var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -307,6 +308,35 @@ namespace CRM.Models
                 }
 
                 return todayDataList;
+            }
+        }
+        public List<MonthAnalizeData> LoadMonthOrdersData(int month, int year)
+        {
+            using(var cmd = _connection.CreateCommand())
+            {
+                var monthDataList = new List<MonthAnalizeData>();
+                cmd.CommandText = @"SELECT COUNT(OrderDate) AS MonthOrders, SUM(Status = 'Отмененный') AS TotalRejections,
+                                    COALESCE(SUM(Income), 0) AS MonthIncome, SUM(Status = 'Успешный') AS TotalSuccess,
+                                    SUM(Status = 'Обрабатывается') AS TotalInProcess, SUM(Status = 'Доставляется') AS TotalDeliver FROM orders 
+                                    WHERE strftime('%m', OrderDate) = ? AND strftime('%Y', OrderDate) = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value = month });
+                cmd.Parameters.Add(new DuckDBParameter { Value = year });
+                using var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var monthList = new MonthAnalizeData
+                    {
+                        MonthOrderCount = reader.IsDBNull(0) ? 0 : reader.GetInt32(0),
+                        MonthOrderRejections = reader.IsDBNull(1) ? 0 : reader.GetInt32(1),
+                        MonthIncome = reader.IsDBNull(2) ? 0 : reader.GetDecimal(2),
+                        MonthSuccessCount = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
+                        MonthInProcessCount = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                        MonthDeliverCount = reader.IsDBNull(5) ? 0 : reader.GetInt32(5)
+                    };
+
+                    monthDataList.Add(monthList);
+                }
+                return monthDataList;
             }
         }
     }

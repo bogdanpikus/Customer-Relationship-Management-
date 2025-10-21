@@ -27,9 +27,9 @@ namespace CRM.Services
         {
             return _db.UpdateOrder(order);
         }
-        public List<SourseCount> LoadSourseCountToDataGtid(int month)
+        public List<SourseCount> LoadSourseCountToDataGtid(int month, int year)
         {
-            return _db.LoadSourseCountToDataGtid(month);
+            return _db.LoadSourseCountToDataGtid(month, year);
         }
         public List<RangeWithOrders> SelectDataToWeekGraff(DateTime start, DateTime end)
         {
@@ -39,9 +39,13 @@ namespace CRM.Services
         {
             return _db.SelectAllPriceByMonth();
         }
-        public List<TodayAnalizeData> LoadTodayOrdersIncomeData()
+        public List<TodayAnalizeData> LoadTodayOrdersData()
         {
             return _db.LoadTodayOrdersIncomeData();
+        }
+        public List<MonthAnalizeData> LoadMonthOrdersData(int month, int year)
+        {
+            return _db.LoadMonthOrdersData(month, year);
         }
     }
 }

@@ -65,7 +65,7 @@
             </StackPanel>
 
 
-            <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Vertical"  HorizontalAlignment="Left" ToolTip="За ваш месяц" Cursor="Help">
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical"  HorizontalAlignment="Left" ToolTip="За ваш месяц" Cursor="Help">
                 <DataGrid ItemsSource="{Binding OrdersSourseCount}" Width="469" Height="180" Background="WhiteSmoke"
                            ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                            EnableColumnVirtualization="True" EnableRowVirtualization="True"
@@ -79,7 +79,7 @@
                 </DataGrid>
 
 
-                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="469" 
+                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="469" 
                      ToolTip="% отмененных заказов за ваш месяц" Cursor="Help">
                     <Button  Command="{Binding GoBackPerSource}" Content="&lt;" Background="WhiteSmoke" BorderThickness="0" FontSize="30" Width="30" ToolTip="На месяц назад" />
                     <TextBox Width="409"  Text="{Binding PercentageOfRejections}" IsEnabled="False" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
@@ -89,7 +89,7 @@
                 </StackPanel>
             </StackPanel>
             
-            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+            <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal">
                 <DataGrid ItemsSource="{Binding ABC_Analize}" Width="469" HorizontalAlignment="Right" Background="WhiteSmoke" 
                           ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                           HorizontalContentAlignment="Center" BorderThickness="2" BorderBrush="DarkRed"
@@ -104,11 +104,17 @@
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" ToolTip="Всего заказов/отказов/прибыли за ваш месяц" Cursor="Help">
-                <TextBox HorizontalAlignment="Right" VerticalAlignment="Top" Width="469" Height="100" FontSize="35"
+                <TextBox HorizontalAlignment="Right" VerticalAlignment="Top" Width="469" Height="50" FontSize="30"
                          HorizontalContentAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False" Text="{Binding MonthOrderCount}" />
-                <TextBox HorizontalAlignment="Right" VerticalAlignment="Center" Width="469" Height="100" FontSize="35"
+                <TextBox HorizontalAlignment="Right" VerticalAlignment="Center" Width="469" Height="50" FontSize="30"
+                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False" Text="{Binding MonthSuccessCount}" />
+                <TextBox HorizontalAlignment="Right" VerticalAlignment="Center" Width="469" Height="50" FontSize="30"
+                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False" Text="{Binding MonthInProcessCount}" />
+                <TextBox HorizontalAlignment="Right" VerticalAlignment="Center" Width="469" Height="50" FontSize="30"
+                         HorizontalContentAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False" Text="{Binding MonthDeliverCount}" />
+                <TextBox HorizontalAlignment="Right" VerticalAlignment="Center" Width="469" Height="50" FontSize="30"
                          HorizontalContentAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False" Text="{Binding MonthCancelledCount}" />
-                <TextBox HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="469" Height="100" FontSize="35"
+                <TextBox HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="469" Height="50" FontSize="30"
                          HorizontalContentAlignment="Left" VerticalContentAlignment="Center" IsEnabled="False" Text="{Binding MonthIncome}" />
             </StackPanel>
         </Grid>

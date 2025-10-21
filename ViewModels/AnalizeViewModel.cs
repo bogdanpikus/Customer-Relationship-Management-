@@ -12,7 +12,7 @@ using OxyPlot.Series;
 
 namespace CRM.ViewModels
 {
-    // REFUCTOR: rule SRP, вынос построение графиков в отдельные файлы
+    // REFUCTOR: rule SRP, вынос построение графиков в отдельные файлы в папку ChartsBuilder
     public class AnalizeViewModel : NotifyPropertyChange
     {
         private readonly SQLService _sqlService = new SQLService(); // сервис запросов SQL
@@ -31,7 +31,19 @@ namespace CRM.ViewModels
         public ICommand GoForwardPerSource { get; set; }
         public ICommand ReloadPage { get; set; }
 
-        private int? maxOrdersValue { get; set; }
+        private int? _maxOrdersValue;
+        private int? maxOrdersValue
+        {
+            get => _maxOrdersValue;
+            set
+            {
+                if(_maxOrdersValue != value)
+                {
+                    _maxOrdersValue = value;
+                    OnPropertyChange(nameof(maxOrdersValue));
+                }
+            }
+        }
         private int? _yAxisHeight = 5; // изначально высота оси Y = 5 с шагом 1
         private int? YAxisHeight // присваеваем значение 10, если заказов становится или было вытянуто 5 или > 5 и т.д
         {
@@ -150,6 +162,45 @@ namespace CRM.ViewModels
                 }
             }
         }
+        private string? _monthSuccessCount;
+        public string? MonthSuccessCount
+        {
+            get => _monthSuccessCount;
+            set
+            {
+                if(_monthSuccessCount != value)
+                {
+                    _monthSuccessCount = value;
+                    OnPropertyChange(nameof(MonthSuccessCount));
+                }
+            }
+        }
+        private string? _monthInProcessCount;
+        public string? MonthInProcessCount
+        {
+            get => _monthInProcessCount;
+            set
+            {
+                if(_monthInProcessCount != value)
+                {
+                    _monthInProcessCount = value;
+                    OnPropertyChange(nameof(MonthInProcessCount));
+                }
+            }
+        }
+        private string? _monthDeliverCount;
+        public string? MonthDeliverCount
+        {
+            get => _monthDeliverCount;
+            set
+            {
+                if(_monthDeliverCount != value)
+                {
+                    _monthDeliverCount = value;
+                    OnPropertyChange(nameof(MonthDeliverCount));
+                }
+            }
+        }
 
         public AnalizeViewModel()
         {
@@ -179,32 +230,43 @@ namespace CRM.ViewModels
             BackToTodayWeekGraff();
             ReloadPie();
             ReloadSourseDataGrid();
+            FieldTodayData();
+            FieldMonthData();
         }
         private void FieldMonthData()
         {
-            MonthOrderCount = $"Заказов за месяц: 300";
-            MonthCancelledCount = $"Отказов за месяц: 3";
-            MonthIncome = $"Прибыль за месяц: 20000";
+            var monthOrders = _sqlService.LoadMonthOrdersData(_Today.Month, _Today.Year);
+            foreach (var order in monthOrders)
+            {
+                MonthOrderCount = $"Заказов за месяц: {order.MonthOrderCount}";
+                MonthSuccessCount = $"Успешных за месяц: {order.MonthSuccessCount} ";
+                MonthInProcessCount = $"Находятся в обработке: {order.MonthInProcessCount} ";
+                MonthDeliverCount = $"Доставляются: {order.MonthDeliverCount}";
+                MonthCancelledCount = $"Отказов за месяц: {order.MonthOrderRejections}";
+                MonthIncome = $"Прибыль за месяц: {order.MonthIncome}";
+            }
         }
         private void FieldTodayData()
         {
-            var todayDate = _sqlService.LoadTodayOrdersIncomeData();
-            foreach( var item in todayDate )
+            var todayOrders = _sqlService.LoadTodayOrdersData();
+            foreach( var item in todayOrders )
             {
                 TodayOrdersCount = $"Заказов за сегодня: {item.TodayOrdersCount}";
                 TodayOrdersIncame = $"Прибыль за сегодня: {item.TodayIncome}";
             }
         }
 
-        private int? CalculateYAxisAmount() 
+        private void CalculateYAxisAmount() 
         {
-            maxOrdersValue = OrdersInRange.Max(x => x.Count);
+            maxOrdersValue = OrdersInRange.Any() ? OrdersInRange.Max(x => x.Count) : 0;
             if (YAxisHeight < maxOrdersValue)
             {
                 YAxisHeight = maxOrdersValue + 1;
             }
-
-            return YAxisHeight;
+            else
+            {
+                YAxisHeight = 5;
+            }
         }
         private void ExtractDataFromDatabase()
         {
@@ -380,7 +442,7 @@ namespace CRM.ViewModels
         private void LoadSourseToDataGrid()
         {
             OrdersSourseCount.Clear();
-            var sourseList = _sqlService.LoadSourseCountToDataGtid(_Today.Month);
+            var sourseList = _sqlService.LoadSourseCountToDataGtid(_Today.Month, _Today.Year);
             foreach (var sourse in sourseList)
             {
                 OrdersSourseCount.Add(sourse);
@@ -395,12 +457,14 @@ namespace CRM.ViewModels
             _Today = _Today.AddMonths(-1);
             RejectionPercent();
             LoadSourseToDataGrid();
+            FieldMonthData();
         }
         private void GoForwardPercentSource()
         {
             _Today = _Today.AddMonths(1);
             RejectionPercent();
             LoadSourseToDataGrid();
+            FieldMonthData();
         }
         private void ReloadSourseDataGrid()
         {

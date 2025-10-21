@@ -164,5 +164,44 @@ namespace CRM.Models
                 }
             }
         }
+        private int? _monthSuccessCount;
+        public int? MonthSuccessCount
+        {
+            get => _monthSuccessCount;
+            set
+            {
+                if(_monthSuccessCount != value)
+                {
+                    _monthSuccessCount = value;
+                    OnPropertyChange(nameof(MonthSuccessCount));
+                }
+            }
+        }
+        private int? _monthInProcessCount;
+        public int? MonthInProcessCount
+        {
+            get => _monthInProcessCount;
+            set
+            {
+                if(_monthInProcessCount != value)
+                {
+                    _monthInProcessCount = value;
+                    OnPropertyChange(nameof(MonthInProcessCount));
+                }
+            }
+        }
+        private int? _monthDeliverCount;
+        public int? MonthDeliverCount
+        {
+            get => _monthDeliverCount;
+            set
+            {
+                if(_monthDeliverCount != value)
+                {
+                    _monthDeliverCount = value;
+                    OnPropertyChange(nameof(MonthDeliverCount));
+                }
+            }
+        }
     }
 }
