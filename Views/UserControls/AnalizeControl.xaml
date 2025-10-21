@@ -61,7 +61,9 @@
             <StackPanel Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3" Orientation="Horizontal">
                 <oxp:PlotView Model="{Binding IncomeByMonthBar}" Width="1010" Height="300" VerticalAlignment="Bottom"
                               HorizontalAlignment="Left" Background="WhiteSmoke" IsEnabled="False"/>
-                <oxp:PlotView Model="{Binding SpendingAnalize}" Width="400" Background="WhiteSmoke" HorizontalAlignment="Right" IsEnabled="False"/>
+                <oxp:PlotView Model="{Binding SpendingAnalize}" Width="400" Background="WhiteSmoke" HorizontalAlignment="Right" IsEnabled="False">
+                  
+                </oxp:PlotView>
             </StackPanel>
 
 

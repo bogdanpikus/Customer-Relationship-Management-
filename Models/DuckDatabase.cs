@@ -339,5 +339,94 @@ namespace CRM.Models
                 return monthDataList;
             }
         }
+        private string GetMonthNameForYearIncome(string monthName)
+        {
+            return monthName switch
+            {
+                "01" => "Янв",
+                "02" => "Фев",
+                "03" => "Мар",
+                "04" => "Апр",
+                "05" => "Май",
+                "06" => "Июн",
+                "07" => "Июл",
+                "08" => "Авг",
+                "09" => "Сен",
+                "10" => "Окт",
+                "11" => "Нояб",
+                "12" => "Дек",
+                _ => "НЕИЗВЕСТНО"
+            };
+        }
+
+        public List<YearIncome> ExtractYearIncome()
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                var yearList = new List<YearIncome>();
+                cmd.CommandText = @"SELECT strftime('%m', OrderDate) AS Month,
+                                    SUM(Income) AS TotalIncome From orders WHERE OrderDate IS NOT NULL AND
+                                    EXTRACT(YEAR FROM OrderDate) = EXTRACT(YEAR FROM CURRENT_DATE)
+                                    GROUP BY strftime('%m', OrderDate) ORDER BY Month";
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var month = reader.GetString(0);
+                    var income = reader.IsDBNull(1) ? 0 : reader.GetDecimal(1);
+
+                    yearList.Add(new YearIncome
+                    {
+                        Month = GetMonthNameForYearIncome(month),
+                        MonthIncome = income
+                    });
+                }
+                return yearList;
+            }
+        }
+
+        private string GetMonthNameForYearSpendings(string monthName)
+        {
+            return monthName switch
+            {
+                "01" => "Янв",
+                "02" => "Фев",
+                "03" => "Мар",
+                "04" => "Апр",
+                "05" => "Май",
+                "06" => "Июн",
+                "07" => "Июл",
+                "08" => "Авг",
+                "09" => "Сен",
+                "10" => "Окт",
+                "11" => "Нояб",
+                "12" => "Дек",
+                _ => "НЕИЗВЕСТНО"
+            };
+        }
+        public List<YearSpendings> ExtractYearSpendings()
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                var yearList = new List<YearSpendings>();
+                cmd.CommandText = @"SELECT strftime('%m', OrderDate) AS Month,
+                                    SUM(Spending) AS TotalSpendings From orders WHERE OrderDate IS NOT NULL AND
+                                    EXTRACT(YEAR FROM OrderDate) = EXTRACT(YEAR FROM CURRENT_DATE)
+                                    GROUP BY strftime('%m', OrderDate) ORDER BY Month";
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    var month = reader.GetString(0);
+                    var spendings = reader.IsDBNull(1) ? 0 : reader.GetDecimal(1);
+
+                    yearList.Add(new YearSpendings
+                    {
+                        Month = GetMonthNameForYearSpendings(month),
+                        MonthSpendings = spendings
+                    });
+                }
+
+                return yearList;
+            }
+        }
     }
 }

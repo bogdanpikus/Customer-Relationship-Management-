@@ -47,5 +47,13 @@ namespace CRM.Services
         {
             return _db.LoadMonthOrdersData(month, year);
         }
+        public List<YearIncome> ExtractYearIncome()
+        {
+            return _db.ExtractYearIncome();
+        }
+        public List<YearSpendings> ExtractYearSpendings()
+        {
+            return _db.ExtractYearSpendings();
+        }
     }
 }

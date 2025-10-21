@@ -19,6 +19,8 @@ namespace CRM.ViewModels
         public ObservableCollection<RangeWithOrders> OrdersInRange { get; } = new();
         public ObservableCollection<PriceByMonth> PriceMonthCollection { get; } = new();
         public ObservableCollection<SourseCount> OrdersSourseCount { get; } = new();
+        public ObservableCollection<YearIncome> YearIncomes { get; } = new();
+        public ObservableCollection<YearSpendings> YearSpendings { get; } = new();
         public PlotModel WeekPlotModel { get; set; }
         public PlotModel PieGraff { get; set; }
         public PlotModel IncomeByMonthBar { get; set; }
@@ -37,7 +39,7 @@ namespace CRM.ViewModels
             get => _maxOrdersValue;
             set
             {
-                if(_maxOrdersValue != value)
+                if (_maxOrdersValue != value)
                 {
                     _maxOrdersValue = value;
                     OnPropertyChange(nameof(maxOrdersValue));
@@ -76,7 +78,7 @@ namespace CRM.ViewModels
             get => _today;
             set
             {
-                if(_today != value)
+                if (_today != value)
                 {
                     _today = value;
                     OnPropertyChange(nameof(_Today));
@@ -98,12 +100,12 @@ namespace CRM.ViewModels
             }
         }
         private string? _todayOrdersCount;
-        public string? TodayOrdersCount 
-        { 
+        public string? TodayOrdersCount
+        {
             get => _todayOrdersCount;
             set
             {
-                if(_todayOrdersCount != value)
+                if (_todayOrdersCount != value)
                 {
                     _todayOrdersCount = value;
                     OnPropertyChange(nameof(TodayOrdersCount));
@@ -116,7 +118,7 @@ namespace CRM.ViewModels
             get => _todayOrdersIncome;
             set
             {
-                if(_todayOrdersIncome != value)
+                if (_todayOrdersIncome != value)
                 {
                     _todayOrdersIncome = value;
                     OnPropertyChange(nameof(TodayOrdersIncame));
@@ -129,7 +131,7 @@ namespace CRM.ViewModels
             get => _monthOrderCount;
             set
             {
-                if(_monthOrderCount != value)
+                if (_monthOrderCount != value)
                 {
                     _monthOrderCount = value;
                     OnPropertyChange(nameof(MonthOrderCount));
@@ -142,7 +144,7 @@ namespace CRM.ViewModels
             get => _monthCancelledCount;
             set
             {
-                if(_monthCancelledCount != value)
+                if (_monthCancelledCount != value)
                 {
                     _monthCancelledCount = value;
                     OnPropertyChange(nameof(MonthCancelledCount));
@@ -155,7 +157,7 @@ namespace CRM.ViewModels
             get => _monthIncome;
             set
             {
-                if(_monthIncome != value)
+                if (_monthIncome != value)
                 {
                     _monthIncome = value;
                     OnPropertyChange(nameof(MonthIncome));
@@ -168,7 +170,7 @@ namespace CRM.ViewModels
             get => _monthSuccessCount;
             set
             {
-                if(_monthSuccessCount != value)
+                if (_monthSuccessCount != value)
                 {
                     _monthSuccessCount = value;
                     OnPropertyChange(nameof(MonthSuccessCount));
@@ -181,7 +183,7 @@ namespace CRM.ViewModels
             get => _monthInProcessCount;
             set
             {
-                if(_monthInProcessCount != value)
+                if (_monthInProcessCount != value)
                 {
                     _monthInProcessCount = value;
                     OnPropertyChange(nameof(MonthInProcessCount));
@@ -194,7 +196,7 @@ namespace CRM.ViewModels
             get => _monthDeliverCount;
             set
             {
-                if(_monthDeliverCount != value)
+                if (_monthDeliverCount != value)
                 {
                     _monthDeliverCount = value;
                     OnPropertyChange(nameof(MonthDeliverCount));
@@ -222,7 +224,7 @@ namespace CRM.ViewModels
             WeekPlotModelGraff();
             PieModelGraff();
             IncomeBarGraff();
-            SpendingAnalizeGraff();
+            SpendingAnalizeBar();
             RejectionPercent();
         }
         private void ReloadAnaliticsPage()
@@ -249,14 +251,14 @@ namespace CRM.ViewModels
         private void FieldTodayData()
         {
             var todayOrders = _sqlService.LoadTodayOrdersData();
-            foreach( var item in todayOrders )
+            foreach (var item in todayOrders)
             {
                 TodayOrdersCount = $"Заказов за сегодня: {item.TodayOrdersCount}";
                 TodayOrdersIncame = $"Прибыль за сегодня: {item.TodayIncome}";
             }
         }
 
-        private void CalculateYAxisAmount() 
+        private void CalculateYAxisAmount()
         {
             maxOrdersValue = OrdersInRange.Any() ? OrdersInRange.Max(x => x.Count) : 0;
             if (YAxisHeight < maxOrdersValue)
@@ -272,13 +274,14 @@ namespace CRM.ViewModels
         {
             OrdersInRange.Clear();
             var ordersInRange = _sqlService.SelectDataToWeekGraff(CenterOfWeek.AddDays(-3), CenterOfWeek.AddDays(3));
-            foreach(var order in ordersInRange)
+            foreach (var order in ordersInRange)
             {
                 OrdersInRange.Add(order);
             }
         }
         private void WeekPlotModelGraff()
         {
+            // REFUCTOR: TrackerFormatString не работает
             WeekPlotModel.Series.Clear();
             CalculateYAxisAmount();
 
@@ -341,7 +344,7 @@ namespace CRM.ViewModels
                 lineSeries.Points.Add(new DataPoint(x + 1, y));
             }
         }
-        private void UpdateTitle() // обновления UI Plot Title при переключении +1 -1 от сегодняшнего дня
+        private void UpdateTitle()
         {
             var startDate = CenterOfWeek.AddDays(-3);
             var endDate = CenterOfWeek.AddDays(3);
@@ -402,7 +405,7 @@ namespace CRM.ViewModels
 
             pieSeries.Slices.Clear();
 
-            foreach(var month in PriceMonthCollection)
+            foreach (var month in PriceMonthCollection)
             {
                 pieSeries.Slices.Add(new PieSlice(month.Month, month.SumOfPriceByMonth) { Fill = OxyColors.WhiteSmoke });
             }
@@ -416,27 +419,6 @@ namespace CRM.ViewModels
             PriceMonthCollection.Clear();
             PieModelGraff();
             PieGraff.InvalidatePlot(true);
-        }
-        
-        private void IncomeBarGraff()
-        {
-            IncomeByMonthBar.Series.Clear();
-            IncomeByMonthBar.Title = "Столбиковая диаграмма прибыли по месяцам";
-            var barSeries = new BarSeries
-            {
-                ItemsSource = new List<BarItem>(new[]
-                {
-                    new BarItem{ Value = 100 },
-                    new BarItem{ Value = 200 },
-                    new BarItem{ Value = 300 },
-                    new BarItem{ Value = 400 },
-                    new BarItem{ Value = 500 }  
-                }),
-                BarWidth = 100
-            };
-           
-
-            IncomeByMonthBar.Series.Add(barSeries);
         }
 
         private void LoadSourseToDataGrid()
@@ -474,13 +456,84 @@ namespace CRM.ViewModels
             RejectionPercent();
         }
 
-        private void SpendingAnalizeGraff()
+        private void SQLExtractYearIncome()
         {
+            var yearIncome = _sqlService.ExtractYearIncome(); //Авг : 0 Окт: 1600 Нояб: 100 Дек: 0
+            foreach (var month in yearIncome)
+            {
+                YearIncomes.Add(month);
+            }
+        }
+        private void IncomeBarGraff()
+        {
+            // REFUCTOR: сделано через жопу просто чтобы перейти на следующий этап из-за дедлайна (100% переделать)
+            SQLExtractYearIncome();
+            IncomeByMonthBar.Series.Clear();
+            IncomeByMonthBar.Axes.Clear();
+            IncomeByMonthBar.Title = $"Столбиковая диаграмма прибыли по месяцам за {_Today.Year}";
+
+            var month = YearIncomes.Select(m => m.Month).ToList();
+            var income = YearIncomes.Select(m => new BarItem { Value = (double)m.MonthIncome }).ToList();
+
+            IncomeByMonthBar.Axes.Add(new CategoryAxis
+            {
+                Position = AxisPosition.Left,
+                ItemsSource = month
+            });
+
+            IncomeByMonthBar.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Minimum = 0,
+            });
+
+            var barSeries = new BarSeries
+            {
+                ItemsSource = income,
+                StrokeThickness = 2,
+                TrackerFormatString = "X = {0}, Y = {0}"
+            };
+
+            IncomeByMonthBar.Series.Add(barSeries);
+        }
+
+        private void SQLExtractYearSpendings()
+        {
+            var yearSpendings = _sqlService.ExtractYearSpendings();
+            foreach(var month in yearSpendings)
+            {
+                YearSpendings.Add(month);
+            }
+        }
+        private void SpendingAnalizeBar()
+        {
+            // REFUCTOR: сделано через жопу просто чтобы перейти на следующий этап из-за дедлайна (100% переделать)
+            SQLExtractYearSpendings();
             SpendingAnalize.Series.Clear();
+            SpendingAnalize.Axes.Clear();
             SpendingAnalize.Title = "Анализ расходов по месяцам";
+
+            var month = YearSpendings.Select(m => m.Month).ToList();
+            var spendings = YearSpendings.Select(m => new BarItem { Value = (double)m.MonthSpendings }).ToList();
+
+            SpendingAnalize.Axes.Add(new CategoryAxis
+            {
+                Position = AxisPosition.Left,
+                ItemsSource = month
+            });
+
+            SpendingAnalize.Axes.Add(new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Minimum = 0,
+                Maximum = 1000
+            });
+
             var series = new BarSeries
             {
-                BarWidth = 100
+                Title = "Расходы",
+                StrokeThickness = 2,
+                ItemsSource = spendings
             };
 
             SpendingAnalize.Series.Add(series);

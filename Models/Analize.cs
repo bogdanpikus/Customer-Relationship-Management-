@@ -204,4 +204,64 @@ namespace CRM.Models
             }
         }
     }
+
+    public class YearIncome : NotifyPropertyChange
+    {
+        private string? _month;
+        public string? Month
+        {
+            get => _month;
+            set
+            {
+                if(_month != value)
+                {
+                    _month = value;
+                    OnPropertyChange(nameof(Month));
+                }
+            }
+        }
+        private decimal?_monthIncome;
+        public decimal? MonthIncome
+        {
+            get => _monthIncome;
+            set
+            {
+                if(_monthIncome != value)
+                {
+                    _monthIncome = value;
+                    OnPropertyChange(nameof(MonthIncome));
+                }
+            }
+        }
+    }
+
+    public class YearSpendings : NotifyPropertyChange
+    {
+        private string? _month;
+        public string? Month
+        {
+            get => _month;
+            set
+            {
+                if(_month != value)
+                {
+                    _month = value;
+                    OnPropertyChange(nameof(Month));
+                }
+            }
+        }
+        private decimal? _monthSpendings;
+        public decimal? MonthSpendings
+        {
+            get => _monthSpendings;
+            set
+            {
+                if(_monthSpendings != value)
+                {
+                    _monthSpendings = value;
+                    OnPropertyChange(nameof(MonthSpendings));
+                }
+            }
+        }
+    } 
 }
