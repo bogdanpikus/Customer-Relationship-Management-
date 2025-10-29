@@ -1,5 +1,6 @@
 ﻿using CRM.Interfaces;
 using CRM.ViewModels;
+using CRM.ViewModels.ModalWindowViewModels;
 using CRM.Views.ModalControls;
 using CRM.Views.ModalWindows;
 using System.Windows;
@@ -18,6 +19,7 @@ namespace CRM.Services
         {
             _mapping[typeof(OrderModalViewModel)] = typeof(OrderModalWindow);
             _mapping[typeof(EditingViewModal)] = typeof(EditingModalWindow);
+            _mapping[typeof(CustomerAddViewModel)] = typeof(CustomerAddWindow);
         }
         public bool ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : class
         {

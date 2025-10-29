@@ -6,12 +6,81 @@
              xmlns:local="clr-namespace:CRM.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="WhiteSmoke" ShowGridLines="True">
+    <Grid Background="DarkGray" ShowGridLines="False">
         <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label FontSize="50">Contacts</Label>
+
+        <DockPanel Grid.Row="0" LastChildFill="False" VerticalAlignment="Top">
+            <Button Command="{Binding OpenModalWindowButton}" Width="120" Height="50" Background="Snow"
+             Foreground="Black" FontWeight="Medium" FontSize="18" 
+             BorderBrush="Black" BorderThickness="2" Cursor="Hand">
+                <TextBlock Text="Добавить контакт" TextWrapping="Wrap" TextAlignment="Center"
+                           VerticalAlignment="Center"/>
+            </Button>
+            <Button Width="170" Height="50" Background="Snow"
+             Foreground="Black" FontWeight="Medium" FontSize="18"
+             BorderBrush="Black" BorderThickness="2" Cursor="Hand">
+                <TextBlock Text="Редактировать контакт" TextWrapping="Wrap" VerticalAlignment="Center"
+                           HorizontalAlignment="Center" TextAlignment="Center"/>
+            </Button>
+            <Button Width="120" Height="50" Background="Snow"
+             Foreground="Black" FontWeight="Medium" FontSize="18"
+             BorderBrush="Black" BorderThickness="2" Cursor="Hand">
+                <TextBlock Text="Удалить контакт" TextWrapping="Wrap" VerticalAlignment="Center"
+                           HorizontalAlignment="Center" TextAlignment="Center"/>
+            </Button>
+            <ComboBox Width="auto" Height="50" Background="Snow" ItemsSource="{Binding Filter}"
+             Foreground="Black" FontWeight="Medium" FontSize="18"
+             BorderBrush="Black" BorderThickness="2" VerticalContentAlignment="Center"
+             HorizontalContentAlignment="Center" Cursor="Hand" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}">
+            </ComboBox>
+        </DockPanel>
+
+        <DockPanel Grid.Row="1" Margin="0,10,0,0">
+            <DockPanel Grid.Row="0" DockPanel.Dock="Top" Background="LightGray" Height="42">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Tag="поиск..." Width="400" Cursor="IBeam"
+             Margin="10,0,0,0" Text="{Binding SearchInOrderPageTable, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Width="30" Height="auto" BorderBrush="Black" Cursor="Hand"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Height="32">
+                    <Button Width="50" Margin="2" BorderThickness="0" Background="Snow" Cursor="Hand"
+                            VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                        <Image Source="/Assets/Settings_ico.ico" Width="44" Height="24" Stretch="Uniform"/>
+                    </Button>
+                </StackPanel>
+            </DockPanel>
+
+            <DataGrid  Grid.Row="1" ItemsSource="{Binding CustomerCollection}" 
+                       HorizontalScrollBarVisibility="Visible" AutoGenerateColumns="False"
+                       VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" 
+                       ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                       FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
+                       GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
+                       RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
+                       EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
+                       VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
+                       SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" 
+                       Cursor="Hand" ColumnWidth="155" HeadersVisibility="Column" HorizontalContentAlignment="Center">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn  Width="25" IsReadOnly="False">
+                        <DataGridCheckBoxColumn.Header>
+                            <CheckBox IsEnabled="False"/>
+                        </DataGridCheckBoxColumn.Header>
+                    </DataGridCheckBoxColumn>
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}" />
+                    <DataGridTextColumn Header="Имя" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding Surename}" />
+                    <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" />
+                    <DataGridTextColumn Header="Почта" Binding="{Binding Email}" />
+                    <DataGridTextColumn Header="Колличество заказов" Binding="{Binding CustomerOrderCount}" />
+                    <DataGridTextColumn Header="Вся прибыль с клиента" Binding="{Binding CustomerSumOfIncome}" />
+                    <DataGridTextColumn Header="Купленные товары" Binding="{Binding CustomerPurchases}" />
+                    <DataGridTextColumn Header="Последний заказ" Binding="{Binding CustomerLastOrderDate}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
     </Grid>
 </UserControl>

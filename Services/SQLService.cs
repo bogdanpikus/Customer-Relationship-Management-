@@ -55,5 +55,9 @@ namespace CRM.Services
         {
             return _db.ExtractYearSpendings();
         }
+        public List<Customer> ExtractCustomers()
+        {
+            return _db.ExtractCustomers();
+        }
     }
 }

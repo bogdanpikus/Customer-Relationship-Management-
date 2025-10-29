@@ -296,6 +296,10 @@ namespace CRM.Models
         public string? Phone { get; set; }
 
         // its variable
+        public string? Email {  get; set; }
         public int AmountOrders { get; set; }
+        public decimal? CustomerSumOfIncome { get; set; }
+        public string? CustomerPurchases { get; set; }
+        public DateTime CustomerLastOrderDate { get; set; }
     }
 }

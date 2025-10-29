@@ -428,5 +428,14 @@ namespace CRM.Models
                 return yearList;
             }
         }
+        public List<Customer> ExtractCustomers()
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                var customerList = new List<Customer>();
+
+                return customerList;
+            }
+        }
     }
 }

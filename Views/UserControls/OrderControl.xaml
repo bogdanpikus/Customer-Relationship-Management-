@@ -127,7 +127,7 @@
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}">
                         <DataGridCheckBoxColumn.Header>
-                            <CheckBox />
+                            <CheckBox IsEnabled="False"/>
                         </DataGridCheckBoxColumn.Header>
                     </DataGridCheckBoxColumn>
                     <DataGridTextColumn Header="№" IsReadOnly="True" Binding="{Binding PersonalNumber}"/>
