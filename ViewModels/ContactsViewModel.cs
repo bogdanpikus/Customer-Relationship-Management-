@@ -12,6 +12,7 @@ namespace CRM.ViewModels
         private readonly DialogService _dialogService = new();
         private readonly SQLService _sqlService = new();
         public ObservableCollection<Customer> CustomerCollection { get; } = new();
+        public ObservableCollection<Company> CompanyCollection { get; } = new();
        
 
         public bool CustomerModalControlVisiability { get; set; } = false;

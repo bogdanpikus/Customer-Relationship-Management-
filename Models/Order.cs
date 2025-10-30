@@ -20,6 +20,7 @@ namespace CRM.Models
         }
         public int Id { get; set; }
         public bool IsSelected { get; set; }
+
         private DateTime? _orderDate;
         public DateTime? OrderDate
         {
@@ -287,19 +288,248 @@ namespace CRM.Models
         }
     }
 
-    public class Customer
+    public class Customer : NotifyPropertyChange
     {
-        public string Id { get; set; }
-        public string? SecondName { get; set; }
-        public string? Name { get; set; }
-        public string? Surname { get; set; }
-        public string? Phone { get; set; }
+        private string? _secondName; 
+        public string? SecondName 
+        {
+            get => _secondName;
+            set 
+            {
+                if(_secondName != value)
+                {
+                    _secondName = value;
+                    OnPropertyChange(nameof(SecondName));
+                }
+            }
+        }
+
+        private string? _name;
+        public string? Name 
+        {
+            get => _name;
+            set
+            {
+                if(_name != value)
+                {
+                    _name = value;
+                    OnPropertyChange(nameof(Name));
+                }
+            }
+        }
+
+        private string? _surname;
+        public string? Surname
+        {
+            get => _surname;
+            set
+            {
+                if(_surname != value)
+                {
+                    _surname = value;
+                    OnPropertyChange(nameof(Surname));
+                }
+            }
+        }
+
+        private string? _phone;
+        public string? Phone
+        {
+            get => _phone;
+            set
+            {
+                if(_phone != value)
+                {
+                    _phone = value;
+                    OnPropertyChange(nameof(Phone));
+                }
+            }
+        }
 
         // its variable
-        public string? Email {  get; set; }
-        public int AmountOrders { get; set; }
-        public decimal? CustomerSumOfIncome { get; set; }
-        public string? CustomerPurchases { get; set; }
-        public DateTime CustomerLastOrderDate { get; set; }
+        private string? _email;
+        public string? Email
+        {
+            get => _email;
+            set
+            {
+                if(_email != value)
+                {
+                    _email = value;
+                    OnPropertyChange(nameof(Email));
+                }
+            }
+        }
+
+        private int? _amountOrders;
+        public int? AmountOrders
+        {
+            get => _amountOrders;
+            set
+            {
+                if(_amountOrders != value)
+                {
+                    _amountOrders = value;
+                    OnPropertyChange(nameof(AmountOrders));
+                }
+            }
+        }
+
+        private decimal? _customerSumIncome;
+        public decimal? CustomerSumIncome
+        {
+            get => _customerSumIncome;
+            set
+            {
+                if (_customerSumIncome != value)
+                {
+                    _customerSumIncome = value;
+                    OnPropertyChange(nameof(CustomerSumIncome));
+                }
+            }
+        }
+
+        private string? _customerPurchases;
+        public string? CustomerPurchases
+        {
+            get => _customerPurchases;
+            set
+            {
+                if (_customerPurchases != value)
+                {
+                    _customerPurchases = value;
+                    OnPropertyChange(nameof(CustomerPurchases));
+                }
+            }
+        }
+
+        private DateTime _customerLastDate;
+        public DateTime CustomerLastOrderDate 
+        {
+            get => _customerLastDate;
+            set
+            {
+                if (_customerLastDate != value)
+                {
+                    _customerLastDate = value;
+                    OnPropertyChange(nameof(CustomerLastOrderDate));
+                }
+            }
+        }
+    }
+
+    public class Company : NotifyPropertyChange
+    {
+        private string? _companyName;
+        public string? CompanyName
+        {
+            get => _companyName;
+            set
+            {
+                if(_companyName != value)
+                {
+                    _companyName = value;
+                    OnPropertyChange(nameof(CompanyName));
+                }
+            }
+        }
+
+        private int? _inn;
+        public int? INN
+        {
+            get => _inn;
+            set
+            {
+                if(_inn != value)
+                {
+                    _inn = value;
+                    OnPropertyChange(nameof(INN));
+                }
+            }
+        }
+
+        private int? _edpnou;
+        public int? EDPNOU
+        {
+            get => _edpnou;
+            set
+            {
+                if(_edpnou != value)
+                {
+                    _edpnou = value;
+                    OnPropertyChange(nameof(EDPNOU));
+                }
+            }
+        }
+
+        private string? _details;
+        public string? Details
+        {
+            get => _details;
+            set
+            {
+                if(_details != value)
+                {
+                    _details = value;
+                    OnPropertyChange(nameof(Details));
+                }
+            }
+        }
+
+        private int? _amountOrders;
+        public int? AmountOrders
+        {
+            get => _amountOrders;
+            set
+            {
+                if(_amountOrders != value)
+                {
+                    _amountOrders = value;
+                    OnPropertyChange(nameof(AmountOrders));
+                }
+            }
+        }
+
+        private decimal? _companySumIncome;
+        public decimal? CompanySumIncome
+        {
+            get => _companySumIncome;
+            set
+            {
+                if(_companySumIncome != value)
+                {
+                    _companySumIncome = value;
+                    OnPropertyChange(nameof(CompanySumIncome));
+                }
+            }
+        }
+
+        private string? _companyPurchases;
+        public string? CompanyPurchases
+        {
+            get => _companyPurchases;
+            set
+            {
+                if(_companyPurchases != value)
+                {
+                    _companyPurchases = value;
+                    OnPropertyChange(nameof(CompanyPurchases));
+                }
+            }
+        }
+
+        private DateTime _companyLastOrderDate;
+        public DateTime CompanyLastOrderDate
+        {
+            get => _companyLastOrderDate;
+            set
+            {
+                if (_companyLastOrderDate != value)
+                {
+                    _companyLastOrderDate = value;
+                    OnPropertyChange(nameof(CompanyLastOrderDate));
+                }
+            }
+        }
     }
 }
