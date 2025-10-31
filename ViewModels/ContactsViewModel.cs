@@ -21,17 +21,36 @@ namespace CRM.ViewModels
         public ContactsViewModel() 
         {
             OpenModalWindowButton = new RelayCommand(Click => OpenModalWindow());
-            LoadSqlInStart();
         }
 
-        private void LoadSqlInStart()
+        private void SQLCustomersLoad()
         {
             _sqlService.ExtractCustomers();
         }
+        private void SQLCompanyLoad()
+        {
+            _sqlService.ExtractCompanies();
+        }
         private void OpenModalWindow()
         {
-            _dialogService.ShowDialog(new CustomerAddViewModel());
+            _dialogService.ShowDialog(new CustomerAddViewModel(CustomerCollection, CompanyCollection));
             
+        }
+        private void OpenCustomerEditing()
+        {
+            var isSelected = CustomerCollection.Where(o => o.IsSelected).ToList();
+            foreach (var item in isSelected) 
+            {
+                _dialogService.ShowDialog(new CustomerEditingViewModel());
+            }
+        }
+        private void OpenCompanyEditing()
+        {
+            var isSelected = CompanyCollection.Where(o => o.IsSelected).ToList();
+            foreach (var item in isSelected)
+            {
+                _dialogService.ShowDialog(new CompanyEditingViewModel());
+            }
         }
     }
 }

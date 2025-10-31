@@ -290,6 +290,9 @@ namespace CRM.Models
 
     public class Customer : NotifyPropertyChange
     {
+        public int Id { get; set; }
+        public bool IsSelected { get; set; }
+
         private string? _secondName; 
         public string? SecondName 
         {
@@ -420,6 +423,9 @@ namespace CRM.Models
 
     public class Company : NotifyPropertyChange
     {
+        public int Id { get; set; }
+        public bool IsSelected { get; set; }
+
         private string? _companyName;
         public string? CompanyName
         {

@@ -1,12 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CRM.Commands;
+using System.Windows;
+using System.Windows.Input;
 
 namespace CRM.ViewModels.ModalWindowViewModels
 {
-    class CustomerAddUserControlViewModel
+    public class CustomerAddUserControlViewModel
     {
+        public ICommand CompanyConfirm { get; }
+
+        public CustomerAddUserControlViewModel() 
+        {
+            CompanyConfirm = new RelayCommand(Click => CompanyConfirmMethod());
+        }
+
+        private void CompanyConfirmMethod()
+        {
+            MessageBox.Show("CompanyConfirmMethod");
+        }
     }
 }

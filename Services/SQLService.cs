@@ -59,5 +59,9 @@ namespace CRM.Services
         {
             return _db.ExtractCustomers();
         }
+        public List<Company> ExtractCompanies()
+        {
+            return _db.ExtractCompanies();
+        }
     }
 }

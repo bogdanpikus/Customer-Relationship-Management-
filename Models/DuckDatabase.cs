@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Data.Common;
 using System.IO;
 using System.Security.Cryptography;
 using DuckDB.NET.Data;
@@ -10,20 +11,20 @@ namespace CRM.Models
     public class DuckDatabase
     {
         private readonly DuckDBConnection _connection;
-    
-        public DuckDatabase(bool InMemory = false, bool OpenFile = false,  string? DatabasePlace = null, string? DatabaseName = null)
+
+        public DuckDatabase(bool InMemory = false, bool OpenFile = false, string? DatabasePlace = null, string? DatabaseName = null)
         {
-             if (string.IsNullOrWhiteSpace(DatabaseName)) { throw new ArgumentNullException(nameof(DatabaseName)); }
-             if (string.IsNullOrWhiteSpace(DatabasePlace)) { throw new ArgumentNullException(nameof(DatabasePlace)); }
-             string dbFilePath = InMemory ? ":memory:" : Path.Combine(DatabasePlace, $"{DatabaseName}.duckdb");
-             string dbFileOpen = InMemory ? ":memory:" : $"{DatabasePlace}";
+            if (string.IsNullOrWhiteSpace(DatabaseName)) { throw new ArgumentNullException(nameof(DatabaseName)); }
+            if (string.IsNullOrWhiteSpace(DatabasePlace)) { throw new ArgumentNullException(nameof(DatabasePlace)); }
+            string dbFilePath = InMemory ? ":memory:" : Path.Combine(DatabasePlace, $"{DatabaseName}.duckdb");
+            string dbFileOpen = InMemory ? ":memory:" : $"{DatabasePlace}";
 
-             if (!InMemory && File.Exists(dbFilePath)) { throw new InvalidOperationException("Файл уже существует в этой директории"); }
-             if (!InMemory && File.Exists(dbFileOpen) && OpenFile) { dbFilePath = $"{DatabasePlace}"; }
+            if (!InMemory && File.Exists(dbFilePath)) { throw new InvalidOperationException("Файл уже существует в этой директории"); }
+            if (!InMemory && File.Exists(dbFileOpen) && OpenFile) { dbFilePath = $"{DatabasePlace}"; }
 
-             string dbConnection = InMemory ? "Data Source=:memory:" : $"Data Source={dbFilePath}";
-             _connection = new DuckDBConnection(dbConnection);
-             _connection.Open();
+            string dbConnection = InMemory ? "Data Source=:memory:" : $"Data Source={dbFilePath}";
+            _connection = new DuckDBConnection(dbConnection);
+            _connection.Open();
 
             using (var cmd = _connection.CreateCommand())
             {
@@ -33,8 +34,9 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (SecondName VARCHAR," +
-                  " Name VARCHAR, Surname VARCHAR, Phone VARCHAR, AmountOrders TINYINT)";
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (Id INTEGER DEFAULT nextval('seq_customers') PRIMARY KEY, SecondName VARCHAR," +
+                  " Name VARCHAR, Surname VARCHAR, Phone VARCHAR, Email VARCHAR, AmountOrders INTEGER, CustomerSumIncome DECIMAL(18,2), " +
+                  "CustomerPurchases VARCHAR, CustomerLastOrderDate DATE)";
                 cmd.ExecuteNonQuery();
             }
 
@@ -47,8 +49,23 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER DEFAULT nextval('seq_orders') PRIMARY KEY, OrderDate DATE, Articul VARCHAR," +
-                   "OrderID VARCHAR, SecondName VARCHAR, Name VARCHAR, Surname VARCHAR, Phone VARCHAR, Item VARCHAR, Amount TINYINT, Price DECIMAL(18,2), Pricecost DECIMAL(18,2), PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
+                   "OrderID VARCHAR, SecondName VARCHAR, Name VARCHAR, Surname VARCHAR, Phone VARCHAR, Item VARCHAR, Amount TINYINT, Price DECIMAL(18,2)," +
+                   " Pricecost DECIMAL(18,2), PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
                    "Status VARCHAR, Spending DECIMAL(18,2), Income DECIMAL(18,2), Organization VARCHAR, Comment VARCHAR)";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"CREATE SEQUENCE IF NOT EXISTS seq_company START 1";
+                cmd.ExecuteNonQuery();
+            }
+
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS companies (Id INTEGER DEFAULT nextval('seq_company') PRIMARY KEY, CompanyName VARCHAR, INN INTEGER," +
+                    "EDPNOU INTEGER, Details VARCHAR, AmountOrders INTEGER, CompanySumIncome DECIMAL(18,2), CompanyPurchases VARCHAR, " +
+                    "CompanyLastOrderDate DATE)";
                 cmd.ExecuteNonQuery();
             }
         }
@@ -101,7 +118,7 @@ namespace CRM.Models
             }
         }
 
-        public List<Order> ExtractOrdersFromDatabase() 
+        public List<Order> ExtractOrdersFromDatabase()
         {
             using (var cmd = _connection.CreateCommand())
             {
@@ -109,7 +126,7 @@ namespace CRM.Models
                     Pricecost, PaymentWay, DelivarWay, DeliverAdress, Status, Spending, Income, Organization, Comment FROM orders";
                 using var reader = cmd.ExecuteReader();
 
-                var orders  = new List<Order>();
+                var orders = new List<Order>();
                 while (reader.Read())
                 {
                     var order = new Order
@@ -186,7 +203,7 @@ namespace CRM.Models
                 cmd.Parameters.Add(new DuckDBParameter { Value = order.PaymentWay });
                 cmd.Parameters.Add(new DuckDBParameter { Value = order.DelivarWay });
                 cmd.Parameters.Add(new DuckDBParameter { Value = order.DeliverAdress });
-                cmd.Parameters.Add(new DuckDBParameter {Value = order.Status });
+                cmd.Parameters.Add(new DuckDBParameter { Value = order.Status });
                 cmd.Parameters.Add(new DuckDBParameter { Value = order.Spending });
                 cmd.Parameters.Add(new DuckDBParameter { Value = order.Income });
                 cmd.Parameters.Add(new DuckDBParameter { Value = order.Organization });
@@ -194,12 +211,12 @@ namespace CRM.Models
 
                 cmd.Parameters.Add(new DuckDBParameter { Value = order.Id });
 
-                return cmd.ExecuteNonQuery()>0;
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
         public List<RangeWithOrders> SelectDataToWeekGraff(DateTime start, DateTime end)
         {
-            using(var cmd = _connection.CreateCommand())
+            using (var cmd = _connection.CreateCommand())
             {
                 var rangeList = new List<RangeWithOrders>();
                 cmd.CommandText = @"SELECT OrderDate, COUNT(*) AS TotalOrdersForDay FROM orders WHERE OrderDate BETWEEN ? AND ? GROUP BY OrderDate ORDER BY OrderDate";
@@ -272,7 +289,7 @@ namespace CRM.Models
                                    AND strftime('%Y', OrderDate) = ? AND Organization IS NOT NULL
                                    GROUP BY Organization ORDER BY Organization";
                 cmd.Parameters.Add(new DuckDBParameter { Value = month });
-                cmd.Parameters.Add(new DuckDBParameter { Value =  year });
+                cmd.Parameters.Add(new DuckDBParameter { Value = year });
                 using var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -290,10 +307,10 @@ namespace CRM.Models
         }
         public List<TodayAnalizeData> LoadTodayOrdersIncomeData()
         {
-            using(var cmd = _connection.CreateCommand())
+            using (var cmd = _connection.CreateCommand())
             {
                 var todayDataList = new List<TodayAnalizeData>();
-                cmd.CommandText = @"SELECT COUNT(*) AS TotalOrders, COALESCE(SUM(Income), 0) AS TotalIncome FROM orders WHERE DATE(OrderDate) = CURRENT_DATE"; 
+                cmd.CommandText = @"SELECT COUNT(*) AS TotalOrders, COALESCE(SUM(Income), 0) AS TotalIncome FROM orders WHERE DATE(OrderDate) = CURRENT_DATE";
                 //(посчитать все даты за сегодня) 2 заказа за сегодня : 300 прибыли за сегодня
                 using var reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -312,7 +329,7 @@ namespace CRM.Models
         }
         public List<MonthAnalizeData> LoadMonthOrdersData(int month, int year)
         {
-            using(var cmd = _connection.CreateCommand())
+            using (var cmd = _connection.CreateCommand())
             {
                 var monthDataList = new List<MonthAnalizeData>();
                 cmd.CommandText = @"SELECT COUNT(OrderDate) AS MonthOrders, SUM(Status = 'Отмененный') AS TotalRejections,
@@ -435,6 +452,15 @@ namespace CRM.Models
                 var customerList = new List<Customer>();
 
                 return customerList;
+            }
+        }
+        public List<Company> ExtractCompanies()
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                var companiesList = new List<Company>();
+
+                return companiesList;
             }
         }
     }

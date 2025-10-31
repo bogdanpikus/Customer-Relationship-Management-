@@ -78,7 +78,7 @@
 
                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200"
                          Margin="0,20,0,5">
-                    <Button Content="Подтвердить" FontSize="30" Command="{Binding Confirm}"/>
+                    <Button Content="Подтвердить" FontSize="30" Command="{Binding CustomerConfirm}"/>
                 </StackPanel>
             </StackPanel>
                 
