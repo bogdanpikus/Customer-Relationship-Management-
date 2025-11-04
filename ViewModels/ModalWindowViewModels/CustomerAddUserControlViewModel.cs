@@ -1,4 +1,5 @@
 ﻿using CRM.Commands;
+using CRM.Services;
 using System.Windows;
 using System.Windows.Input;
 
@@ -6,6 +7,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
 {
     public class CustomerAddUserControlViewModel
     {
+        private readonly SQLService _sqlService = new();
         public ICommand CompanyConfirm { get; }
 
         public CustomerAddUserControlViewModel() 
@@ -15,7 +17,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
 
         private void CompanyConfirmMethod()
         {
-            MessageBox.Show("CompanyConfirmMethod");
+            _sqlService.SQLCompanyInsert();
         }
     }
 }

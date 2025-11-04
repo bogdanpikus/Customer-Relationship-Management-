@@ -55,13 +55,21 @@ namespace CRM.Services
         {
             return _db.ExtractYearSpendings();
         }
-        public List<Customer> ExtractCustomers()
+        public List<Customer> ExtractCustomers() //вытягивания клиентов из базы данных
         {
             return _db.ExtractCustomers();
         }
-        public List<Company> ExtractCompanies()
+        public List<Company> ExtractCompanies() //вытягивания компаний из базы данных
         {
             return _db.ExtractCompanies();
+        }
+        public bool SQLCustomerInsert() // запрос INSERT в таблицу customers
+        {
+            return _db.SQLCustomerInsert();
+        }
+        public bool SQLCompanyInsert() // запрос INSERT вв таблицу companies
+        {
+            return _db.SQLCompanyInsert();
         }
     }
 }

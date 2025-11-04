@@ -5,8 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM.Views.ModalWindows"
         mc:Ignorable="d"
-        Title="CustomerEditingView" Height="450" Width="800">
-    <Grid>
-        
+        Title="Изменить поле клиента" MaxHeight="700" Width="500"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="ThreeDBorderWindow"
+        SizeToContent="Height"
+        Icon="/Assets/logo_ico.ico">
+    
+    <Grid Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0" />
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Margin="5,0,0,0" Grid.Row="1">
+            <StackPanel VerticalAlignment="Top" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                       VerticalContentAlignment="Center" Cursor="Help" Text="{Binding SecondName}"
+                       Height="50" Tag="Введите фамилию заказчика" FontSize="20" Margin="0,10,0,0" ToolTip="Введите фамилию заказчика"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                       VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Name}"
+                       Height="50" Tag="Введите имя заказчика" FontSize="20" Margin="0,10,0,0" ToolTip="Введите имя заказчика"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                       VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Surname}"
+                       Height="50" Tag="Введите отчество заказчика" FontSize="20" Margin="0,10,0,0" ToolTip="Введите отчество заказчика"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Tag="(+38)063 321 57 80" Template="{StaticResource UkraineTextPhoneNumber}"
+                       Width="400" VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Phone}"
+                       Height="50" FontSize="20" Margin="0,10,0,0" ToolTip="Поле для указания номера заказчика">
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Tag="Колличество купленных товаров" Template="{StaticResource TextPlaceholderSquare}"
+                          Width="400" VerticalContentAlignment="Center" Cursor="Help" Text="{Binding AmountOrders}"
+                          Height="50" FontSize="20" Margin="0,10,0,0" ToolTip="Поле для указания почты">
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Tag="Вся прибыль с клиента" Template="{StaticResource TextPlaceholderSquare}"
+                             Width="400" VerticalContentAlignment="Center" Cursor="Help" Text="{Binding CustomerSumIncome}"
+                             Height="50" FontSize="20" Margin="0,10,0,0" ToolTip="Поле для указания почты">
+                    </TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Width="400" VerticalContentAlignment="Center"
+                           Cursor="Help" ItemsSource="{Binding Items}"
+                           Height="50" FontSize="20" Margin="0,10,0,0" Text="{Binding Item}">
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <DatePicker Text="{Binding LastDateOrder}" Width="400" 
+                                VerticalContentAlignment="Center" Cursor="Help" SelectedDate="{Binding LastDateOrder}" 
+                                Height="50" FontSize="20" Margin="0,5,0,0" ToolTip="Последняя дата заказа">
+                    </DatePicker>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200"
+                  Margin="0,20,0,5">
+                <Button Content="Подтвердить" FontSize="30" Command="{Binding CustomerConfirm}"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

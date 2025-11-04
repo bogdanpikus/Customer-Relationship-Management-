@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Data;
-using System.Data.Common;
 using System.IO;
-using System.Security.Cryptography;
 using DuckDB.NET.Data;
 
 namespace CRM.Models
@@ -35,7 +31,7 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (Id INTEGER DEFAULT nextval('seq_customers') PRIMARY KEY, SecondName VARCHAR," +
-                  " Name VARCHAR, Surname VARCHAR, Phone VARCHAR, Email VARCHAR, AmountOrders INTEGER, CustomerSumIncome DECIMAL(18,2), " +
+                  " Name VARCHAR, Surname VARCHAR, Phone VARCHAR, AmountOrders INTEGER, CustomerSumIncome DECIMAL(18,2), " +
                   "CustomerPurchases VARCHAR, CustomerLastOrderDate DATE)";
                 cmd.ExecuteNonQuery();
             }
@@ -64,7 +60,7 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = "CREATE TABLE IF NOT EXISTS companies (Id INTEGER DEFAULT nextval('seq_company') PRIMARY KEY, CompanyName VARCHAR, INN INTEGER," +
-                    "EDPNOU INTEGER, Details VARCHAR, AmountOrders INTEGER, CompanySumIncome DECIMAL(18,2), CompanyPurchases VARCHAR, " +
+                    "EDPNOU INTEGER, Details VARCHAR, AmountOrders INTEGER, Email VARCHAR, CompanySumIncome DECIMAL(18,2), CompanyPurchases VARCHAR, " +
                     "CompanyLastOrderDate DATE)";
                 cmd.ExecuteNonQuery();
             }
@@ -450,6 +446,25 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 var customerList = new List<Customer>();
+                cmd.CommandText = @"SELECT SecondName, Name, Surname, Phone, AmountOrders, 
+                                  CustomerSumIncome, CustomerPurchases, CustomerLastOrderDate FROM customers 
+                                  ORDER BY LOWER(SecondName), LOWER(Name), LOWER(Surname), CustomerLastOrderDate DESC,
+                                  CustomerSumIncome DESC";
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    customerList.Add(new Customer
+                    {
+                        SecondName = reader.IsDBNull(0) ? null : reader.GetString(0),
+                        Name = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        Surname = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        Phone = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        AmountOrders = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                        CustomerSumIncome = reader.IsDBNull(5) ? 0 : reader.GetDecimal(5),
+                        CustomerPurchases = reader.IsDBNull(6) ? null : reader.GetString(6),
+                        CustomerLastOrderDate = reader.IsDBNull(7) ? DateTime.Now : reader.GetDateTime(7)
+                    });
+                }
 
                 return customerList;
             }
@@ -459,8 +474,41 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 var companiesList = new List<Company>();
+                cmd.CommandText = @"SELECT CompanyName, INN, EDPNOU, Details, AmountOrders, Email, CompanySumIncome,
+                                   CompanyPurchases, CompanyLastOrderDate FROM companies ORDER BY LOWER(CompanyName), LOWER(CAST(INN AS VARCHAR)),
+                                   LOWER(CAST(EDPNOU AS VARCHAR)),CompanyLastOrderDate DESC, CompanySumIncome DESC";
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    companiesList.Add(new Company
+                    {
+                        CompanyName = reader.IsDBNull(0) ? null : reader.GetString(0),
+                        INN = reader.IsDBNull(1) ? null : reader.GetInt16(1),
+                        EDPNOU = reader.IsDBNull(2) ? null : reader.GetInt16(2),
+                        Details = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        AmountOrders = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
+                        Email = reader.IsDBNull(5) ? null : reader.GetString(5),
+                        CompanySumIncome = reader.IsDBNull(6) ? 0 : reader.GetDecimal(6),
+                        CompanyPurchases = reader.IsDBNull(7) ? null : reader.GetString(7),
+                        CompanyLastOrderDate = reader.IsDBNull(8) ? DateTime.Now : reader.GetDateTime(8)
+                    });
+                }
 
                 return companiesList;
+            }
+        }
+        public bool SQLCustomerInsert()
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                return true;
+            }
+        }
+        public bool SQLCompanyInsert()
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                return true;
             }
         }
     }

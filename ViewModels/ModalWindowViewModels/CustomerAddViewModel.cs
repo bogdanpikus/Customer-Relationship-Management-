@@ -9,6 +9,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
 {
     public class CustomerAddViewModel : NotifyPropertyChange
     {
+        private readonly SQLService _sqlServise = new();
         public ObservableCollection<string> ComboItems { get; } = ["Клиент", "Юр.лицо"];
         public object CurrentContent { get; set; }
         public bool CustomerModalControlVisiability { get; set; }
@@ -57,7 +58,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
         }
         private void CustomerConfirmMethod()
         {
-            MessageBox.Show("CustomerConfirmMethod");
+            _sqlServise.SQLCustomerInsert();
         }
     }
 }

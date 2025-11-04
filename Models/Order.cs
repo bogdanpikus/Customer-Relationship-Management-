@@ -350,20 +350,6 @@ namespace CRM.Models
         }
 
         // its variable
-        private string? _email;
-        public string? Email
-        {
-            get => _email;
-            set
-            {
-                if(_email != value)
-                {
-                    _email = value;
-                    OnPropertyChange(nameof(Email));
-                }
-            }
-        }
-
         private int? _amountOrders;
         public int? AmountOrders
         {
@@ -492,6 +478,20 @@ namespace CRM.Models
                 {
                     _amountOrders = value;
                     OnPropertyChange(nameof(AmountOrders));
+                }
+            }
+        }
+
+        private string? _email;
+        public string? Email
+        {
+            get => _email;
+            set
+            {
+                if(_email != value)
+                {
+                    _email = value;
+                    OnPropertyChange(nameof(Email));
                 }
             }
         }

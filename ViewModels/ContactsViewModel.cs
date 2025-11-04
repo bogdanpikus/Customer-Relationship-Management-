@@ -3,6 +3,7 @@ using CRM.Models;
 using CRM.Services;
 using CRM.ViewModels.ModalWindowViewModels;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace CRM.ViewModels
@@ -17,39 +18,56 @@ namespace CRM.ViewModels
 
         public bool CustomerModalControlVisiability { get; set; } = false;
         public ICommand OpenModalWindowButton { get; }
+        public ICommand EditingModalWindowButton { get; }
 
         public ContactsViewModel() 
         {
             OpenModalWindowButton = new RelayCommand(Click => OpenModalWindow());
+            EditingModalWindowButton = new RelayCommand(Click => EditingModalWindow());
+            SQLCustomersLoad();
+            SQLCompanyLoad();
         }
 
-        private void SQLCustomersLoad()
+        private void SQLCustomersLoad() // TIP: изначальная загрузка клиентов в первую таблицу при загрузке страницы 
         {
-            _sqlService.ExtractCustomers();
+            var customersList = _sqlService.ExtractCustomers();
+            foreach (var customer in customersList)
+            {
+                CustomerCollection.Add(customer);
+            }
         }
-        private void SQLCompanyLoad()
+        private void SQLCompanyLoad() // TIP: изначальная загрузка компаний во вторую таблицу при загрузке страницы
         {
-            _sqlService.ExtractCompanies();
+            var companiesList = _sqlService.ExtractCompanies();
+            foreach (var company in companiesList)
+            {
+                CompanyCollection.Add(company);
+            }
         }
         private void OpenModalWindow()
         {
             _dialogService.ShowDialog(new CustomerAddViewModel(CustomerCollection, CompanyCollection));
             
         }
-        private void OpenCustomerEditing()
+
+        //TODO: эти 2 метода в один в метод EditingModalWindow()
+        private void EditingModalWindow()
         {
-            var isSelected = CustomerCollection.Where(o => o.IsSelected).ToList();
-            foreach (var item in isSelected) 
+            var customerIsSelected = CustomerCollection.Where(o => o.IsSelected).ToList();
+            if(customerIsSelected == null)
             {
-                _dialogService.ShowDialog(new CustomerEditingViewModel());
+                var companyIsSelected = CompanyCollection.Where(o => o.IsSelected).ToList();
+                foreach(var company in companyIsSelected)
+                {
+                    _dialogService.ShowDialog(new CompanyEditingViewModel());
+                }
             }
-        }
-        private void OpenCompanyEditing()
-        {
-            var isSelected = CompanyCollection.Where(o => o.IsSelected).ToList();
-            foreach (var item in isSelected)
+            else
             {
-                _dialogService.ShowDialog(new CompanyEditingViewModel());
+                foreach (var item in customerIsSelected)
+                {
+                    _dialogService.ShowDialog(new CustomerEditingViewModel());
+                }
             }
         }
     }

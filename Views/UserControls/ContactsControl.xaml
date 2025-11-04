@@ -21,7 +21,7 @@
                     <TextBlock Text="Добавить контакт" TextWrapping="Wrap" TextAlignment="Center"
                            VerticalAlignment="Center"/>
                 </Button>
-                <Button Width="170" Height="50" Background="Snow"
+                <Button Command="{Binding EditingModalWindowButton}" Width="170" Height="50" Background="Snow"
              Foreground="Black" FontWeight="Medium" FontSize="18"
              BorderBrush="Black" BorderThickness="2" Cursor="Hand">
                     <TextBlock Text="Редактировать контакт" TextWrapping="Wrap" VerticalAlignment="Center"
@@ -74,9 +74,8 @@
                         </DataGridCheckBoxColumn>
                         <DataGridTextColumn Header="Фамилия" Binding="{Binding SecondName}" />
                         <DataGridTextColumn Header="Имя" Binding="{Binding Name}" />
-                        <DataGridTextColumn Header="Отчество" Binding="{Binding Surename}" />
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding Surname}" />
                         <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" />
-                        <DataGridTextColumn Header="Почта" Binding="{Binding Email}" />
                         <DataGridTextColumn Header="Колличество заказов" Binding="{Binding CustomerOrderCount}" />
                         <DataGridTextColumn Header="Вся прибыль с клиента" Binding="{Binding CustomerSumOfIncome}" />
                         <DataGridTextColumn Header="Купленные товары" Binding="{Binding CustomerPurchases}" />
@@ -100,7 +99,7 @@
                     </StackPanel>
                 </DockPanel>
 
-                <DataGrid ItemsSource="{Binding CustomerCollection}" 
+                <DataGrid ItemsSource="{Binding CompanyCollection}" 
                 HorizontalScrollBarVisibility="Visible" AutoGenerateColumns="False"
                 VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" 
                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -117,15 +116,15 @@
                                 <CheckBox IsEnabled="False"/>
                             </DataGridCheckBoxColumn.Header>
                         </DataGridCheckBoxColumn>
-                        <DataGridTextColumn Header="Компания / Юр.лицо" Binding="{Binding SecondName}" />
-                        <DataGridTextColumn Header="ИНН" Binding="{Binding Name}" />
-                        <DataGridTextColumn Header="ЕГРПОУ" Binding="{Binding Surename}" />
-                        <DataGridTextColumn Header="Реквизиты" Binding="{Binding Phone}" />
-                        <DataGridTextColumn Header="Купленные товары" Binding="{Binding CustomerPurchases}" />
+                        <DataGridTextColumn Header="Компания / Юр.лицо" Binding="{Binding CompanyName}" />
+                        <DataGridTextColumn Header="ИНН" Binding="{Binding INN}" />
+                        <DataGridTextColumn Header="ЕГРПОУ" Binding="{Binding EDPNOU}" />
+                        <DataGridTextColumn Header="Реквизиты" Binding="{Binding Details}" />
+                        <DataGridTextColumn Header="Купленные товары" Binding="{Binding CompanyPurchases}" />
                         <DataGridTextColumn Header="Почта/Телефон" Binding="{Binding Email}" />
-                        <DataGridTextColumn Header="Колличество заказов" Binding="{Binding CustomerOrderCount}" />
-                        <DataGridTextColumn Header="Общая прибыть" Binding="{Binding CustomerSumOfIncome}" />
-                        <DataGridTextColumn Header="Последний заказ" Binding="{Binding CustomerLastOrderDate}" />
+                        <DataGridTextColumn Header="Колличество заказов" Binding="{Binding AmountOrders}" />
+                        <DataGridTextColumn Header="Общая прибыть" Binding="{Binding CompanySumIncome}" />
+                        <DataGridTextColumn Header="Последний заказ" Binding="{Binding CompanyLastOrderDate}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
