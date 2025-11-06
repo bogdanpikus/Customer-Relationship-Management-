@@ -4,6 +4,8 @@ using CRM.Services;
 using CRM.ViewModels.ModalWindowViewModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace CRM.ViewModels
@@ -19,11 +21,14 @@ namespace CRM.ViewModels
         public bool CustomerModalControlVisiability { get; set; } = false;
         public ICommand OpenModalWindowButton { get; }
         public ICommand EditingModalWindowButton { get; }
+        public ICommand DeleteButton { get; }
+
 
         public ContactsViewModel() 
         {
             OpenModalWindowButton = new RelayCommand(Click => OpenModalWindow());
             EditingModalWindowButton = new RelayCommand(Click => EditingModalWindow());
+            DeleteButton = new RelayCommand(Click => SelectedDelete());
             SQLCustomersLoad();
             SQLCompanyLoad();
         }
@@ -44,10 +49,9 @@ namespace CRM.ViewModels
                 CompanyCollection.Add(company);
             }
         }
-        private void OpenModalWindow()
+        private void OpenModalWindow() // TIP: добавление клиента или компании
         {
-            _dialogService.ShowDialog(new CustomerAddViewModel(CustomerCollection, CompanyCollection));
-            
+            _dialogService.ShowDialog(new CustomerAddViewModel(CustomerCollection, CompanyCollection));   
         }
 
         //TODO: эти 2 метода в один в метод EditingModalWindow()
@@ -59,16 +63,38 @@ namespace CRM.ViewModels
                 var companyIsSelected = CompanyCollection.Where(o => o.IsSelected).ToList();
                 foreach(var company in companyIsSelected)
                 {
-                    _dialogService.ShowDialog(new CompanyEditingViewModel());
+                    _dialogService.ShowDialog(new CompanyEditingViewModel(company));
                 }
             }
             else
             {
-                foreach (var item in customerIsSelected)
+                foreach (var customer in customerIsSelected)
                 {
-                    _dialogService.ShowDialog(new CustomerEditingViewModel());
+                    _dialogService.ShowDialog(new CustomerEditingViewModel(customer));
                 }
             }
+        }
+        private void SelectedDelete()
+        {
+            var customerSelected = CustomerCollection.Where(o => o.IsSelected).ToList();
+            if(customerSelected == null)
+            {
+                var companySelected = CompanyCollection.Where(o => o.IsSelected).ToList();
+                foreach (var company in companySelected)
+                {
+                    _sqlService.CompanySelectedDelete(company.Id);
+                    CompanyCollection.Remove(company);
+                }
+            }
+            else
+            {
+                foreach (var customer in customerSelected)
+                {
+                    _sqlService.CustomerSelectedDelete(customer.Id);
+                    CustomerCollection.Remove(customer);
+                }
+            }
+
         }
     }
 }

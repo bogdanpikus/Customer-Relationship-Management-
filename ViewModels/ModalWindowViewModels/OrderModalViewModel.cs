@@ -9,6 +9,7 @@ namespace CRM.ViewModels
 {
     public class OrderModalViewModel : NotifyPropertyChange
     {
+        private readonly DialogService _dialogService = new();
         private readonly SQLService _sqlService = new SQLService();
 
         public ICommand Confirm {  get; }
@@ -83,7 +84,7 @@ namespace CRM.ViewModels
             };
             _sqlService.InsertOrder(order);
             orders.Insert(0,order);
-            DialogService.Instance.CloseDialog();
+            _dialogService.CloseDialog();
         }
         private void AddTestOrderMackup(ObservableCollection<Order> orders)
         {

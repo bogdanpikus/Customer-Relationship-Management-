@@ -63,13 +63,21 @@ namespace CRM.Services
         {
             return _db.ExtractCompanies();
         }
-        public bool SQLCustomerInsert() // запрос INSERT в таблицу customers
+        public bool SQLCustomerInsert(Customer customer) // запрос INSERT в таблицу customers
         {
-            return _db.SQLCustomerInsert();
+            return _db.SQLCustomerInsert(customer);
         }
-        public bool SQLCompanyInsert() // запрос INSERT вв таблицу companies
+        public bool SQLCompanyInsert(Company company) // запрос INSERT вв таблицу companies
         {
-            return _db.SQLCompanyInsert();
+            return _db.SQLCompanyInsert(company);
+        }
+        public bool CustomerSelectedDelete(int id)
+        {
+            return _db.CustomerSelectedDelete(id);
+        }
+        public bool CompanySelectedDelete(int id)
+        {
+            return _db.CompanySelectedDelete(id);
         }
     }
 }

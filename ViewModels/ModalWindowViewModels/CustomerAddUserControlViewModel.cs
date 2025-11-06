@@ -1,5 +1,7 @@
 ﻿using CRM.Commands;
+using CRM.Models;
 using CRM.Services;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -7,17 +9,35 @@ namespace CRM.ViewModels.ModalWindowViewModels
 {
     public class CustomerAddUserControlViewModel
     {
+        private readonly DialogService _dialogService = new();
         private readonly SQLService _sqlService = new();
         public ICommand CompanyConfirm { get; }
 
-        public CustomerAddUserControlViewModel() 
+        public DateTime? CompanyLastOrderDate { get; set; }
+        public string? CompanyName { get; set; }
+        public int? INN { get; set; }
+        public int? EDPNOU { get; set; }
+        public string? Details { get; set; }
+        public string Email { get; set; }
+        public int? AmountOrders { get; set; }
+        public string? CompanyPurchases { get; set; }
+        public decimal? CompanySumIncome { get; set; }
+
+        public CustomerAddUserControlViewModel(ObservableCollection<Company> companies) 
         {
-            CompanyConfirm = new RelayCommand(Click => CompanyConfirmMethod());
+            CompanyConfirm = new RelayCommand(Click => CompanyConfirmMethod(companies));
         }
 
-        private void CompanyConfirmMethod()
+        private void CompanyConfirmMethod(ObservableCollection<Company> companies)
         {
-            _sqlService.SQLCompanyInsert();
+            var company = new Company
+            {
+
+            };
+
+            _sqlService.SQLCompanyInsert(company);
+            companies.Insert(0, company);
+            _dialogService.CloseDialog();
         }
     }
 }

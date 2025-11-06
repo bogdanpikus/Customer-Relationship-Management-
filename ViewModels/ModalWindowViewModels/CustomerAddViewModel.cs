@@ -9,8 +9,23 @@ namespace CRM.ViewModels.ModalWindowViewModels
 {
     public class CustomerAddViewModel : NotifyPropertyChange
     {
+        private readonly DialogService _dialogService = new();
         private readonly SQLService _sqlServise = new();
         public ObservableCollection<string> ComboItems { get; } = ["Клиент", "Юр.лицо"];
+        private ObservableCollection<Company> _companies;
+        public ObservableCollection<Company> Companies
+        {
+            get => _companies;
+            set
+            {
+                if(_companies != value)
+                {
+                    _companies = value;
+                    OnPropertyChange(nameof(Companies));
+                }
+            }
+        }
+
         public object CurrentContent { get; set; }
         public bool CustomerModalControlVisiability { get; set; }
 
@@ -30,11 +45,22 @@ namespace CRM.ViewModels.ModalWindowViewModels
                 }
             }
         }
+
+        public DateTime? CustomerLastOrderDate { get; set; }
+        public string? SecondName { get; set; }
+        public string? Name { get; set; }
+        public string? Surname { get; set; }
+        public string? Phone {  get; set; }
+        public int? AmountOrders { get; set; }
+        public decimal? CustomerSumIncome { get; set; }
+        public string? CustomerPurchases { get; set; }
+
+
         public CustomerAddViewModel(ObservableCollection<Customer> customers, ObservableCollection<Company> companies)
         {
+            Companies = companies;
             SelectedItems = ComboItems[0];
-
-            CustomerConfirm = new RelayCommand(Click => CustomerConfirmMethod());
+            CustomerConfirm = new RelayCommand(Click => CustomerConfirmMethod(customers));
         }
         private void UpdateCurrentView()
         {
@@ -51,14 +77,21 @@ namespace CRM.ViewModels.ModalWindowViewModels
         }
         private void OpenUserControl()
         {
-            CurrentContent = new CustomerAddUserControlViewModel();
+            CurrentContent = new CustomerAddUserControlViewModel(Companies);
             CustomerModalControlVisiability = true;
             OnPropertyChange(nameof(CurrentContent));
             OnPropertyChange(nameof(CustomerModalControlVisiability));
         }
-        private void CustomerConfirmMethod()
+        private void CustomerConfirmMethod(ObservableCollection<Customer> customers)
         {
-            _sqlServise.SQLCustomerInsert();
+            var customer = new Customer
+            {
+
+            };
+
+            _sqlServise.SQLCustomerInsert(customer);
+             customers.Insert(0, customer);
+            _dialogService.CloseDialog();
         }
     }
 }

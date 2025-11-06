@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRM.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace CRM.ViewModels.ModalWindowViewModels
 {
-    class CustomerEditingViewModel
+    public class CustomerEditingViewModel
     {
+        public CustomerEditingViewModel(Customer customer) { }
     }
 }

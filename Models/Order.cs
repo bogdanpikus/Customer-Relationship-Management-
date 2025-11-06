@@ -496,6 +496,20 @@ namespace CRM.Models
             }
         }
 
+        private string? _bank;
+        public string? Bank
+        {
+            get => _bank;
+            set
+            {
+                if (_bank != value)
+                {
+                    _bank = value;
+                    OnPropertyChange(nameof(Bank));
+                }
+            }
+        }
+
         private decimal? _companySumIncome;
         public decimal? CompanySumIncome
         {

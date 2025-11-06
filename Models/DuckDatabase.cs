@@ -497,18 +497,61 @@ namespace CRM.Models
                 return companiesList;
             }
         }
-        public bool SQLCustomerInsert()
+        public bool SQLCustomerInsert(Customer customer)
         {
             using (var cmd = _connection.CreateCommand())
             {
-                return true;
+                cmd.CommandText = @"INSERT INTO customers (SecondName, Name, Surname, Phone, AmountOrders, 
+                                  CustomerSumIncome, CustomerPurchases, CustomerLastOrderDate) VALUES (?,?,?,?,?,?,?,?)";
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.SecondName });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Name });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Surname });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Phone });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.AmountOrders });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerSumIncome });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerPurchases });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerLastOrderDate });
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
-        public bool SQLCompanyInsert()
+        public bool SQLCompanyInsert(Company company)
         {
             using (var cmd = _connection.CreateCommand())
             {
-                return true;
+                cmd.CommandText = @"INSERT INTO companies (CompanyName, INN, EDPNOU, Details, AmountOrders, Email, CompanySumIncome,
+                                   CompanyPurchases, CompanyLastOrderDat) VALUES (?,?,?,?,?,?,?,?,?)";
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyName });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.INN });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.EDPNOU });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.Details });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.AmountOrders });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.Email });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanySumIncome });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyPurchases });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyLastOrderDate});
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public bool CustomerSelectedDelete(int id)
+        {
+            using(var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "DELETE FROM customers WHERE Id = ?";
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add(new DuckDBParameter { Value = id });
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
+            }
+        }
+        public bool CompanySelectedDelete(int id)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "DELETE FROM companies WHERE Id = ?";
+                cmd.Parameters.Clear();
+                cmd.Parameters.Add(new DuckDBParameter { Value = id });
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
             }
         }
     }

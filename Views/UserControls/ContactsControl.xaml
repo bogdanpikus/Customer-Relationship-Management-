@@ -27,7 +27,7 @@
                     <TextBlock Text="Редактировать контакт" TextWrapping="Wrap" VerticalAlignment="Center"
                            HorizontalAlignment="Center" TextAlignment="Center"/>
                 </Button>
-                <Button Width="120" Height="50" Background="Snow"
+                <Button Command="{Binding DeleteButton}" Width="120" Height="50" Background="Snow"
              Foreground="Black" FontWeight="Medium" FontSize="18"
              BorderBrush="Black" BorderThickness="2" Cursor="Hand">
                     <TextBlock Text="Удалить контакт" TextWrapping="Wrap" VerticalAlignment="Center"
