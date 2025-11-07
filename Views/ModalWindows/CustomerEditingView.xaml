@@ -14,11 +14,10 @@
     
     <Grid Background="WhiteSmoke">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0" />
             <RowDefinition  Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Margin="5,0,0,0" Grid.Row="1">
+        <StackPanel Margin="5,0,0,0" Grid.Row="0">
             <StackPanel VerticalAlignment="Top" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
                     <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
@@ -44,13 +43,13 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBox Tag="Колличество купленных товаров" Template="{StaticResource TextPlaceholderSquare}"
                           Width="400" VerticalContentAlignment="Center" Cursor="Help" Text="{Binding AmountOrders}"
-                          Height="50" FontSize="20" Margin="0,10,0,0" ToolTip="Поле для указания почты">
+                          Height="50" FontSize="20" Margin="0,10,0,0" ToolTip="Колличество купленных товаров">
                     </TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Tag="Вся прибыль с клиента" Template="{StaticResource TextPlaceholderSquare}"
                              Width="400" VerticalContentAlignment="Center" Cursor="Help" Text="{Binding CustomerSumIncome}"
-                             Height="50" FontSize="20" Margin="0,10,0,0" ToolTip="Поле для указания почты">
+                             Height="50" FontSize="20" Margin="0,10,0,0" ToolTip="Вся прибыль с клиента">
                     </TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">

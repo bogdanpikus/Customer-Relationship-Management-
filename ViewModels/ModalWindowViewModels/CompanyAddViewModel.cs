@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace CRM.ViewModels.ModalWindowViewModels
 {
-    public class CustomerAddUserControlViewModel
+    public class CompanyAddViewMode
     {
         private readonly DialogService _dialogService = new();
         private readonly SQLService _sqlService = new();
@@ -23,7 +23,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
         public string? CompanyPurchases { get; set; }
         public decimal? CompanySumIncome { get; set; }
 
-        public CustomerAddUserControlViewModel(ObservableCollection<Company> companies) 
+        public CompanyAddViewMode(ObservableCollection<Company> companies) 
         {
             CompanyConfirm = new RelayCommand(Click => CompanyConfirmMethod(companies));
         }
@@ -32,7 +32,15 @@ namespace CRM.ViewModels.ModalWindowViewModels
         {
             var company = new Company
             {
-
+                CompanyName = CompanyName,
+                INN = INN,
+                EDPNOU = EDPNOU,
+                Details = Details,
+                Email = Email,
+                AmountOrders = AmountOrders,
+                CompanyPurchases = CompanyPurchases,
+                CompanySumIncome = CompanySumIncome,
+                CompanyLastOrderDate = CompanyLastOrderDate
             };
 
             _sqlService.SQLCompanyInsert(company);

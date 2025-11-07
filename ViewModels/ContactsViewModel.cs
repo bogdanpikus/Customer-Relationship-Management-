@@ -63,14 +63,14 @@ namespace CRM.ViewModels
                 var companyIsSelected = CompanyCollection.Where(o => o.IsSelected).ToList();
                 foreach(var company in companyIsSelected)
                 {
-                    _dialogService.ShowDialog(new CompanyEditingViewModel(company));
+                    _dialogService.ShowDialog(new CompanyEditingViewModel(company, CompanyCollection));
                 }
             }
             else
             {
                 foreach (var customer in customerIsSelected)
                 {
-                    _dialogService.ShowDialog(new CustomerEditingViewModel(customer));
+                    _dialogService.ShowDialog(new CustomerEditingViewModel(customer, CustomerCollection));
                 }
             }
         }

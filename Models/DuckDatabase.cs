@@ -441,6 +441,8 @@ namespace CRM.Models
                 return yearList;
             }
         }
+
+        //WARNING: с этого места возможны ошибки. BUG: есть баги
         public List<Customer> ExtractCustomers()
         {
             using (var cmd = _connection.CreateCommand())
@@ -552,6 +554,20 @@ namespace CRM.Models
                 cmd.Parameters.Add(new DuckDBParameter { Value = id });
                 int rows = cmd.ExecuteNonQuery();
                 return rows > 0;
+            }
+        }
+        public bool UpdateCompanySelectedField()
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                return true;
+            }
+        }
+        public bool UpdateCustomerSelectedField()
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                return true;
             }
         }
     }

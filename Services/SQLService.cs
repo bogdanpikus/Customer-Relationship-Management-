@@ -79,5 +79,13 @@ namespace CRM.Services
         {
             return _db.CompanySelectedDelete(id);
         }
+        public bool UpdateCompanySelectedField()
+        {
+            return _db.UpdateCompanySelectedField();
+        }
+        public bool UpdateCustomerSelectedField()
+        {
+            return _db.UpdateCustomerSelectedField();
+        }
     }
 }

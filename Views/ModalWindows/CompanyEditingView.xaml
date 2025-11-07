@@ -5,8 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM.Views.ModalWindows"
         mc:Ignorable="d"
-        Title="CompanyEditingView" Height="450" Width="800">
-    <Grid>
-        
+        Title="Изменить поле компания" MaxHeight="700" Width="500"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="ThreeDBorderWindow"
+        SizeToContent="Height"
+        Icon="/Assets/logo_ico.ico">
+    <Grid Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="5,0,0,0">
+            <StackPanel VerticalAlignment="Top" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                       VerticalContentAlignment="Center" Cursor="Help" Text="{Binding CompanyName}"
+                       Height="50" Tag="Введите компанию/юр.лицо" FontSize="20" Margin="0,10,0,0" ToolTip="Введите название компании/юр лица"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding INN}"
+                             Height="50" Tag="Введите ИНН компании/юр.лица" FontSize="20" Margin="0,10,0,0" ToolTip="Введите ИНН компании/юр.лица"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding EDPNOU}"
+                             Height="50" Tag="Введите EDPNOU компании/юр.лица" FontSize="20" Margin="0,10,0,0" ToolTip="Введите EDPNOU компании/юр.лица"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Details}"
+                             Height="50" Tag="Введите реквизиты компании/юр.лица" FontSize="20" Margin="0,10,0,0" ToolTip="Введите реквизиты компании/юр.лица"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Email}"
+                             Height="50" Tag="Введите почту компании/юр.лица" FontSize="20" Margin="0,10,0,0" ToolTip="Введите почту компании/юр.лица"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Bank}"
+                             Height="50" Tag="Введите банк получателя" FontSize="20" Margin="0,10,0,0" ToolTip="Введите банк получателя"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Width="400" VerticalContentAlignment="Center"
+                              Cursor="Help" ItemsSource="{Binding CompanyPurchases}"
+                              Height="50" FontSize="20" Margin="0,10,0,0" Text="{Binding CompanyPurchases}">
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding AmountOrders}"
+                             Height="50" Tag="Колличество купленных товаров" FontSize="20" Margin="0,10,0,0" ToolTip="Колличество купленных товаров"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding CompanySumIncome}"
+                             Height="50" Tag="Вся прибыль с компании/юр.лица" FontSize="20" Margin="0,10,0,0" ToolTip="Вся прибыль с компании/юр.лица"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <DatePicker Text="{Binding CompanyLastOrderDate}" Width="400" 
+                                VerticalContentAlignment="Center" Cursor="Help" SelectedDate="{Binding CompanyLastOrderDate}" 
+                                Height="50" FontSize="20" Margin="0,5,0,0" ToolTip="Последняя дата заказа">
+                    </DatePicker>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Margin="0,20,0,5">
+                <Button Content="Подтвердить" FontSize="30" Command="{Binding CompanyConfirm}"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

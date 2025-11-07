@@ -67,7 +67,7 @@
                        SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" 
                        Cursor="Hand" ColumnWidth="155" HeadersVisibility="Column" HorizontalContentAlignment="Center">
                     <DataGrid.Columns>
-                        <DataGridCheckBoxColumn  Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}">
+                        <DataGridCheckBoxColumn  Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}" CanUserResize="False">
                             <DataGridCheckBoxColumn.Header>
                                 <CheckBox IsEnabled="False"/>
                             </DataGridCheckBoxColumn.Header>
@@ -111,7 +111,7 @@
                 SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" 
                 Cursor="Hand" ColumnWidth="155" HeadersVisibility="Column" HorizontalContentAlignment="Center">
                     <DataGrid.Columns>
-                        <DataGridCheckBoxColumn  Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}">
+                        <DataGridCheckBoxColumn  Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}" CanUserResize="False">
                             <DataGridCheckBoxColumn.Header>
                                 <CheckBox IsEnabled="False"/>
                             </DataGridCheckBoxColumn.Header>

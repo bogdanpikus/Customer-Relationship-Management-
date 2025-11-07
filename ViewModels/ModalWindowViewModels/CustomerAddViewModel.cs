@@ -10,7 +10,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
     public class CustomerAddViewModel : NotifyPropertyChange
     {
         private readonly DialogService _dialogService = new();
-        private readonly SQLService _sqlServise = new();
+        private readonly SQLService _sqlService = new();
         public ObservableCollection<string> ComboItems { get; } = ["Клиент", "Юр.лицо"];
         private ObservableCollection<Company> _companies;
         public ObservableCollection<Company> Companies
@@ -77,7 +77,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
         }
         private void OpenUserControl()
         {
-            CurrentContent = new CustomerAddUserControlViewModel(Companies);
+            CurrentContent = new CompanyAddViewMode(Companies);
             CustomerModalControlVisiability = true;
             OnPropertyChange(nameof(CurrentContent));
             OnPropertyChange(nameof(CustomerModalControlVisiability));
@@ -86,10 +86,17 @@ namespace CRM.ViewModels.ModalWindowViewModels
         {
             var customer = new Customer
             {
-
+                SecondName = SecondName,
+                Name = Name,
+                Surname = Surname,
+                Phone = Phone,
+                AmountOrders = AmountOrders,
+                CustomerSumIncome = CustomerSumIncome,
+                CustomerPurchases = CustomerPurchases,
+                CustomerLastOrderDate = CustomerLastOrderDate
             };
 
-            _sqlServise.SQLCustomerInsert(customer);
+            _sqlService.SQLCustomerInsert(customer);
              customers.Insert(0, customer);
             _dialogService.CloseDialog();
         }

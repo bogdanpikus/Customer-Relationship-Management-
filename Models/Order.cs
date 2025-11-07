@@ -392,8 +392,8 @@ namespace CRM.Models
             }
         }
 
-        private DateTime _customerLastDate;
-        public DateTime CustomerLastOrderDate 
+        private DateTime? _customerLastDate;
+        public DateTime? CustomerLastOrderDate 
         {
             get => _customerLastDate;
             set
@@ -538,8 +538,8 @@ namespace CRM.Models
             }
         }
 
-        private DateTime _companyLastOrderDate;
-        public DateTime CompanyLastOrderDate
+        private DateTime? _companyLastOrderDate;
+        public DateTime? CompanyLastOrderDate
         {
             get => _companyLastOrderDate;
             set

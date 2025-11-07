@@ -42,8 +42,8 @@
             <DataTemplate DataType="{x:Type vm:SettingsViewModel}">
                 <views:SettingsControl />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vms:CustomerAddUserControlViewModel}">
-                <viewsM:CustomerAddWindowUserControl />
+            <DataTemplate DataType="{x:Type vms:CompanyAddViewMode}">
+                <viewsM:CompanyAddWindow />
             </DataTemplate>
             <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
                 <Setter Property="Template" Value="{StaticResource DatePickerTemplate}" />

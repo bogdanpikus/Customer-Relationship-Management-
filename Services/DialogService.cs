@@ -4,7 +4,6 @@ using CRM.ViewModels.ModalWindowViewModels;
 using CRM.Views.ModalControls;
 using CRM.Views.ModalWindows;
 using System.Windows;
-using System.Windows.Interop;
 
 namespace CRM.Services
 {
