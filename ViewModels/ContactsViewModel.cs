@@ -3,9 +3,6 @@ using CRM.Models;
 using CRM.Services;
 using CRM.ViewModels.ModalWindowViewModels;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace CRM.ViewModels
@@ -54,7 +51,7 @@ namespace CRM.ViewModels
             _dialogService.ShowDialog(new CustomerAddViewModel(CustomerCollection, CompanyCollection));   
         }
 
-        //TODO: эти 2 метода в один в метод EditingModalWindow()
+        //FIX: НЕ РАБОТАЕТ НА COMPANY
         private void EditingModalWindow()
         {
             var customerIsSelected = CustomerCollection.Where(o => o.IsSelected).ToList();
@@ -63,17 +60,18 @@ namespace CRM.ViewModels
                 var companyIsSelected = CompanyCollection.Where(o => o.IsSelected).ToList();
                 foreach(var company in companyIsSelected)
                 {
-                    _dialogService.ShowDialog(new CompanyEditingViewModel(company, CompanyCollection));
+                    _dialogService.ShowDialog(new CompanyEditingViewModel(company));
                 }
             }
             else
             {
                 foreach (var customer in customerIsSelected)
                 {
-                    _dialogService.ShowDialog(new CustomerEditingViewModel(customer, CustomerCollection));
+                    _dialogService.ShowDialog(new CustomerEditingViewModel(customer));
                 }
             }
         }
+        //FIX: НЕ РАБОТАЕТ НА COMPANY
         private void SelectedDelete()
         {
             var customerSelected = CustomerCollection.Where(o => o.IsSelected).ToList();

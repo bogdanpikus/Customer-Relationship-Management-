@@ -45,7 +45,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
 
             _sqlService.SQLCompanyInsert(company);
             companies.Insert(0, company);
-            _dialogService.CloseDialog();
+            _dialogService.CloseDialog(); // НЕ РАБОТАЕТ
         }
     }
 }

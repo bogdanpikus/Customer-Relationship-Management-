@@ -443,7 +443,7 @@ namespace CRM.Models
         }
 
         //WARNING: с этого места возможны ошибки. BUG: есть баги
-        public List<Customer> ExtractCustomers()
+        public List<Customer> ExtractCustomers() // РАБОТАЕТ
         {
             using (var cmd = _connection.CreateCommand())
             {
@@ -471,7 +471,7 @@ namespace CRM.Models
                 return customerList;
             }
         }
-        public List<Company> ExtractCompanies()
+        public List<Company> ExtractCompanies() // РАБОТАЕТ
         {
             using (var cmd = _connection.CreateCommand())
             {
@@ -485,8 +485,8 @@ namespace CRM.Models
                     companiesList.Add(new Company
                     {
                         CompanyName = reader.IsDBNull(0) ? null : reader.GetString(0),
-                        INN = reader.IsDBNull(1) ? null : reader.GetInt16(1),
-                        EDPNOU = reader.IsDBNull(2) ? null : reader.GetInt16(2),
+                        INN = reader.IsDBNull(1) ? null : reader.GetInt32(1),
+                        EDPNOU = reader.IsDBNull(2) ? null : reader.GetInt32(2),
                         Details = reader.IsDBNull(3) ? null : reader.GetString(3),
                         AmountOrders = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
                         Email = reader.IsDBNull(5) ? null : reader.GetString(5),
@@ -499,7 +499,7 @@ namespace CRM.Models
                 return companiesList;
             }
         }
-        public bool SQLCustomerInsert(Customer customer)
+        public bool SQLCustomerInsert(Customer customer) // РАБОТАЕТ
         {
             using (var cmd = _connection.CreateCommand())
             {
@@ -516,12 +516,12 @@ namespace CRM.Models
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
-        public bool SQLCompanyInsert(Company company)
+        public bool SQLCompanyInsert(Company company) // РАБОТАЕТ
         {
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = @"INSERT INTO companies (CompanyName, INN, EDPNOU, Details, AmountOrders, Email, CompanySumIncome,
-                                   CompanyPurchases, CompanyLastOrderDat) VALUES (?,?,?,?,?,?,?,?,?)";
+                                   CompanyPurchases, CompanyLastOrderDate) VALUES (?,?,?,?,?,?,?,?,?)";
                 cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyName });
                 cmd.Parameters.Add(new DuckDBParameter { Value = company.INN });
                 cmd.Parameters.Add(new DuckDBParameter { Value = company.EDPNOU });
@@ -534,40 +534,60 @@ namespace CRM.Models
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
-        public bool CustomerSelectedDelete(int id)
+        public bool CustomerSelectedDelete(int id) // НЕ РАБОТАЕТ
         {
             using(var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "DELETE FROM customers WHERE Id = ?";
-                cmd.Parameters.Clear();
+                cmd.CommandText = @"DELETE FROM customers WHERE Id = ?";
                 cmd.Parameters.Add(new DuckDBParameter { Value = id });
-                int rows = cmd.ExecuteNonQuery();
-                return rows > 0;
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
         public bool CompanySelectedDelete(int id)
         {
-            using (var cmd = _connection.CreateCommand())
+            using (var cmd = _connection.CreateCommand()) // НЕ РАБОТАЕТ
             {
-                cmd.CommandText = "DELETE FROM companies WHERE Id = ?";
-                cmd.Parameters.Clear();
+                cmd.CommandText = @"DELETE FROM companies WHERE Id = ?";
                 cmd.Parameters.Add(new DuckDBParameter { Value = id });
-                int rows = cmd.ExecuteNonQuery();
-                return rows > 0;
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
-        public bool UpdateCompanySelectedField()
+        public bool UpdateCompanySelectedField(Company company) // НЕ РАБОТАЕТ
         {
             using (var cmd = _connection.CreateCommand())
             {
-                return true;
+                cmd.CommandText = @"UPDATE companies SET CompanyName = ?, INN = ?, EDPNOU = ?, Details = ?, AmountOrders = ?, Email = ?,
+                                    Bank = ?, CompanySumIncome = ?, CompanyPurchases = ?, CompanyLastOrderDate = ? WHERE Id = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyName });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.INN });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.EDPNOU });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.Details });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.AmountOrders });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.Email });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.Bank });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanySumIncome });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyPurchases });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyLastOrderDate });
+                cmd.Parameters.Add(new DuckDBParameter { Value = company.Id });
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
-        public bool UpdateCustomerSelectedField()
+        public bool UpdateCustomerSelectedField(Customer customer) // НЕ РАБОТАЕТ
         {
             using (var cmd = _connection.CreateCommand())
             {
-                return true;
+                cmd.CommandText = @"UPDATE customers SET SecondName = ?, Name = ?, Surname = ?, Phone = ?, AmountOrders = ?,
+                                    CustomerSumIncome = ?, CustomerPurchases = ?, CustomerLastOrderDate = ?  WHERE Id = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.SecondName });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Name });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Surname });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Phone });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.AmountOrders });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerSumIncome });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerPurchases });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerLastOrderDate });
+                cmd.Parameters.Add(new DuckDBParameter { Value = customer.Id });
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
     }

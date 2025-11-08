@@ -2,6 +2,8 @@
 using CRM.Models;
 using CRM.Services;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CRM.ViewModels.ModalWindowViewModels
@@ -24,39 +26,44 @@ namespace CRM.ViewModels.ModalWindowViewModels
 
         public ICommand CompanyConfirm { get; }
 
-        public CompanyEditingViewModel(Company company, ObservableCollection<Company> companies) 
+        public CompanyEditingViewModel(Company company) 
         {
-            CompanyConfirm = new RelayCommand(Click => ConfirmButton(companies));
             _company = company;
-            CompanyName = _company.CompanyName;
-            INN = _company.INN;
-            EDPNOU = _company.EDPNOU;
-            Details = _company.Details;
-            Email = _company.Email;
-            Bank = _company.Bank;
-            CompanyPurchases = _company.CompanyPurchases;
-            AmountOrders = _company.AmountOrders;
-            CompanySumIncome = _company.CompanySumIncome;
-            CompanyLastOrderDate = _company.CompanyLastOrderDate;
-        }
-        private void ConfirmButton(ObservableCollection<Company> companies)
-        {
-            var company = new Company
-            {
-                CompanyName = CompanyName,
-                INN = INN,
-                EDPNOU = EDPNOU,
-                Details = Details,
-                Email = Email,
-                Bank = Bank,
-                CompanyPurchases = CompanyPurchases,
-                AmountOrders = AmountOrders,
-                CompanySumIncome= CompanySumIncome,
-                CompanyLastOrderDate= CompanyLastOrderDate
-            };
 
-            companies.Insert(0, company);
-            _sqlService.UpdateCompanySelectedField();
+            CompanyName = company.CompanyName;
+            INN = company.INN;
+            EDPNOU = company.EDPNOU;
+            Details = company.Details;
+            Email = company.Email;
+            Bank = company.Bank;
+            CompanyPurchases = company.CompanyPurchases;
+            AmountOrders = company.AmountOrders;
+            CompanySumIncome = company.CompanySumIncome;
+            CompanyLastOrderDate = company.CompanyLastOrderDate;
+
+            CompanyConfirm = new RelayCommand(Click => ConfirmButton());
+        }
+        private void ConfirmButton()
+        {
+            _company.CompanyName = CompanyName;
+            _company.INN = INN;
+            _company.EDPNOU = EDPNOU;
+            _company.Details = Details;
+            _company.Email = Email;
+            _company.Bank = Bank;
+            _company.CompanyPurchases = CompanyPurchases;
+            _company.AmountOrders = AmountOrders;
+            _company.CompanySumIncome = CompanySumIncome;
+            _company.CompanyLastOrderDate = CompanyLastOrderDate;
+
+            if (_sqlService.UpdateCompanySelectedField(_company))
+            {
+                DialogService.Instance.CloseDialog();
+            }
+            else
+            {
+                MessageBox.Show("Error. Try again.");
+            }
         }
     }
 }

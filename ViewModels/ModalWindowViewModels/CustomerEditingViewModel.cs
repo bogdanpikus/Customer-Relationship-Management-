@@ -2,7 +2,7 @@
 using CRM.Models;
 using CRM.Services;
 using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CRM.ViewModels.ModalWindowViewModels
@@ -23,10 +23,10 @@ namespace CRM.ViewModels.ModalWindowViewModels
 
         public ICommand CustomerConfirm { get; }
 
-        public CustomerEditingViewModel(Customer customer, ObservableCollection<Customer> customers) 
+        public CustomerEditingViewModel(Customer customer) 
         {
-            CustomerConfirm = new RelayCommand(Click => ConfirmButton(customers));
             _customer = customer;
+         
             SecondName = customer.SecondName;
             Name = customer.Name;
             Surname = customer.Surname;
@@ -35,23 +35,29 @@ namespace CRM.ViewModels.ModalWindowViewModels
             CustomerSumIncome = customer.CustomerSumIncome;
             Items = customer.CustomerPurchases;
             LastDateOrder = customer.CustomerLastOrderDate;
-        }
-        private void ConfirmButton(ObservableCollection<Customer> customers)
-        {
-            var customer = new Customer
-            {
-                SecondName = SecondName,
-                Name = Name,
-                Surname = Surname,
-                Phone = Phone,
-                AmountOrders = AmountOrders,
-                CustomerSumIncome = CustomerSumIncome,
-                CustomerPurchases = Items,
-                CustomerLastOrderDate = LastDateOrder
-            };
 
-            customers.Insert(0, customer);
-            _sqlService.UpdateCustomerSelectedField();
+            CustomerConfirm = new RelayCommand(Click => ConfirmButton());
+        }
+        private void ConfirmButton()
+        {
+            _customer.SecondName = SecondName;
+            _customer.Name = Name; 
+            _customer.Surname = Surname;
+            _customer.Phone = Phone;
+            _customer.AmountOrders = AmountOrders;  
+            _customer.CustomerSumIncome = CustomerSumIncome;
+            _customer.CustomerPurchases = Items;
+            _customer.CustomerLastOrderDate = LastDateOrder;
+
+
+            if (_sqlService.UpdateCustomerSelectedField(_customer))
+            {
+                DialogService.Instance.CloseDialog();
+            }
+            else
+            {
+                MessageBox.Show("Error. Try again.");
+            }
         }
     }
 }

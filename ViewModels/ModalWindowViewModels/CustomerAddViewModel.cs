@@ -98,7 +98,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
 
             _sqlService.SQLCustomerInsert(customer);
              customers.Insert(0, customer);
-            _dialogService.CloseDialog();
+            _dialogService.CloseDialog(); // НЕ РАБОТАЕТ
         }
     }
 }
