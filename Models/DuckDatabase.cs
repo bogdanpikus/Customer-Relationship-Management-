@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Controls;
 using DuckDB.NET.Data;
 
 namespace CRM.Models
@@ -60,7 +61,7 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = "CREATE TABLE IF NOT EXISTS companies (Id INTEGER DEFAULT nextval('seq_company') PRIMARY KEY, CompanyName VARCHAR, INN INTEGER," +
-                    "EDPNOU INTEGER, Details VARCHAR, AmountOrders INTEGER, Email VARCHAR, CompanySumIncome DECIMAL(18,2), CompanyPurchases VARCHAR, " +
+                    "EDPNOU VARCHAR, Details VARCHAR, AmountOrders INTEGER, Email VARCHAR, Bank VARCHAR, CompanySumIncome DECIMAL(18,2), CompanyPurchases VARCHAR, " +
                     "CompanyLastOrderDate DATE)";
                 cmd.ExecuteNonQuery();
             }
@@ -110,7 +111,7 @@ namespace CRM.Models
                 crm.Parameters.Add(new DuckDBParameter { Value = order.Comment });
                 order.Id = Convert.ToInt32(crm.ExecuteScalar());
 
-                return true;
+                return order.Id > 0;
             }
         }
 
@@ -448,7 +449,7 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 var customerList = new List<Customer>();
-                cmd.CommandText = @"SELECT SecondName, Name, Surname, Phone, AmountOrders, 
+                cmd.CommandText = @"SELECT Id, SecondName, Name, Surname, Phone, AmountOrders, 
                                   CustomerSumIncome, CustomerPurchases, CustomerLastOrderDate FROM customers 
                                   ORDER BY LOWER(SecondName), LOWER(Name), LOWER(Surname), CustomerLastOrderDate DESC,
                                   CustomerSumIncome DESC";
@@ -457,14 +458,15 @@ namespace CRM.Models
                 {
                     customerList.Add(new Customer
                     {
-                        SecondName = reader.IsDBNull(0) ? null : reader.GetString(0),
-                        Name = reader.IsDBNull(1) ? null : reader.GetString(1),
-                        Surname = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        Phone = reader.IsDBNull(3) ? null : reader.GetString(3),
-                        AmountOrders = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
-                        CustomerSumIncome = reader.IsDBNull(5) ? 0 : reader.GetDecimal(5),
-                        CustomerPurchases = reader.IsDBNull(6) ? null : reader.GetString(6),
-                        CustomerLastOrderDate = reader.IsDBNull(7) ? DateTime.Now : reader.GetDateTime(7)
+                        Id = reader.GetInt32(0),
+                        SecondName = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        Name = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        Surname = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        Phone = reader.IsDBNull(4) ? null : reader.GetString(4),
+                        AmountOrders = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
+                        CustomerSumIncome = reader.IsDBNull(6) ? 0 : reader.GetDecimal(6),
+                        CustomerPurchases = reader.IsDBNull(7) ? null : reader.GetString(7),
+                        CustomerLastOrderDate = reader.IsDBNull(8) ? DateTime.Now : reader.GetDateTime(8)
                     });
                 }
 
@@ -476,7 +478,7 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 var companiesList = new List<Company>();
-                cmd.CommandText = @"SELECT CompanyName, INN, EDPNOU, Details, AmountOrders, Email, CompanySumIncome,
+                cmd.CommandText = @"SELECT Id, CompanyName, INN, EDPNOU, Details, AmountOrders, Email, CompanySumIncome,
                                    CompanyPurchases, CompanyLastOrderDate FROM companies ORDER BY LOWER(CompanyName), LOWER(CAST(INN AS VARCHAR)),
                                    LOWER(CAST(EDPNOU AS VARCHAR)),CompanyLastOrderDate DESC, CompanySumIncome DESC";
                 var reader = cmd.ExecuteReader();
@@ -484,15 +486,16 @@ namespace CRM.Models
                 {
                     companiesList.Add(new Company
                     {
-                        CompanyName = reader.IsDBNull(0) ? null : reader.GetString(0),
-                        INN = reader.IsDBNull(1) ? null : reader.GetInt32(1),
-                        EDPNOU = reader.IsDBNull(2) ? null : reader.GetInt32(2),
-                        Details = reader.IsDBNull(3) ? null : reader.GetString(3),
-                        AmountOrders = reader.IsDBNull(4) ? 0 : reader.GetInt32(4),
-                        Email = reader.IsDBNull(5) ? null : reader.GetString(5),
-                        CompanySumIncome = reader.IsDBNull(6) ? 0 : reader.GetDecimal(6),
-                        CompanyPurchases = reader.IsDBNull(7) ? null : reader.GetString(7),
-                        CompanyLastOrderDate = reader.IsDBNull(8) ? DateTime.Now : reader.GetDateTime(8)
+                        Id = reader.GetInt32(0),
+                        CompanyName = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        INN = reader.IsDBNull(2) ? null : reader.GetInt32(2),
+                        EDPNOU = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        Details = reader.IsDBNull(4) ? null : reader.GetString(4),
+                        AmountOrders = reader.IsDBNull(5) ? 0 : reader.GetInt32(5),
+                        Email = reader.IsDBNull(6) ? null : reader.GetString(6),
+                        CompanySumIncome = reader.IsDBNull(7) ? 0 : reader.GetDecimal(7),
+                        CompanyPurchases = reader.IsDBNull(8) ? null : reader.GetString(8),
+                        CompanyLastOrderDate = reader.IsDBNull(9) ? DateTime.Now : reader.GetDateTime(9)
                     });
                 }
 
@@ -504,7 +507,7 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = @"INSERT INTO customers (SecondName, Name, Surname, Phone, AmountOrders, 
-                                  CustomerSumIncome, CustomerPurchases, CustomerLastOrderDate) VALUES (?,?,?,?,?,?,?,?)";
+                                  CustomerSumIncome, CustomerPurchases, CustomerLastOrderDate) VALUES (?,?,?,?,?,?,?,?) RETURNING Id";
                 cmd.Parameters.Add(new DuckDBParameter { Value = customer.SecondName });
                 cmd.Parameters.Add(new DuckDBParameter { Value = customer.Name });
                 cmd.Parameters.Add(new DuckDBParameter { Value = customer.Surname });
@@ -513,7 +516,9 @@ namespace CRM.Models
                 cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerSumIncome });
                 cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerPurchases });
                 cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerLastOrderDate });
-                return cmd.ExecuteNonQuery() > 0;
+                customer.Id = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return customer.Id > 0;
             }
         }
         public bool SQLCompanyInsert(Company company) // РАБОТАЕТ
@@ -521,7 +526,7 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 cmd.CommandText = @"INSERT INTO companies (CompanyName, INN, EDPNOU, Details, AmountOrders, Email, CompanySumIncome,
-                                   CompanyPurchases, CompanyLastOrderDate) VALUES (?,?,?,?,?,?,?,?,?)";
+                                   CompanyPurchases, CompanyLastOrderDate) VALUES (?,?,?,?,?,?,?,?,?) RETURNING Id";
                 cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyName });
                 cmd.Parameters.Add(new DuckDBParameter { Value = company.INN });
                 cmd.Parameters.Add(new DuckDBParameter { Value = company.EDPNOU });
@@ -531,7 +536,9 @@ namespace CRM.Models
                 cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanySumIncome });
                 cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyPurchases });
                 cmd.Parameters.Add(new DuckDBParameter { Value = company.CompanyLastOrderDate});
-                return cmd.ExecuteNonQuery() > 0;
+                company.Id = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return company.Id > 0;
             }
         }
         public bool CustomerSelectedDelete(int id) // НЕ РАБОТАЕТ

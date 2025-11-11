@@ -11,11 +11,12 @@ namespace CRM.ViewModels.ModalWindowViewModels
     public class CompanyEditingViewModel
     {
         private readonly Company _company;
+        private readonly DialogService _dialogService = DialogService.Instance;
         private readonly SQLService _sqlService = new();
 
         public string? CompanyName { get; set; }
         public int? INN { get; set; }
-        public int? EDPNOU { get; set; }
+        public string? EDPNOU { get; set; }
         public string? Details { get; set; }
         public string? Email { get; set; }
         public string? Bank {  get; set; }
@@ -58,7 +59,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
 
             if (_sqlService.UpdateCompanySelectedField(_company))
             {
-                DialogService.Instance.CloseDialog();
+                _dialogService.CloseDialog();
             }
             else
             {

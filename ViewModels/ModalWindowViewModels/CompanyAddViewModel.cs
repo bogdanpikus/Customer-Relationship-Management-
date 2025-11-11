@@ -9,14 +9,14 @@ namespace CRM.ViewModels.ModalWindowViewModels
 {
     public class CompanyAddViewMode
     {
-        private readonly DialogService _dialogService = new();
+        private readonly DialogService _dialogService = DialogService.Instance;
         private readonly SQLService _sqlService = new();
         public ICommand CompanyConfirm { get; }
 
         public DateTime? CompanyLastOrderDate { get; set; }
         public string? CompanyName { get; set; }
         public int? INN { get; set; }
-        public int? EDPNOU { get; set; }
+        public string? EDPNOU { get; set; }
         public string? Details { get; set; }
         public string Email { get; set; }
         public int? AmountOrders { get; set; }
@@ -45,7 +45,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
 
             _sqlService.SQLCompanyInsert(company);
             companies.Insert(0, company);
-            _dialogService.CloseDialog(); // НЕ РАБОТАЕТ
+            _dialogService.CloseDialog(); // РАБОТАЕТ
         }
     }
 }

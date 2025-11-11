@@ -2,6 +2,7 @@
 using CRM.Models;
 using CRM.Services;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,7 +10,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
 {
     public class CustomerAddViewModel : NotifyPropertyChange
     {
-        private readonly DialogService _dialogService = new();
+        private readonly DialogService _dialogService = DialogService.Instance;
         private readonly SQLService _sqlService = new();
         public ObservableCollection<string> ComboItems { get; } = ["Клиент", "Юр.лицо"];
         private ObservableCollection<Company> _companies;
@@ -98,7 +99,8 @@ namespace CRM.ViewModels.ModalWindowViewModels
 
             _sqlService.SQLCustomerInsert(customer);
              customers.Insert(0, customer);
-            _dialogService.CloseDialog(); // НЕ РАБОТАЕТ
+            Debug.WriteLine($"Company ID = {customer.Id}");
+            _dialogService.CloseDialog(); // РАБОТАЕТ
         }
     }
 }

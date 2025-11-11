@@ -3,13 +3,14 @@ using CRM.Models;
 using CRM.Services;
 using CRM.ViewModels.ModalWindowViewModels;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows.Input;
 
 namespace CRM.ViewModels
 {
     public class ContactsViewModel : NotifyPropertyChange
     {
-        private readonly DialogService _dialogService = new();
+        private readonly DialogService _dialogService = DialogService.Instance;
         private readonly SQLService _sqlService = new();
         public ObservableCollection<Customer> CustomerCollection { get; } = new();
         public ObservableCollection<Company> CompanyCollection { get; } = new();
@@ -51,46 +52,38 @@ namespace CRM.ViewModels
             _dialogService.ShowDialog(new CustomerAddViewModel(CustomerCollection, CompanyCollection));   
         }
 
-        //FIX: НЕ РАБОТАЕТ НА COMPANY
+        //FIX: ИСПРАВЛЕНО
         private void EditingModalWindow()
         {
             var customerIsSelected = CustomerCollection.Where(o => o.IsSelected).ToList();
-            if(customerIsSelected == null)
+            foreach (var customer in customerIsSelected)
             {
-                var companyIsSelected = CompanyCollection.Where(o => o.IsSelected).ToList();
-                foreach(var company in companyIsSelected)
-                {
-                    _dialogService.ShowDialog(new CompanyEditingViewModel(company));
-                }
+                _dialogService.ShowDialog(new CustomerEditingViewModel(customer));
             }
-            else
+
+            var companyIsSelected = CompanyCollection.Where(o => o.IsSelected).ToList();
+            foreach (var company in companyIsSelected)
             {
-                foreach (var customer in customerIsSelected)
-                {
-                    _dialogService.ShowDialog(new CustomerEditingViewModel(customer));
-                }
+                _dialogService.ShowDialog(new CompanyEditingViewModel(company));
             }
         }
-        //FIX: НЕ РАБОТАЕТ НА COMPANY
+        //FIX: ИСПРАВЛЕНО
         private void SelectedDelete()
         {
             var customerSelected = CustomerCollection.Where(o => o.IsSelected).ToList();
-            if(customerSelected == null)
+            foreach (var customer in customerSelected)
             {
-                var companySelected = CompanyCollection.Where(o => o.IsSelected).ToList();
-                foreach (var company in companySelected)
-                {
-                    _sqlService.CompanySelectedDelete(company.Id);
-                    CompanyCollection.Remove(company);
-                }
+                _sqlService.CustomerSelectedDelete(customer.Id);
+                Debug.WriteLine($"Company ID = {customer.Id}");
+                CustomerCollection.Remove(customer);
             }
-            else
+
+            var companySelected = CompanyCollection.Where(o => o.IsSelected).ToList();
+            foreach (var company in companySelected)
             {
-                foreach (var customer in customerSelected)
-                {
-                    _sqlService.CustomerSelectedDelete(customer.Id);
-                    CustomerCollection.Remove(customer);
-                }
+                _sqlService.CompanySelectedDelete(company.Id);
+                Debug.WriteLine($"Company ID = {company.Id}");
+                CompanyCollection.Remove(company);
             }
 
         }

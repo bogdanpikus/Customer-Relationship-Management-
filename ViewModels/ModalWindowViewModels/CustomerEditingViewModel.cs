@@ -2,6 +2,7 @@
 using CRM.Models;
 using CRM.Services;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -10,6 +11,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
     public class CustomerEditingViewModel
     {
         private readonly Customer _customer;
+        private readonly DialogService _dialogService = DialogService.Instance;
         private readonly SQLService _sqlService = new();
 
         public string? SecondName { get; set; }
@@ -49,10 +51,9 @@ namespace CRM.ViewModels.ModalWindowViewModels
             _customer.CustomerPurchases = Items;
             _customer.CustomerLastOrderDate = LastDateOrder;
 
-
             if (_sqlService.UpdateCustomerSelectedField(_customer))
             {
-                DialogService.Instance.CloseDialog();
+                _dialogService.CloseDialog();
             }
             else
             {

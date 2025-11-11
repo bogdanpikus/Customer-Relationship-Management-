@@ -440,8 +440,8 @@ namespace CRM.Models
             }
         }
 
-        private int? _edpnou;
-        public int? EDPNOU
+        private string? _edpnou;
+        public string? EDPNOU
         {
             get => _edpnou;
             set

@@ -12,6 +12,7 @@ namespace CRM.ViewModels
     public class EditingViewModal : NotifyPropertyChange
     {
         private readonly Order _order;
+        private readonly DialogService _dialogService = DialogService.Instance;
         private readonly SQLService _sqlService = new SQLService();
         
         public ICommand Confirm { get; }
@@ -87,7 +88,7 @@ namespace CRM.ViewModels
 
             if (_sqlService.UpdateOrder(_order))
             {
-                DialogService.Instance.CloseDialog();
+                _dialogService.CloseDialog();
             }
             else
             {

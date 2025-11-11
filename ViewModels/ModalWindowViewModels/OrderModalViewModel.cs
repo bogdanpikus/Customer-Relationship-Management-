@@ -9,7 +9,7 @@ namespace CRM.ViewModels
 {
     public class OrderModalViewModel : NotifyPropertyChange
     {
-        private readonly DialogService _dialogService = new();
+        private readonly DialogService _dialogService = DialogService.Instance;
         private readonly SQLService _sqlService = new SQLService();
 
         public ICommand Confirm {  get; }

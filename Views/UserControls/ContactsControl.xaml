@@ -79,7 +79,7 @@
                         <DataGridTextColumn Header="Колличество заказов" Binding="{Binding CustomerOrderCount}" />
                         <DataGridTextColumn Header="Вся прибыль с клиента" Binding="{Binding CustomerSumOfIncome}" />
                         <DataGridTextColumn Header="Купленные товары" Binding="{Binding CustomerPurchases}" />
-                        <DataGridTextColumn Header="Последний заказ" Binding="{Binding CustomerLastOrderDate}" />
+                        <DataGridTextColumn Header="Последний заказ" Binding="{Binding CustomerLastOrderDate, StringFormat=\{0:dd.MM.yy\}}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
@@ -124,7 +124,7 @@
                         <DataGridTextColumn Header="Почта/Телефон" Binding="{Binding Email}" />
                         <DataGridTextColumn Header="Колличество заказов" Binding="{Binding AmountOrders}" />
                         <DataGridTextColumn Header="Общая прибыть" Binding="{Binding CompanySumIncome}" />
-                        <DataGridTextColumn Header="Последний заказ" Binding="{Binding CompanyLastOrderDate}" />
+                        <DataGridTextColumn Header="Последний заказ" Binding="{Binding CompanyLastOrderDate, StringFormat=\{0:dd.MM.yy\}}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
