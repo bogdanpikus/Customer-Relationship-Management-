@@ -6,12 +6,73 @@
              xmlns:local="clr-namespace:CRM.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="WhiteSmoke" ShowGridLines="True">
+    <Grid Background="WhiteSmoke" ShowGridLines="False">
         <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="55"/>
+            <RowDefinition />
         </Grid.RowDefinitions>
-        <Label FontSize="50">Storage</Label>
+
+        <DockPanel Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Button Content="Создать склад" Width="Auto" Height="50" Background="Snow"
+                    Foreground="Black" FontWeight="Medium" FontSize="20"
+                    BorderBrush="Black" BorderThickness="2" Cursor="Hand">
+            </Button>
+            <Button Content="Создать группу" Width="Auto" Height="50" Background="Snow"
+                    Foreground="Black" FontWeight="Medium" FontSize="20" Margin="5,0,0,0"
+                    BorderBrush="Black" BorderThickness="2" Cursor="Hand">
+            </Button>
+            <Button Content="Создать товар" Width="Auto" Height="50" Background="Snow"
+                    Foreground="Black" FontWeight="Medium" FontSize="20" Margin="5,0,0,0"
+                    BorderBrush="Black" BorderThickness="2" Cursor="Hand">
+            </Button>
+        </DockPanel>
+        <DockPanel Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <Button Content="Редактировать" Width="140" Height="50" Background="Snow"
+                    Foreground="Black" FontWeight="Medium" FontSize="18"
+                    BorderBrush="Black" BorderThickness="1" Cursor="Hand">
+            </Button>
+            <Button Content="Удалить" Width="150" Height="50" Background="Snow"
+                    Foreground="Black" FontWeight="Medium" FontSize="18" Margin="5,0,0,0"
+                    BorderBrush="Black" BorderThickness="1" Cursor="Hand">
+            </Button>
+            <Button Content="Фильтры" Width="140" Height="50" Background="Snow"
+                    Foreground="Black" FontWeight="Medium" FontSize="18" Margin="5,0,0,0"
+                    BorderBrush="Black" BorderThickness="1" Cursor="Hand">
+            </Button>
+        </DockPanel>
+
+        <DockPanel Grid.Row="2"  Background="LightGray" Margin="0,10,0,0">
+            <DataGrid ItemsSource="{Binding Storages}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
+                      VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" 
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
+                      GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
+                      RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
+                      EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
+                      VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
+                      SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
+                      Cursor="Hand" ColumnWidth="355" HorizontalAlignment="Center">
+                
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}" CanUserResize="False">
+                        <DataGridCheckBoxColumn.Header>
+                            <CheckBox IsEnabled="False"/>
+                        </DataGridCheckBoxColumn.Header>
+                    </DataGridCheckBoxColumn>
+                    <DataGridTemplateColumn Header="Склады">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding OpenStorage}" Width="200" Content="Склад 1" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Адрес"/>
+                    <DataGridTextColumn Header="Ответственный"/>
+                    <DataGridTextColumn Header="Телефон ответственного"/>
+                    <DataGridTextColumn Header="Колличество товара на складе"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
     </Grid>
 </UserControl>
