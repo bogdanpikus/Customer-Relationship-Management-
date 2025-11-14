@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography;
 using System.Windows.Controls;
 using DuckDB.NET.Data;
 
@@ -25,44 +26,49 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = @"CREATE SEQUENCE IF NOT EXISTS seq_customers START 1";
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (Id INTEGER PRIMARY KEY, SecondName VARCHAR," +
+                                  "Name VARCHAR, Surname VARCHAR, Phone VARCHAR, AmountOrders INTEGER, CustomerSumIncome DECIMAL(18,2), " +
+                                  "CustomerPurchases VARCHAR, CustomerLastOrderDate DATE)";
                 cmd.ExecuteNonQuery();
             }
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (Id INTEGER DEFAULT nextval('seq_customers') PRIMARY KEY, SecondName VARCHAR," +
-                  " Name VARCHAR, Surname VARCHAR, Phone VARCHAR, AmountOrders INTEGER, CustomerSumIncome DECIMAL(18,2), " +
-                  "CustomerPurchases VARCHAR, CustomerLastOrderDate DATE)";
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER PRIMARY KEY, OrderDate DATE, Articul VARCHAR," +
+                                  "OrderID VARCHAR, SecondName VARCHAR, Name VARCHAR, Surname VARCHAR, Phone VARCHAR, Item VARCHAR, Amount TINYINT, Price DECIMAL(18,2)," +
+                                  "Pricecost DECIMAL(18,2), PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
+                                  "Status VARCHAR, Spending DECIMAL(18,2), Income DECIMAL(18,2), Organization VARCHAR, Comment VARCHAR)";
                 cmd.ExecuteNonQuery();
             }
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = @"CREATE SEQUENCE IF NOT EXISTS seq_orders START 1";
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS companies (Id INTEGER PRIMARY KEY, CompanyName VARCHAR, INN INTEGER," +
+                                  "EDPNOU VARCHAR, Details VARCHAR, AmountOrders INTEGER, Email VARCHAR, Bank VARCHAR, CompanySumIncome DECIMAL(18,2), CompanyPurchases VARCHAR, " +
+                                  "CompanyLastOrderDate DATE)";
                 cmd.ExecuteNonQuery();
             }
 
-            using (var cmd = _connection.CreateCommand())
+            using (var cmd = _connection.CreateCommand()) // NOTE: СОЗДАНИЕ ТАБЛИЦЫ STORAGES
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER DEFAULT nextval('seq_orders') PRIMARY KEY, OrderDate DATE, Articul VARCHAR," +
-                   "OrderID VARCHAR, SecondName VARCHAR, Name VARCHAR, Surname VARCHAR, Phone VARCHAR, Item VARCHAR, Amount TINYINT, Price DECIMAL(18,2)," +
-                   " Pricecost DECIMAL(18,2), PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
-                   "Status VARCHAR, Spending DECIMAL(18,2), Income DECIMAL(18,2), Organization VARCHAR, Comment VARCHAR)";
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS storage (Id INTEGER PRIMARY KEY, Address VARCHAR, 
+                                    Responsible VARCHAR, Phone VARCHAR, AmountGoodsInStorage INTEGER)";
                 cmd.ExecuteNonQuery();
             }
 
-            using (var cmd = _connection.CreateCommand())
+            using (var cmd = _connection.CreateCommand()) // NOTE: СОЗДАНИЕ ТАБЛИЦЫ GROUPS
             {
-                cmd.CommandText = @"CREATE SEQUENCE IF NOT EXISTS seq_company START 1";
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS productGroup (Id INTEGER PRIMARY KEY, StorageId INTEGER NOT NULL, Name VARCHAR,
+                                    FOREIGN KEY (StorageId) REFERENCES storage(Id))"; 
                 cmd.ExecuteNonQuery();
             }
 
-            using (var cmd = _connection.CreateCommand())
+            using (var cmd = _connection.CreateCommand()) // NOTE: СОЗДАНИЕ ТАБЛИЦЫ PRODUCTS
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS companies (Id INTEGER DEFAULT nextval('seq_company') PRIMARY KEY, CompanyName VARCHAR, INN INTEGER," +
-                    "EDPNOU VARCHAR, Details VARCHAR, AmountOrders INTEGER, Email VARCHAR, Bank VARCHAR, CompanySumIncome DECIMAL(18,2), CompanyPurchases VARCHAR, " +
-                    "CompanyLastOrderDate DATE)";
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS products (Id INTEGER PRIMARY KEY, ProductId INTEGER NOT NULL,
+                                    Articul VARCHAR, PhotoPath VARCHAR, Name VARCHAR, Price DECIMAL(18,2), PrimaryPrice DECIMAL(18,2), 
+                                    IncomeFromSelling DECIMAL(18,2), Amount INTEGER, Comment VARCHAR,
+                                    FOREIGN KEY (ProductId) REFERENCES productGroup(Id))";
                 cmd.ExecuteNonQuery();
             }
         }

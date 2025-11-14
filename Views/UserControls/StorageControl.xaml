@@ -63,7 +63,7 @@
                     <DataGridTemplateColumn Header="Склады">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Command="{Binding OpenStorage}" Width="200" Content="Склад 1" />
+                                <Button Command="{Binding OpenStorage}" Width="200" Height="100" Content="Склад 1" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

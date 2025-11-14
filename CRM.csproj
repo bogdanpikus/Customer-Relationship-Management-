@@ -20,6 +20,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Assets\Images\" />
 		<Folder Include="Core\" />
 		<Folder Include="third_party\Microsoft.Extensions.DependencyInjection\" />
 		<Folder Include="third_party\OxyPlot\" />
