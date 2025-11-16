@@ -14,36 +14,37 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Button Content="Создать склад" Width="Auto" Height="50" Background="Snow"
+            <Button Command="{Binding CreateStorage}" Content="Создать склад" Width="Auto" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20"
                     BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
-            <Button Content="Создать группу" Width="Auto" Height="50" Background="Snow"
+            <Button Command="{Binding CreateGroup}" Content="Создать группу" Width="Auto" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20" Margin="5,0,0,0"
                     BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
-            <Button Content="Создать товар" Width="Auto" Height="50" Background="Snow"
+            <Button Command="{Binding CreateProduct}" Content="Создать товар" Width="Auto" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="20" Margin="5,0,0,0"
                     BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
         </DockPanel>
         <DockPanel Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <Button Content="Редактировать" Width="140" Height="50" Background="Snow"
+            <Button Command="{Binding Editing}" Content="Редактировать" Width="140" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="18"
                     BorderBrush="Black" BorderThickness="1" Cursor="Hand">
             </Button>
-            <Button Content="Удалить" Width="150" Height="50" Background="Snow"
+            <Button Command="{Binding Delete}" Content="Удалить" Width="150" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="18" Margin="5,0,0,0"
                     BorderBrush="Black" BorderThickness="1" Cursor="Hand">
             </Button>
-            <Button Content="Фильтры" Width="140" Height="50" Background="Snow"
-                    Foreground="Black" FontWeight="Medium" FontSize="18" Margin="5,0,0,0"
-                    BorderBrush="Black" BorderThickness="1" Cursor="Hand">
-            </Button>
+            <ComboBox Width="140" Height="50" Background="Snow" ItemsSource="{Binding Filters}"
+                      Foreground="Black" FontWeight="Medium" FontSize="20" Margin="5,0,0,0"
+                      BorderBrush="Black" BorderThickness="2" VerticalContentAlignment="Center"
+                      HorizontalContentAlignment="Center" Cursor="Hand" SelectedItem="{Binding SelectedFilter, Mode=TwoWay}">
+            </ComboBox>
         </DockPanel>
 
         <DockPanel Grid.Row="2"  Background="LightGray" Margin="0,10,0,0">
-            <DataGrid ItemsSource="{Binding Storages}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
+            <DataGrid ItemsSource="{Binding StoragesCollection}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
                       VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" 
                       ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
@@ -51,8 +52,8 @@
                       RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
                       EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
                       VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
-                      SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                      Cursor="Hand" ColumnWidth="355" HorizontalAlignment="Center">
+                      SelectionMode="Extended" SelectionUnit="CellOrRowHeader" HorizontalContentAlignment="Stretch"
+                      Cursor="Hand" ColumnWidth="200" HorizontalAlignment="Stretch" IsEnabled="True" RowHeight="50" VerticalContentAlignment="Center">
                 
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}" CanUserResize="False">
@@ -63,15 +64,21 @@
                     <DataGridTemplateColumn Header="Склады">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Command="{Binding OpenStorage}" Width="200" Height="100" Content="Склад 1" />
+                                <Button Command="{Binding OpenStorage}" Width="190" Height="45" Content="{Binding StorageName}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Адрес"/>
-                    <DataGridTextColumn Header="Ответственный"/>
-                    <DataGridTextColumn Header="Телефон ответственного"/>
-                    <DataGridTextColumn Header="Колличество товара на складе"/>
+                    <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="Ответственный" Binding="{Binding Responsible}"/>
+                    <DataGridTextColumn Header="Телефон ответственного" Binding="{Binding Phone}"/>
+                    <DataGridTextColumn Header="Колличество товара на складе" Binding="{Binding AmountGoodsInStorage}"/>
                 </DataGrid.Columns>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+                </DataGrid.CellStyle>
             </DataGrid>
         </DockPanel>
     </Grid>
