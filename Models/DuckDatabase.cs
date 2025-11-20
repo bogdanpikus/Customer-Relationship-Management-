@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Controls;
+using CRM.ViewModels;
 using DuckDB.NET.Data;
 
 namespace CRM.Models
@@ -24,9 +25,15 @@ namespace CRM.Models
             _connection = new DuckDBConnection(dbConnection);
             _connection.Open();
 
+            using(var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"CREATE SEQUENCE IF NOT EXISTS seq_customers START 1";
+                cmd.ExecuteNonQuery();
+            }
+
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (Id INTEGER PRIMARY KEY, SecondName VARCHAR," +
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS customers (Id INTEGER DEFAULT nextval('seq_customers') PRIMARY KEY, SecondName VARCHAR," +
                                   "Name VARCHAR, Surname VARCHAR, Phone VARCHAR, AmountOrders INTEGER, CustomerSumIncome DECIMAL(18,2), " +
                                   "CustomerPurchases VARCHAR, CustomerLastOrderDate DATE)";
                 cmd.ExecuteNonQuery();
@@ -34,7 +41,14 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER PRIMARY KEY, OrderDate DATE, Articul VARCHAR," +
+                cmd.CommandText = "CREATE SEQUENCE IF NOT EXISTS seq_orders START 1";
+                cmd.ExecuteNonQuery();
+            }
+
+
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS orders (Id INTEGER DEFAULT nextval('seq_orders') PRIMARY KEY, OrderDate DATE, Articul VARCHAR," +
                                   "OrderID VARCHAR, SecondName VARCHAR, Name VARCHAR, Surname VARCHAR, Phone VARCHAR, Item VARCHAR, Amount TINYINT, Price DECIMAL(18,2)," +
                                   "Pricecost DECIMAL(18,2), PaymentWay VARCHAR, DelivarWay VARCHAR, DeliverAdress VARCHAR," +
                                   "Status VARCHAR, Spending DECIMAL(18,2), Income DECIMAL(18,2), Organization VARCHAR, Comment VARCHAR)";
@@ -43,29 +57,57 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = "CREATE TABLE IF NOT EXISTS companies (Id INTEGER PRIMARY KEY, CompanyName VARCHAR, INN INTEGER," +
+                cmd.CommandText = "CREATE SEQUENCE IF NOT EXISTS seq_companies START 1";
+                cmd.ExecuteNonQuery();
+            }
+
+
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "CREATE TABLE IF NOT EXISTS companies (Id INTEGER DEFAULT nextval('seq_companies') PRIMARY KEY, CompanyName VARCHAR, INN INTEGER," +
                                   "EDPNOU VARCHAR, Details VARCHAR, AmountOrders INTEGER, Email VARCHAR, Bank VARCHAR, CompanySumIncome DECIMAL(18,2), CompanyPurchases VARCHAR, " +
                                   "CompanyLastOrderDate DATE)";
                 cmd.ExecuteNonQuery();
             }
 
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "CREATE SEQUENCE IF NOT EXISTS seq_storage START 1";
+                cmd.ExecuteNonQuery();
+            }
+
+
             using (var cmd = _connection.CreateCommand()) // NOTE: СОЗДАНИЕ ТАБЛИЦЫ STORAGES
             {
-                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS storage (Id INTEGER PRIMARY KEY, Address VARCHAR, 
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS storage (Id INTEGER DEFAULT nextval('seq_storage') PRIMARY KEY, StorageName VARCHAR, Address VARCHAR, 
                                     Responsible VARCHAR, Phone VARCHAR, AmountGoodsInStorage INTEGER)";
                 cmd.ExecuteNonQuery();
             }
 
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "CREATE SEQUENCE IF NOT EXISTS seq_groups START 1";
+                cmd.ExecuteNonQuery();
+            }
+
+
             using (var cmd = _connection.CreateCommand()) // NOTE: СОЗДАНИЕ ТАБЛИЦЫ GROUPS
             {
-                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS productGroup (Id INTEGER PRIMARY KEY, StorageId INTEGER NOT NULL, Name VARCHAR,
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS productGroup (Id INTEGER DEFAULT nextval('seq_groups') PRIMARY KEY, StorageId INTEGER NOT NULL, Name VARCHAR,
                                     FOREIGN KEY (StorageId) REFERENCES storage(Id))"; 
                 cmd.ExecuteNonQuery();
             }
 
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = "CREATE SEQUENCE IF NOT EXISTS seq_products START 1";
+                cmd.ExecuteNonQuery();
+            }
+
+
             using (var cmd = _connection.CreateCommand()) // NOTE: СОЗДАНИЕ ТАБЛИЦЫ PRODUCTS
             {
-                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS products (Id INTEGER PRIMARY KEY, ProductId INTEGER NOT NULL,
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS products (Id INTEGER DEFAULT nextval('seq_products') PRIMARY KEY, ProductId INTEGER NOT NULL,
                                     Articul VARCHAR, PhotoPath VARCHAR, Name VARCHAR, Price DECIMAL(18,2), PrimaryPrice DECIMAL(18,2), 
                                     IncomeFromSelling DECIMAL(18,2), Amount INTEGER, Comment VARCHAR,
                                     FOREIGN KEY (ProductId) REFERENCES productGroup(Id))";
@@ -600,6 +642,37 @@ namespace CRM.Models
                 cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerPurchases });
                 cmd.Parameters.Add(new DuckDBParameter { Value = customer.CustomerLastOrderDate });
                 cmd.Parameters.Add(new DuckDBParameter { Value = customer.Id });
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public bool InsertStocrage(Storages storage)
+        {
+            using(var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"INSERT INTO storage (StorageName, Address, Responsible, 
+                                    Phone, AmountGoodsInStorage) VALUES (?,?,?,?,?) RETURNING Id";
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.StorageName });
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.Address });
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.Responsible });
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.Phone });
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.AmountGoodsInStorage });
+                storage.Id = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return storage.Id > 0;
+            }
+        }
+        public bool DeleteStorage(int id) // storages (exist) -> productGroup (if exists) -> provucts (if exists)
+        {
+            using(var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"DELETE FROM storage WHERE Id = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value =  id });
+                cmd.CommandText = @"DELETE FROM productGroup WHERE StorageId = ? RETURNING Id"; // IF NOT NULL
+                cmd.Parameters.Add(new DuckDBParameter { Value = id });
+                var productId = Convert.ToInt32(cmd.ExecuteScalar());
+                cmd.CommandText = @"DELETE FROM products WHERE ProductId = ?";  // IF NOT NULL 
+                cmd.Parameters.Add(new DuckDBParameter { Value =  productId });
+
                 return cmd.ExecuteNonQuery() > 0;
             }
         }

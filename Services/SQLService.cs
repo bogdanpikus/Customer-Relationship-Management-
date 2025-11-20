@@ -87,5 +87,13 @@ namespace CRM.Services
         {
             return _db.UpdateCustomerSelectedField(customer);
         }
+        public bool InsertStorage(Storages storage)
+        {
+            return _db.InsertStocrage(storage);
+        }
+        public bool DeleteStorage(int id)
+        {
+            return _db.DeleteStorage(id);
+        }
     }
 }

@@ -6,6 +6,19 @@ namespace CRM.Models
     {
         public int Id { get; set; }
         public bool IsSelected { get; set; }
+        private string _storageName;
+        public string StorageName 
+        {  
+            get => _storageName;
+            set
+            {
+                if (_storageName != value)
+                {
+                    _storageName = value;
+                    OnPropertyChange(nameof(StorageName));
+                }
+            }
+        }
 
         private string? _address;
         public string? Address

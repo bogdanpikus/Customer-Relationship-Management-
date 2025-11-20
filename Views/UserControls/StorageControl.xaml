@@ -52,21 +52,22 @@
                       RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
                       EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
                       VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
-                      SelectionMode="Extended" SelectionUnit="CellOrRowHeader" HorizontalContentAlignment="Stretch"
-                      Cursor="Hand" ColumnWidth="200" HorizontalAlignment="Stretch" IsEnabled="True" RowHeight="50" VerticalContentAlignment="Center">
+                      SelectionMode="Extended" SelectionUnit="CellOrRowHeader" HorizontalContentAlignment="Center"
+                      Cursor="Hand" ColumnWidth="290" HorizontalAlignment="Stretch" IsEnabled="True" RowHeight="50" VerticalContentAlignment="Center" 
+                      >
                 
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}" CanUserResize="False">
                         <DataGridCheckBoxColumn.Header>
-                            <CheckBox IsEnabled="False"/>
+                            <CheckBox IsEnabled="False" />
                         </DataGridCheckBoxColumn.Header>
                     </DataGridCheckBoxColumn>
                     <DataGridTemplateColumn Header="Склады">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Command="{Binding OpenStorage}" Width="190" Height="45" Content="{Binding StorageName}" />
+                                <Button Command="{Binding OpenGroups}" Width="190" Height="45" FontSize="20" Content="{Binding StorageName}" />
                             </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
+                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
                     <DataGridTextColumn Header="Ответственный" Binding="{Binding Responsible}"/>
