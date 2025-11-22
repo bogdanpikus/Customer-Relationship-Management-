@@ -3,6 +3,7 @@ using CRM.ViewModels;
 using CRM.ViewModels.ModalWindowViewModels;
 using CRM.Views.ModalControls;
 using CRM.Views.ModalWindows;
+using CRM.Views.UserControls;
 using System.Windows;
 
 namespace CRM.Services

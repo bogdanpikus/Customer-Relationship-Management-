@@ -6,8 +6,8 @@ namespace CRM.Models
     {
         public int Id { get; set; }
         public bool IsSelected { get; set; }
-        private string _storageName;
-        public string StorageName 
+        private string? _storageName;
+        public string? StorageName 
         {  
             get => _storageName;
             set
@@ -93,6 +93,20 @@ namespace CRM.Models
                 {
                     _name = value;
                     OnPropertyChange(nameof(Name));
+                }
+            }
+        }
+
+        private int? _amountGoodsInGroup;
+        public int? AmountGoodsInGroup
+        {
+            get => _amountGoodsInGroup;
+            set
+            {
+                if(_amountGoodsInGroup != value)
+                {
+                    _amountGoodsInGroup = value;
+                    OnPropertyChange(nameof(AmountGoodsInGroup));
                 }
             }
         }

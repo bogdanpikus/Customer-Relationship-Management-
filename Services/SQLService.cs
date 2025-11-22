@@ -95,5 +95,9 @@ namespace CRM.Services
         {
             return _db.DeleteStorage(id);
         }
+        public List<Storages> LoadStorages()
+        {
+            return _db.LoadStorages();
+        }
     }
 }

@@ -589,7 +589,7 @@ namespace CRM.Models
                 return company.Id > 0;
             }
         }
-        public bool CustomerSelectedDelete(int id) // НЕ РАБОТАЕТ
+        public bool CustomerSelectedDelete(int id) // РАБОТАЕТ
         {
             using(var cmd = _connection.CreateCommand())
             {
@@ -600,14 +600,14 @@ namespace CRM.Models
         }
         public bool CompanySelectedDelete(int id)
         {
-            using (var cmd = _connection.CreateCommand()) // НЕ РАБОТАЕТ
+            using (var cmd = _connection.CreateCommand()) // РАБОТАЕТ
             {
                 cmd.CommandText = @"DELETE FROM companies WHERE Id = ?";
                 cmd.Parameters.Add(new DuckDBParameter { Value = id });
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
-        public bool UpdateCompanySelectedField(Company company) // НЕ РАБОТАЕТ
+        public bool UpdateCompanySelectedField(Company company) // РАБОТАЕТ
         {
             using (var cmd = _connection.CreateCommand())
             {
@@ -627,7 +627,7 @@ namespace CRM.Models
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
-        public bool UpdateCustomerSelectedField(Customer customer) // НЕ РАБОТАЕТ
+        public bool UpdateCustomerSelectedField(Customer customer) // РАБОТАЕТ
         {
             using (var cmd = _connection.CreateCommand())
             {
@@ -661,19 +661,46 @@ namespace CRM.Models
                 return storage.Id > 0;
             }
         }
-        public bool DeleteStorage(int id) // storages (exist) -> productGroup (if exists) -> provucts (if exists)
+        public bool DeleteStorage(int id) // storages (exist) -> productGroup (if exists) -> provucts (if exists) НЕ РАБОТАЕТ
         {
             using(var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = @"DELETE FROM storage WHERE Id = ?";
+                cmd.CommandText = @"DELETE FROM products WHERE ProductId IN (SELECT Id FROM productGroup WHERE StorageId = ?)";
                 cmd.Parameters.Add(new DuckDBParameter { Value =  id });
-                cmd.CommandText = @"DELETE FROM productGroup WHERE StorageId = ? RETURNING Id"; // IF NOT NULL
+                cmd.ExecuteNonQuery();
+                cmd.Parameters.Clear();
+
+                cmd.CommandText = @"DELETE FROM productGroup WHERE StorageId = ?";
                 cmd.Parameters.Add(new DuckDBParameter { Value = id });
-                var productId = Convert.ToInt32(cmd.ExecuteScalar());
-                cmd.CommandText = @"DELETE FROM products WHERE ProductId = ?";  // IF NOT NULL 
-                cmd.Parameters.Add(new DuckDBParameter { Value =  productId });
+                cmd.ExecuteNonQuery();
+                cmd.Parameters.Clear();
+
+                cmd.CommandText = @"DELETE FROM storage WHERE Id = ?";  // IF NOT NULL 
+                cmd.Parameters.Add(new DuckDBParameter { Value = id });
 
                 return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public List<Storages> LoadStorages() // РАБОТАЕТ
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                var storages = new List<Storages>();
+                cmd.CommandText = @"SELECT StorageName ,Address ,Responsible ,Phone, AmountGoodsInStorage FROM storage";
+                var reader  = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    storages.Add(new Storages
+                    {
+                        StorageName = reader.IsDBNull(0) ? null : reader.GetString(0),
+                        Address = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        Responsible = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        Phone = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        AmountGoodsInStorage = reader.IsDBNull(4) ? null : reader.GetInt32(4)
+                    });
+                }
+
+                return storages;
             }
         }
     }

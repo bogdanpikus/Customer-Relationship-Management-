@@ -45,6 +45,9 @@
             <DataTemplate DataType="{x:Type vms:CompanyAddViewMode}">
                 <viewsM:CompanyAddWindow />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:StorageGroupViewModel}">
+                <views:StorageGroupControl />
+            </DataTemplate>
             <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
                 <Setter Property="Template" Value="{StaticResource DatePickerTemplate}" />
             </Style>
