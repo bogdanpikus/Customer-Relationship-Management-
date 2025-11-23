@@ -45,7 +45,7 @@ namespace CRM.ViewModels
         {
             CreateStorage = new RelayCommand(Click => CreateStorageButton());
             Delete = new RelayCommand(Click => DeleteButton());
-            OpenGroups = new RelayCommand(Click => OpenGroupsAction());
+            OpenGroups = new RelayCommand(obj => OpenGroupsAction(obj));
             Load();
         }
         private void Load()
@@ -81,10 +81,16 @@ namespace CRM.ViewModels
             }
 
         }
-        private void OpenGroupsAction()
+        private void OpenGroupsAction(object obj)
         {
+            var storage = obj as Storages;
+            if (storage == null)
+            {
+                return;
+            }
+
             ContentVisiability = true;
-            CurrentView = new StorageGroupViewModel();
+            CurrentView = new StorageGroupViewModel(storage);
             OnPropertyChange(nameof(ContentVisiability));
             OnPropertyChange(nameof(CurrentView));
         }

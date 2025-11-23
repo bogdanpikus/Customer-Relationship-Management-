@@ -83,8 +83,8 @@ namespace CRM.Models
         public bool isSelected { get; set; }
         public int StorageId { get; set; }
 
-        private string _name;
-        public string Name 
+        private string? _name;
+        public string? Name 
         { 
             get => _name;
             set 

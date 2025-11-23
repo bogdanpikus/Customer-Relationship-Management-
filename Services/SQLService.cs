@@ -99,5 +99,13 @@ namespace CRM.Services
         {
             return _db.LoadStorages();
         }
+        public bool InsertGroup(ProductGroups group)
+        {
+            return _db.InsertGroup(group);
+        }
+        public List<ProductGroups> LoadGroups(int id)
+        {
+            return _db.LoadGroups(id);
+        }
     }
 }

@@ -703,5 +703,40 @@ namespace CRM.Models
                 return storages;
             }
         }
+        public bool InsertGroup(ProductGroups group)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"INSERT INTO productGroup (Name, StorageId, AmountGoodsInGroup) VALUES (?,?,?) RETURNING Id";
+                cmd.Parameters.Add(new DuckDBParameter { Value = group.Name });
+                cmd.Parameters.Add(new DuckDBParameter { Value = group.StorageId });
+                cmd.Parameters.Add(new DuckDBParameter { Value = group.AmountGoodsInGroup });
+                group.Id = Convert.ToInt32(cmd.ExecuteScalar());
+
+                return group.Id > 0;
+            }
+        }
+        public List<ProductGroups> LoadGroups(int id)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"SELECT Id, StorageId, Name, AmountGoodsInGroup FROM productGroup WHERE StorageId = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value =  id });
+                var reader = cmd.ExecuteReader();
+
+                var groups = new List<ProductGroups>();
+                while (reader.Read()) 
+                {
+                    groups.Add(new ProductGroups
+                    {
+                        Id =  reader.GetInt32(0),
+                        StorageId = reader.GetInt32(1),
+                        Name = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        AmountGoodsInGroup = reader.IsDBNull(3) ? null : reader.GetInt32(3)
+                    });
+                }
+                return groups;
+            }
+        }
     }
 }
