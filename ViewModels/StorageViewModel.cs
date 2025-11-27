@@ -1,9 +1,8 @@
 ﻿using CRM.Commands;
 using CRM.Models;
 using CRM.Services;
+using CRM.ViewModels.ModalWindowViewModels;
 using System.Collections.ObjectModel;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows;
 using System.Windows.Input;
 
 namespace CRM.ViewModels
@@ -46,6 +45,7 @@ namespace CRM.ViewModels
             CreateStorage = new RelayCommand(Click => CreateStorageButton());
             Delete = new RelayCommand(Click => DeleteButton());
             OpenGroups = new RelayCommand(obj => OpenGroupsAction(obj));
+            Editing = new RelayCommand(Click => StorageEditing());
             Load();
         }
         private void Load()
@@ -93,6 +93,14 @@ namespace CRM.ViewModels
             CurrentView = new StorageGroupViewModel(storage);
             OnPropertyChange(nameof(ContentVisiability));
             OnPropertyChange(nameof(CurrentView));
+        }
+        private void StorageEditing()
+        {
+           var isSelected = StoragesCollection.Where(o => o.IsSelected).ToList();
+            foreach(var storage in isSelected)
+            {
+                _dialogService.ShowDialog(new StorageEditingViewModel(storage));
+            }
         }
     }
 }

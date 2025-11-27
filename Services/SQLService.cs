@@ -107,5 +107,9 @@ namespace CRM.Services
         {
             return _db.LoadGroups(id);
         }
+        public bool StorageUpdateData(Storages storage)
+        {
+            return _db.StorageUpdateData(storage);
+        }
     }
 }

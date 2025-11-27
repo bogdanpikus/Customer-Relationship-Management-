@@ -93,7 +93,7 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand()) // NOTE: СОЗДАНИЕ ТАБЛИЦЫ GROUPS
             {
-                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS productGroup (Id INTEGER DEFAULT nextval('seq_groups') PRIMARY KEY, StorageId INTEGER NOT NULL, Name VARCHAR,
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS productGroup (Id INTEGER DEFAULT nextval('seq_groups') PRIMARY KEY, StorageId INTEGER NOT NULL, Name VARCHAR, AmountGoodsInGroup INTEGER,
                                     FOREIGN KEY (StorageId) REFERENCES storage(Id))"; 
                 cmd.ExecuteNonQuery();
             }
@@ -736,6 +736,19 @@ namespace CRM.Models
                     });
                 }
                 return groups;
+            }
+        }
+        public bool StorageUpdateData(Storages storage)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"UPDATE storage SET StorageName = ?, Address = ?, Responsible = ?, Phone = ? WHERE Id = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.StorageName });
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.Address });
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.Responsible });
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.Phone });
+                cmd.Parameters.Add(new DuckDBParameter { Value = storage.Id });
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
     }

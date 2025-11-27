@@ -69,10 +69,10 @@
                             </DataTemplate>
                          </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Адрес" Binding="{Binding Address}"/>
-                    <DataGridTextColumn Header="Ответственный" Binding="{Binding Responsible}"/>
-                    <DataGridTextColumn Header="Телефон ответственного" Binding="{Binding Phone}"/>
-                    <DataGridTextColumn Header="Колличество товара на складе" Binding="{Binding AmountGoodsInStorage}"/>
+                    <DataGridTextColumn Header="Адрес" IsReadOnly="True" Binding="{Binding Address}"/>
+                    <DataGridTextColumn Header="Ответственный" IsReadOnly="True" Binding="{Binding Responsible}"/>
+                    <DataGridTextColumn Header="Телефон ответственного" IsReadOnly="True" Binding="{Binding Phone}"/>
+                    <DataGridTextColumn Header="Колличество товара на складе" IsReadOnly="True" Binding="{Binding AmountGoodsInStorage}"/>
                 </DataGrid.Columns>
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">

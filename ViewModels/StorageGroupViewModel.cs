@@ -28,7 +28,7 @@ namespace CRM.ViewModels
         }
         private void Load(int id)
         {
-            _sqlService.LoadGroups(idaas);
+            _sqlService.LoadGroups(id);
         }
         private void GoBackToStoragesAction()
         {
