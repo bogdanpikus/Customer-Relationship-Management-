@@ -686,17 +686,18 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand())
             {
                 var storages = new List<Storages>();
-                cmd.CommandText = @"SELECT StorageName ,Address ,Responsible ,Phone, AmountGoodsInStorage FROM storage";
+                cmd.CommandText = @"SELECT Id, StorageName ,Address ,Responsible ,Phone, AmountGoodsInStorage FROM storage";
                 var reader  = cmd.ExecuteReader();
                 while (reader.Read())
                 {
                     storages.Add(new Storages
                     {
-                        StorageName = reader.IsDBNull(0) ? null : reader.GetString(0),
-                        Address = reader.IsDBNull(1) ? null : reader.GetString(1),
-                        Responsible = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        Phone = reader.IsDBNull(3) ? null : reader.GetString(3),
-                        AmountGoodsInStorage = reader.IsDBNull(4) ? null : reader.GetInt32(4)
+                        Id = reader.GetInt32(0),
+                        StorageName = reader.IsDBNull(1) ? null : reader.GetString(1),
+                        Address = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        Responsible = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        Phone = reader.IsDBNull(4) ? null : reader.GetString(4),
+                        AmountGoodsInStorage = reader.IsDBNull(5) ? null : reader.GetInt32(5)
                     });
                 }
 

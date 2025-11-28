@@ -3,6 +3,8 @@ using CRM.Models;
 using CRM.Services;
 using CRM.ViewModels.ModalWindowViewModels;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CRM.ViewModels
@@ -61,7 +63,7 @@ namespace CRM.ViewModels
 
             var storage = new Storages
             {
-                StorageName = $"СКЛАД {Count + 1}",
+                StorageName = $"СКЛАД {StoragesCollection.Count + 1}",
                 Address = null,
                 Responsible = null,
                 Phone = null,
@@ -73,11 +75,18 @@ namespace CRM.ViewModels
         }
         private void DeleteButton()
         {
-            var selected = StoragesCollection.Where(o => o.IsSelected).ToList();
-            foreach(var storage in selected)
+            var isSelected = StoragesCollection.Where(o => o.IsSelected).ToList();
+            foreach (var storage in isSelected)
             {
-                _sqlService.DeleteStorage(storage.Id);
-                StoragesCollection.Remove(storage);
+                Debug.WriteLine($"storage.id: {storage.Id}");
+                if (_sqlService.DeleteStorage(storage.Id))
+                {
+                    StoragesCollection.Remove(storage);
+                }
+                else
+                {
+                    MessageBox.Show("ERROR SQL DELETE, TRY LATER");
+                }
             }
 
         }

@@ -1,7 +1,9 @@
 ﻿using CRM.Commands;
 using CRM.Models;
 using CRM.Services;
+using System.Diagnostics;
 using System.Net.Http.Headers;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CRM.ViewModels.ModalWindowViewModels
@@ -10,9 +12,11 @@ namespace CRM.ViewModels.ModalWindowViewModels
     {
         private readonly Storages _storage;
         private readonly SQLService _sqlService = new();
+        private readonly DialogService _dialogService = DialogService.Instance;
 
         public string? StorageName { get; set; }
         public string? Address { get; set; }
+        public string? Responsible { get; set; }
         public string? Phone {  get; set; }
 
         public ICommand Confirm {  get; }
@@ -28,14 +32,21 @@ namespace CRM.ViewModels.ModalWindowViewModels
         }
         private void ConfirmAction()
         {
-            var storage = new Storages
-            {
-                StorageName = StorageName,
-                Address = Address,
-                Phone = Phone
-            };
+            _storage.StorageName = StorageName;
+            _storage.Address = Address;
+            _storage.Responsible = Responsible;
+            _storage.Phone = Phone;
 
-            _sqlService.StorageUpdateData(storage);
+            Debug.Write($"_storage.id: {_storage.Id}");
+
+           if (_sqlService.StorageUpdateData(_storage))
+            {
+                _dialogService.CloseDialog();
+            }
+            else
+            {
+                MessageBox.Show("There is some ERROR during running SQL UPDATE");
+            }
         }
     }
 }

@@ -24,6 +24,11 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Responsible}"
+                             Height="50" Tag="Введите ответственного за склад" FontSize="20" Margin="0,10,0,0" ToolTip="Введите ответственного за склад"/>
+                </StackPanel> 
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
                              VerticalContentAlignment="Center" Cursor="Help" Text="{Binding Phone}"
                              Height="50" Tag="Введите телефон ответственного за склад" FontSize="20" Margin="0,10,0,0" ToolTip="Введите телефон ответственного за склад"/>
                 </StackPanel>
