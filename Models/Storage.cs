@@ -79,19 +79,7 @@ namespace CRM.Models
 
     public class ProductGroups : NotifyPropertyChange
     {
-        private int _id;
-        public int Id
-        {
-            get => Id;
-            set
-            {
-                if(_id != value)
-                {
-                    Id = value;
-                    OnPropertyChange(nameof(Id));
-                }
-            }
-        }
+        public int Id { get; set; }
         public bool isSelected { get; set; }
         public int StorageId { get; set; }
 

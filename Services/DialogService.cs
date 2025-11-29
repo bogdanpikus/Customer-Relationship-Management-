@@ -23,6 +23,8 @@ namespace CRM.Services
             _mapping[typeof(CustomerEditingViewModel)] = typeof(CustomerEditingView);
             _mapping[typeof(CompanyEditingViewModel)] = typeof(CompanyEditingView);
             _mapping[typeof(StorageEditingViewModel)] = typeof(StorageEditingWindow);
+            _mapping[typeof(GroupModalViewModel)] = typeof(GroupModalWindow);
+            _mapping[typeof(GroupCreateFromStorageViewModel)] = typeof(GroupCreateFromStorageWindow);
         }
         public bool ShowDialog<TViewModel>(TViewModel viewModel) where TViewModel : class
         {

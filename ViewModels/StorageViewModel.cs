@@ -45,6 +45,7 @@ namespace CRM.ViewModels
         public StorageViewModel() 
         {
             CreateStorage = new RelayCommand(Click => CreateStorageButton());
+            CreateGroup = new RelayCommand(Click => CreateGroupAction());
             Delete = new RelayCommand(Click => DeleteButton());
             OpenGroups = new RelayCommand(obj => OpenGroupsAction(obj));
             Editing = new RelayCommand(Click => StorageEditing());
@@ -110,6 +111,10 @@ namespace CRM.ViewModels
             {
                 _dialogService.ShowDialog(new StorageEditingViewModel(storage));
             }
+        }
+        private void CreateGroupAction()
+        {
+            _dialogService.ShowDialog(new GroupCreateFromStorageViewModel());
         }
     }
 }

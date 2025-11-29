@@ -69,7 +69,7 @@
                     <DataGridTemplateColumn Header="Группы">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Command="{Binding DataContext.OpenProducts, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Width="190" Height="45" FontSize="20" Content="{Binding GroupName}" />
+                                <Button Command="{Binding DataContext.OpenProducts, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Width="190" Height="45" FontSize="20" Content="{Binding Name}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
