@@ -77,7 +77,7 @@ namespace CRM.ViewModels
                 MessageBox.Show("selected in Selected");
             }
         }
-        private void OpenProductsAction(object obj)
+        private void OpenProductsAction(object obj) // НЕ РАБОТАЕТ
         {
             var group = obj as ProductGroups;
             if (group != null)

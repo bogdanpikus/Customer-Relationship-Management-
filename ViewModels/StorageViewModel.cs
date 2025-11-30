@@ -114,7 +114,7 @@ namespace CRM.ViewModels
         }
         private void CreateGroupAction()
         {
-            _dialogService.ShowDialog(new GroupCreateFromStorageViewModel());
+            _dialogService.ShowDialog(new GroupCreateFromStorageViewModel(StoragesCollection));
         }
     }
 }
