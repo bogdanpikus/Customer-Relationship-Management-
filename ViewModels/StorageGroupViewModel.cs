@@ -3,6 +3,7 @@ using CRM.Models;
 using CRM.Services;
 using CRM.ViewModels.ModalWindowViewModels;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,8 +12,9 @@ namespace CRM.ViewModels
     public class StorageGroupViewModel : NotifyPropertyChange
     {
         public ObservableCollection<ProductGroups> GroupCollection { get; } = new();
+        private readonly ObservableCollection<Storages> _storageCollection;
         private readonly DialogService _dialogService = DialogService.Instance;
-        public bool CurremtVisiability { get; set; }
+        public bool CurrentVisiability { get; set; }
 
         public ICommand GoBackToStorages { get; set; }
         public ICommand CreateGroup {  get; set; }
@@ -24,30 +26,34 @@ namespace CRM.ViewModels
         private readonly Storages _storage;
 
 
-        public StorageGroupViewModel(Storages storage)
+        public StorageGroupViewModel(Storages storage, ObservableCollection<Storages> storageCollection)
         {
             _storage = storage;
+            _storageCollection = storageCollection;
 
-            CurremtVisiability = true;
+            CurrentVisiability = true;
             GoBackToStorages = new RelayCommand(Click => GoBackToStoragesAction());
             CreateGroup = new RelayCommand(Click => CreateGroupAction(_storage.Id));
-            Editing = new RelayCommand(Click => EditingGroupAction());
+            Editing = new RelayCommand(Click => EditingGroupAction(_storageCollection));
             Delete = new RelayCommand(Click => DeleteGroupAction());
             OpenProducts = new RelayCommand(obj => OpenProductsAction(obj));
             Load(_storage.Id);
         }
         private void Load(int id) // РАБОТАЕТ
         {
+            GroupCollection.Clear();
+
             var groups = _sqlService.LoadGroups(id);
             foreach(var group in groups)
             {
                 GroupCollection.Add(group);
+                Debug.WriteLine($"{group.Name} | Hash: {group.GetHashCode()} | Selected: {group.IsSelected}");
             }
         }
         private void GoBackToStoragesAction()
         {
-            CurremtVisiability = false;
-            OnPropertyChange(nameof(CurremtVisiability));
+            CurrentVisiability = false;
+            OnPropertyChange(nameof(CurrentVisiability));
         }
         private void CreateGroupAction(int id)
         {
@@ -61,17 +67,17 @@ namespace CRM.ViewModels
             GroupCollection.Add(group);
             _sqlService.InsertGroup(group);
         }
-        private void EditingGroupAction() // НЕ РАБОТАЕТ
+        private void EditingGroupAction(ObservableCollection<Storages> storage) //  РАБОТАЕТ
         {
-            var isSelected = GroupCollection.Where(o => o.isSelected).ToList();
+            var isSelected = GroupCollection.Where(o => o.IsSelected).ToList();
             foreach(var selected in isSelected)
             {
-                _dialogService.ShowDialog(new GroupModalViewModel());
+                _dialogService.ShowDialog(new GroupModalViewModel(selected, storage));
             }
         }
-        private void DeleteGroupAction() // НЕ РАБОТАЕТ
+        private void DeleteGroupAction() //  РАБОТАЕТ
         {
-            var isSelected = GroupCollection.Where(o => o.isSelected).ToList();
+            var isSelected = GroupCollection.Where(o => o.IsSelected).ToList();
             foreach (var selected in isSelected)
             {
                 MessageBox.Show("selected in Selected");

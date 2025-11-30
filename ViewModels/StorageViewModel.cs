@@ -57,6 +57,7 @@ namespace CRM.ViewModels
             foreach(var storage in storages)
             {
                 StoragesCollection.Insert(0, storage);
+                Debug.WriteLine($"{storage.StorageName} | Hash: {storage.GetHashCode()} | Selected: {storage.IsSelected}");
             }
         }
         private void CreateStorageButton()
@@ -100,7 +101,7 @@ namespace CRM.ViewModels
             }
 
             ContentVisiability = true;
-            CurrentView = new StorageGroupViewModel(storage);
+            CurrentView = new StorageGroupViewModel(storage, StoragesCollection);
             OnPropertyChange(nameof(ContentVisiability));
             OnPropertyChange(nameof(CurrentView));
         }

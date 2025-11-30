@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CRM.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="WhiteSmoke" ShowGridLines="False" Visibility="{Binding CurremtVisiability, Converter={StaticResource BooleanVisiabilityConverter}}">
+    <Grid Background="WhiteSmoke" ShowGridLines="False" Visibility="{Binding CurrentVisiability, Converter={StaticResource BooleanVisiabilityConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="55"/>
@@ -73,7 +73,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Название группы" Binding="{Binding GroupName}"/>
+                    <DataGridTextColumn Header="Описание группы" Binding="{Binding Description}"/>
                     <DataGridTextColumn Header="Колличество товара в группе" Binding="{Binding AmountGoodsInGroup}"/>
                 </DataGrid.Columns>
                 <DataGrid.CellStyle>

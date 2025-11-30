@@ -5,11 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CRM.Views.ModalWindows"
         mc:Ignorable="d"
-        Title="Окно редактирования группы" MaxHeight="700" Height="350" Width="500"
+        Title="Окно редактирования группы" MaxHeight="700" Height="320" Width="500"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowStyle="ThreeDBorderWindow">
-    <Grid>
-        
+    <Grid Background="WhiteSmoke">
+        <StackPanel Margin="5,0,0,0" Grid.Row="1">
+            <StackPanel VerticalAlignment="Top" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding GroupName}"
+                             Height="50" Tag="Введите название группы" FontSize="20" Margin="0,10,0,0" ToolTip="Введите название группы"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Template="{StaticResource TextPlaceholderSquare}" Width="400"
+                             VerticalContentAlignment="Center" Cursor="Help" Text="{Binding GroupDescription}"
+                             Height="50" Tag="Введите описание группы" FontSize="20" Margin="0,10,0,0" ToolTip="Введите описание группы"/>
+                </StackPanel>
+                <ComboBox ItemsSource="{Binding StoragesSelection}" SelectedItem="{Binding SelectedStorage, Mode=TwoWay}" 
+           IsReadOnly="True" Width="400" FontSize="15" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="50"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Margin="0,20,0,5">
+            <Button Content="Изменить" FontSize="30" Command="{Binding Confirm}"/>
+        </StackPanel>
     </Grid>
 </Window>

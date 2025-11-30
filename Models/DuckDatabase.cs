@@ -93,7 +93,8 @@ namespace CRM.Models
 
             using (var cmd = _connection.CreateCommand()) // NOTE: СОЗДАНИЕ ТАБЛИЦЫ GROUPS
             {
-                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS productGroup (Id INTEGER DEFAULT nextval('seq_groups') PRIMARY KEY, StorageId INTEGER NOT NULL, Name VARCHAR, AmountGoodsInGroup INTEGER,
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS productGroup (Id INTEGER DEFAULT nextval('seq_groups') PRIMARY KEY, StorageId INTEGER NOT NULL, Name VARCHAR,
+                                    Description VARCHAR, AmountGoodsInGroup INTEGER,
                                     FOREIGN KEY (StorageId) REFERENCES storage(Id))"; 
                 cmd.ExecuteNonQuery();
             }
@@ -645,7 +646,7 @@ namespace CRM.Models
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
-        public bool InsertStocrage(Storages storage)
+        public bool InsertStorage(Storages storage)
         {
             using(var cmd = _connection.CreateCommand())
             {
@@ -708,9 +709,10 @@ namespace CRM.Models
         {
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = @"INSERT INTO productGroup (Name, StorageId, AmountGoodsInGroup) VALUES (?,?,?) RETURNING Id";
+                cmd.CommandText = @"INSERT INTO productGroup (Name, StorageId, Description, AmountGoodsInGroup) VALUES (?,?,?,?) RETURNING Id";
                 cmd.Parameters.Add(new DuckDBParameter { Value = group.Name });
                 cmd.Parameters.Add(new DuckDBParameter { Value = group.StorageId });
+                cmd.Parameters.Add(new DuckDBParameter { Value = group.Description });
                 cmd.Parameters.Add(new DuckDBParameter { Value = group.AmountGoodsInGroup });
                 group.Id = Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -721,7 +723,7 @@ namespace CRM.Models
         {
             using (var cmd = _connection.CreateCommand())
             {
-                cmd.CommandText = @"SELECT Id, StorageId, Name, AmountGoodsInGroup FROM productGroup WHERE StorageId = ?";
+                cmd.CommandText = @"SELECT Id, StorageId, Name, Description, AmountGoodsInGroup FROM productGroup WHERE StorageId = ?";
                 cmd.Parameters.Add(new DuckDBParameter { Value =  id });
                 var reader = cmd.ExecuteReader();
 
@@ -733,7 +735,8 @@ namespace CRM.Models
                         Id =  reader.GetInt32(0),
                         StorageId = reader.GetInt32(1),
                         Name = reader.IsDBNull(2) ? null : reader.GetString(2),
-                        AmountGoodsInGroup = reader.IsDBNull(3) ? null : reader.GetInt32(3)
+                        Description = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        AmountGoodsInGroup = reader.IsDBNull(4) ? null : reader.GetInt32(4)
                     });
                 }
                 return groups;

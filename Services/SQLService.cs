@@ -89,7 +89,7 @@ namespace CRM.Services
         }
         public bool InsertStorage(Storages storage)
         {
-            return _db.InsertStocrage(storage);
+            return _db.InsertStorage(storage);
         }
         public bool DeleteStorage(int id)
         {

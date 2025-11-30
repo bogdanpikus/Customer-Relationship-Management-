@@ -80,7 +80,7 @@ namespace CRM.Models
     public class ProductGroups : NotifyPropertyChange
     {
         public int Id { get; set; }
-        public bool isSelected { get; set; }
+        public bool IsSelected { get; set; }
         public int StorageId { get; set; }
 
         private string? _name;
@@ -93,6 +93,20 @@ namespace CRM.Models
                 {
                     _name = value;
                     OnPropertyChange(nameof(Name));
+                }
+            }
+        }
+
+        private string? _description;
+        public string? Description
+        {
+            get => _description;
+            set
+            {
+                if( _description != value)
+                {
+                    _description = value;
+                    OnPropertyChange(nameof(Description));
                 }
             }
         }

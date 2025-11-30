@@ -16,6 +16,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
         public ObservableCollection<string> StoragesSelection {  get; set; }
 
         public string? StorageName { get; set; }
+        public string? Description { get; set; }
 
         private string? _selectedItem;
         public string? SelectedItem
@@ -56,6 +57,7 @@ namespace CRM.ViewModels.ModalWindowViewModels
             {
                 Name = StorageName,
                 StorageId = storage.Id,
+                Description = Description,
                 AmountGoodsInGroup = 0
             };
 
