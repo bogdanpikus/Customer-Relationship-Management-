@@ -128,9 +128,11 @@ namespace CRM.Models
 
     public class Products : NotifyPropertyChange
     {
-        public int Id { get; set; }
+        public int Id { get; set; } // собственный id для базы данных
         public bool IsSelected { get; set; }
-        public int ProductId { get; set; }
+        public int ProductId { get; set; } // код товара для групп 
+
+        public string SKU { get; set; } // внутренний код товара
 
         private string? _articul;
         public string? Articul
@@ -146,16 +148,16 @@ namespace CRM.Models
             }
         }
 
-        private string? _photoPath;
-        public string? PhotoPath // путь для отображения фото
+        private string? _imagePath;
+        public string? ImagePath // путь для отображения фото
         {
-            get => _photoPath;
+            get => _imagePath;
             set
             {
-                if(_photoPath != value)
+                if(_imagePath != value)
                 {
-                    _photoPath = value;
-                    OnPropertyChange(nameof(PhotoPath));
+                    _imagePath = value;
+                    OnPropertyChange(nameof(ImagePath));
                 }
             }
         }
@@ -170,6 +172,20 @@ namespace CRM.Models
                 {
                     _name = value;
                     OnPropertyChange(nameof(Name));
+                }
+            }
+        }
+
+        private string? _color;
+        public string? Color
+        {
+            get => _color;
+            set
+            {
+                if(_color != value)
+                {
+                    _color = value;
+                    OnPropertyChange(nameof(Color));
                 }
             }
         }
@@ -216,6 +232,20 @@ namespace CRM.Models
             }
         }
 
+        private string? _measurement; // единица измерения
+        public string? Measurement
+        {
+            get => _measurement;
+            set
+            {
+                if(_measurement != value)
+                {
+                    _measurement = value;
+                    OnPropertyChange(nameof(Measurement));
+                }
+            }
+        }
+
         private int? _amount;
         public int? Amount
         {
@@ -226,6 +256,48 @@ namespace CRM.Models
                 {
                     _amount = value;
                     OnPropertyChange(nameof(Amount));
+                }
+            }
+        }
+
+        private string? _supplier; // поставщик/производитель товара
+        public string? Supplier
+        {
+            get => _supplier;
+            set
+            {
+                if(_supplier != value)
+                {
+                    _supplier = value;
+                    OnPropertyChange(nameof(Supplier));
+                }
+            }
+        }
+
+        private string? _category;
+        public string Category
+        {
+            get => _category;
+            set
+            {
+                if(_category != value)
+                {
+                    _category = value;
+                    OnPropertyChange(nameof(Category));
+                }
+            }
+        }
+
+        private string? _status; // Статус товара (в продаже, архив, предзаказ)
+        public string? Status
+        {
+            get => _status;
+            set
+            {
+                if(_status != value)
+                {
+                    _status = value;
+                    OnPropertyChange(nameof(Status));
                 }
             }
         }
@@ -243,5 +315,8 @@ namespace CRM.Models
                 }
             }
         }
+
+        public string Barcode { get; set; } //Штрих-код в формате EAN/UPC.
+        public Dictionary<string, string> Attributes { get; set; } // Динамические характеристики товара
     }
 }

@@ -64,11 +64,11 @@ namespace CRM.ViewModels.ModalWindowViewModels
         {
             if (defaultStorageName == newStorage.StorageName)
             {
-                MessageBox.Show("StorageName == default");
+                MessageBox.Show("StorageName == default"); // НЕ меняем положения группы
             }
             else
             {
-                MessageBox.Show("StorageName != default");
+                MessageBox.Show("StorageName != default"); // МЕНЯЕМ на выбранный склад по средством переписывание StorageId группы?
             }
         }
     }

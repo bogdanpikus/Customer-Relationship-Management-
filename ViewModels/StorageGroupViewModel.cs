@@ -25,6 +25,9 @@ namespace CRM.ViewModels
         private readonly SQLService _sqlService = new();
         private readonly Storages _storage;
 
+        public object CurrentView { get; set; }
+        public bool ContentVisiability { get; set; }
+
 
         public StorageGroupViewModel(Storages storage, ObservableCollection<Storages> storageCollection)
         {
@@ -75,23 +78,34 @@ namespace CRM.ViewModels
                 _dialogService.ShowDialog(new GroupModalViewModel(selected, storage));
             }
         }
-        private void DeleteGroupAction() //  РАБОТАЕТ
+        private void DeleteGroupAction() // РАБОТАЕТ
         {
             var isSelected = GroupCollection.Where(o => o.IsSelected).ToList();
-            foreach (var selected in isSelected)
+            foreach (var group in isSelected)
             {
-                MessageBox.Show("selected in Selected");
+                if (_sqlService.DeleteGroupSQLAction(group.Id, group.StorageId))
+                {
+                    Debug.WriteLine($"{group.Name} was DELETED");
+                    GroupCollection.Remove(group);
+                }
+                else
+                {
+                    MessageBox.Show($"{group.Name} was not DELETED, ERROR MESSASE");
+                }
             }
         }
-        private void OpenProductsAction(object obj) // НЕ РАБОТАЕТ
+        private void OpenProductsAction(object obj) // РАБОТАЕТ
         {
             var group = obj as ProductGroups;
-            if (group != null)
+            if (group == null)
             {
                 return;
             }
 
-            MessageBox.Show("OpenProductsAction");
+            CurrentView = new StorageProductViewModel();
+            ContentVisiability = true;
+            OnPropertyChange(nameof(CurrentView));
+            OnPropertyChange(nameof(ContentVisiability));
         }
     }
 }

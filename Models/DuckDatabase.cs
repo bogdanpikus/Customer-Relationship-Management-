@@ -755,5 +755,20 @@ namespace CRM.Models
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
+        public bool DeleteGroupSQLAction(int id, int storageId)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"DELETE FROM products WHERE ProductId IN (SELECT Id FROM productGroup WHERE StorageId = ?)"; // удаления всех товаров в группе c 
+                cmd.Parameters.Add(new DuckDBParameter { Value = storageId });
+                cmd.ExecuteNonQuery();
+                cmd.Parameters.Clear();
+                
+                cmd.CommandText = @"DELETE FROM productGroup WHERE Id = ?"; // удаление группы
+                cmd.Parameters.Add(new DuckDBParameter { Value = id });
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
     }
 }

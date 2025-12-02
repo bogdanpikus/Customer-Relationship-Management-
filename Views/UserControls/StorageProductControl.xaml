@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="CRM.Views.UserControls.StorageGroupControl"
+﻿<UserControl x:Class="CRM.Views.UserControls.StorageProductControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:CRM.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="WhiteSmoke" ShowGridLines="False" Visibility="{Binding CurrentVisiability, Converter={StaticResource BooleanVisiabilityConverter}}">
+    <Grid Background="WhiteSmoke" Visibility="{Binding CurrentVisiability, Converter={StaticResource BooleanVisiabilityConverter}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="55"/>
@@ -26,7 +26,7 @@
                     Foreground="Black" FontWeight="Medium" FontSize="20" Margin="5,0,0,0"
                     BorderBrush="Black" BorderThickness="2" Cursor="Hand">
             </Button>
-            <Button Command="{Binding GoBackToStorages}" Content="&lt;" Width="30" Height="50" Background="Snow"
+            <Button Command="{Binding GoBackToGroups}" Content="&lt;" Width="30" Height="50" Background="Snow"
                     Foreground="Black" FontWeight="Medium" FontSize="30" ToolTip="Вернутся назад к складам"
                     BorderBrush="Black" BorderThickness="2" Cursor="Hand"  Margin="5,0,0,0">
             </Button>
@@ -48,17 +48,17 @@
         </DockPanel>
 
         <DockPanel Grid.Row="2"  Background="LightGray" Margin="0,10,0,0">
-            <DataGrid ItemsSource="{Binding GroupCollection}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
-                      VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" 
-                      ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                      FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
-                      GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
-                      RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
-                      EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
-                      VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
-                      SelectionMode="Extended" SelectionUnit="CellOrRowHeader" HorizontalContentAlignment="Center"
-                      Cursor="Hand" ColumnWidth="290" HorizontalAlignment="Stretch" IsEnabled="True" RowHeight="50" VerticalContentAlignment="Stretch" 
-                      >
+            <DataGrid ItemsSource="{Binding ProductCollection}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
+              VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" 
+              ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
+              GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
+              RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
+              EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
+              VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
+              SelectionMode="Extended" SelectionUnit="CellOrRowHeader" HorizontalContentAlignment="Center"
+              Cursor="Hand" ColumnWidth="160" HorizontalAlignment="Stretch" IsEnabled="True" RowHeight="50" VerticalContentAlignment="Stretch" 
+              >
 
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Width="25" IsReadOnly="False" Binding="{Binding IsSelected, Mode=TwoWay}" CanUserResize="False">
@@ -66,15 +66,26 @@
                             <CheckBox IsEnabled="False" />
                         </DataGridCheckBoxColumn.Header>
                     </DataGridCheckBoxColumn>
-                    <DataGridTemplateColumn Header="Группы">
+                    <DataGridTextColumn Header="Артикул" Binding="{Binding Articul}" />
+                    <DataGridTemplateColumn Header="Фото">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Command="{Binding DataContext.OpenProducts, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Width="190" Height="45" FontSize="20" Content="{Binding Name}" />
+                                <Button Command="{Binding DataContext.OpenProduct, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                        CommandParameter="{Binding}" Width="50" Height="45" FontSize="20" >
+                                    <Image Source="{Binding ImagePath}" Stretch="Uniform" />
+                                </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Описание группы" Binding="{Binding Description}"/>
-                    <DataGridTextColumn Header="Колличество товара в группе" Binding="{Binding AmountGoodsInGroup}"/>
+
+                    <DataGridTextColumn Header="Название" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Цвет" Binding="{Binding Color}" />
+                    <DataGridTextColumn Header="Цена" Binding="{Binding Price}" />
+                    <DataGridTextColumn Header="Себестоимость" Binding="{Binding PrimaryPrice}" />
+                    <DataGridTextColumn Header="Прибыль от продажи" Binding="{Binding IncomeFromSelling}" />
+                    <DataGridTextColumn Header="Колличество на складе" Binding="{Binding Amount}" />
+                    <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" />
+
                 </DataGrid.Columns>
                 <DataGrid.CellStyle>
                     <Style TargetType="DataGridCell">
@@ -84,7 +95,5 @@
                 </DataGrid.CellStyle>
             </DataGrid>
         </DockPanel>
-
-        <ContentControl Grid.Row="0" Grid.RowSpan="3" Content="{Binding CurrentView}" Visibility="{Binding ContentVisiability, Converter={StaticResource BooleanVisiabilityConverter}}" />
     </Grid>
 </UserControl>

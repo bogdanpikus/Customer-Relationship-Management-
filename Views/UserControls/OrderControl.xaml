@@ -26,10 +26,9 @@
         
         <ToolBarTray Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
             <ToolBar>
-                <Button Content="Создать" Cursor="Hand"></Button>
-                <Button Content="Открыть" Cursor="Hand"></Button>
-                <Button Content="Сохранить" Cursor="Hand"></Button>
-                <Button Content="Сохранить как" Cursor="Hand"></Button>
+                <Button Command="{Binding CreateNewDatabase}" Content="Создать" Cursor="Hand"></Button>
+                <Button Command="{Binding OpenExistDatabase}" Content="Открыть" Cursor="Hand"></Button>
+                <Button Command="{Binding MakeACopyOfDatabase}" Content="Сохранить как" Cursor="Hand"></Button>
             </ToolBar>
         </ToolBarTray>
         

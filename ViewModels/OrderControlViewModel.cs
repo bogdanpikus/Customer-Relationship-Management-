@@ -31,6 +31,12 @@ namespace CRM.ViewModels
         public ICommand Settings { get; set; }
         public ICommand Exit { get; set; }
 
+        //---------------------ToolBar------------------
+        public ICommand CreateNewDatabase {  get; set; }
+        public ICommand OpenExistDatabase {  get; set; }
+        public ICommand MakeACopyOfDatabase {  get; set; }
+        //----------------------------------------------
+
         private decimal? _allSpendings;
         public decimal? AllSpendings
         {
@@ -72,7 +78,12 @@ namespace CRM.ViewModels
         }
 
         public OrderControlViewModel()
-        {   
+        {
+            //---------------------ToolBar------------------
+            CreateNewDatabase = new RelayCommand(Click => CreateNewDatabaseAction());
+            OpenExistDatabase = new RelayCommand(Click => OpenExistDatabaseAction());
+            MakeACopyOfDatabase = new RelayCommand(Click => MakeACopyOfDatabaseAction());
+            //----------------------------------------------
             AddOrderCommand = new RelayCommand(Click => OpenOrderDialog());
             EditingCommand = new RelayCommand(Click => OpenEditingDialog());
             DeleteOrder = new RelayCommand(Click => DeleteOrderFromTableAndDatabase());
@@ -195,6 +206,18 @@ namespace CRM.ViewModels
             ControlsVisiability = true;
             OnPropertyChange(nameof(ControlsVisiability));
             OnPropertyChange(nameof(CurrentView));
+        }
+        private void CreateNewDatabaseAction()
+        {
+            MessageBox.Show("CreateNewDatabaseAction");
+        }
+        private void OpenExistDatabaseAction()
+        {
+            MessageBox.Show("OpenExistDatabaseAction");
+        }
+        private void MakeACopyOfDatabaseAction()
+        {
+            MessageBox.Show("MakeACopyOfDatabaseAction");
         }
     }
 }
