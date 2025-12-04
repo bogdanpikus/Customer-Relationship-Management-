@@ -95,5 +95,6 @@
                 </DataGrid.CellStyle>
             </DataGrid>
         </DockPanel>
+        <ContentControl Grid.Row="0" Grid.RowSpan="3" Visibility="{Binding ContentControlVisiability, Converter={StaticResource BooleanVisiabilityConverter}}"  Content="{Binding ProductContentControl}"/>
     </Grid>
 </UserControl>

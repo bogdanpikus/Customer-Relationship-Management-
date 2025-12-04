@@ -9,8 +9,10 @@ namespace CRM.ViewModels.ModalWindowViewModels
 {
     public class GroupModalViewModel : NotifyPropertyChange
     {
+        private readonly DialogService _dialogService = DialogService.Instance;
         public ObservableCollection<string> StoragesSelection { get; set; }
         private readonly ObservableCollection<Storages> _storageCollection;
+        private readonly SQLService _sqlService = new();
         private ProductGroups _group;
 
         public string? GroupName { get; set; }
@@ -26,12 +28,11 @@ namespace CRM.ViewModels.ModalWindowViewModels
                 {
                     _selectedStorage = value;
                     OnPropertyChange(nameof(SelectedStorage));
-                    UpdateConfirmAction();
                 }
             }
         }
 
-        private readonly string? _defaultStorageName;
+        private readonly string _originalStorageName;
 
         public ICommand Confirm { get; set; }
 
@@ -44,32 +45,38 @@ namespace CRM.ViewModels.ModalWindowViewModels
             GroupDescription = _group.Description;
 
             StoragesSelection = new ObservableCollection<string>(_storageCollection.Select(o => o.StorageName));
-            SelectedStorage = StoragesSelection.FirstOrDefault();
-            var defaultStorage = _storageCollection.FirstOrDefault(o => o.StorageName == SelectedStorage);
-            _defaultStorageName = SelectedStorage;
+            _originalStorageName = _storageCollection.First(s => s.Id == _group.StorageId).StorageName;
+            SelectedStorage = _originalStorageName;
 
-            Confirm = new RelayCommand(Click => ConfirmAction(defaultStorage, _defaultStorageName));
+            Confirm = new RelayCommand(Click => ConfirmAction());
         }
-        private void UpdateConfirmAction()
+
+        private void ConfirmAction()
         {
-            var selectedStorage = _storageCollection.FirstOrDefault(o => o.StorageName == SelectedStorage);
-            if(selectedStorage != null)
+            var newStorage = _storageCollection.First(s => s.StorageName == SelectedStorage);
+
+            if (newStorage.StorageName == _originalStorageName)
             {
-                Confirm = new RelayCommand(Click => ConfirmAction(selectedStorage, _defaultStorageName));
-                OnPropertyChange(nameof(Confirm));
-            }
-            
-        }
-        private void ConfirmAction(Storages newStorage, string defaultStorageName)
-        {
-            if (defaultStorageName == newStorage.StorageName)
-            {
-                MessageBox.Show("StorageName == default"); // НЕ меняем положения группы
+                _group.Name = GroupName;
+                _group.Description = GroupDescription;
             }
             else
             {
-                MessageBox.Show("StorageName != default"); // МЕНЯЕМ на выбранный склад по средством переписывание StorageId группы?
+                _group.Name = GroupName;
+                _group.Description = GroupDescription;
+                _group.StorageId = newStorage.Id;
+                MessageBox.Show($"{_group.Name} was mooved to {newStorage.StorageName}");
+            }
+
+            if (_sqlService.UpdateGroupSQLAction(_group))
+            {
+                _dialogService.CloseDialog();
+            }
+            else
+            {
+                MessageBox.Show("SQL ERROR, TRY LATER");
             }
         }
     }
+    
 }

@@ -115,5 +115,9 @@ namespace CRM.Services
         {
             return _db.DeleteGroupSQLAction(id, storageId);
         }
+        public bool UpdateGroupSQLAction(ProductGroups group)
+        {
+            return _db.UpdateGroupSQLAction(group);
+        }
     }
 }

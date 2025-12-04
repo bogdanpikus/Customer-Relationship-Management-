@@ -12,17 +12,30 @@ namespace CRM.ViewModels
         public bool CurrentVisiability { get; set; }
 
         public ICommand GoBackToGroups { get; set; }
+        public ICommand CreateProduct { get; set; }
+
+        public bool ContentControlVisiability { get; set; }
+        public object ProductContentControl {  get; set; }
 
         public StorageProductViewModel()
         {
             CurrentVisiability = true;
+            ContentControlVisiability = false;
 
             GoBackToGroups = new RelayCommand(Click => GoBackToGroupsAction());
+            CreateProduct = new RelayCommand(Click => CreateProductAction());
         }
         private void GoBackToGroupsAction()
         {
             CurrentVisiability = false;
             OnPropertyChange(nameof(CurrentVisiability));
+        }
+        private void CreateProductAction()
+        {
+            ContentControlVisiability = true;
+            ProductContentControl = new ProductCreateViewModel(ProductCollection);
+            OnPropertyChange(nameof(ProductContentControl));
+            OnPropertyChange(nameof(ContentControlVisiability));
         }
     }
 }

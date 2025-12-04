@@ -31,36 +31,36 @@
                 <Button Command="{Binding MakeACopyOfDatabase}" Content="Сохранить как" Cursor="Hand"></Button>
             </ToolBar>
         </ToolBarTray>
-        
-        <Button Command="{Binding OrderPage}" Content="Заказы" Grid.Column="0" Grid.Row="1" Background="#00FF2F"
+
+        <Button Command="{Binding OrderPage}" Content="Заказы" Grid.Column="0" Grid.Row="1" Background="LightGray"
                 Foreground="Black" FontWeight="Medium" FontSize="20" Cursor="Hand"
                 BorderBrush="Black" BorderThickness="1">
         </Button>
-        <Button Command="{Binding AnalizePage}" Content="Аналитика" Grid.Column="0" Grid.Row="2" Background="#00FF2F"
+        <Button Command="{Binding AnalizePage}" Content="Аналитика" Grid.Column="0" Grid.Row="2" Background="LightGray"
                 Foreground="Black" FontWeight="Medium" FontSize="20" Cursor="Hand"
                 BorderBrush="Black" BorderThickness="1">
         </Button>
-        <Button Command="{Binding Contacts}" Content="Контакты" Grid.Column="0" Grid.Row="3" Background="#00FF2F"
+        <Button Command="{Binding Contacts}" Content="Контакты" Grid.Column="0" Grid.Row="3" Background="LightGray"
                 Foreground="Black" BorderBrush="Black" BorderThickness="1"
                 FontSize="20" FontWeight="Medium" Cursor="Hand">
         </Button>
-        <Button Command="{Binding Storage}" Content="Склад" Grid.Column="0" Grid.Row="4" Background="#00FF2F"
+        <Button Command="{Binding Storage}" Content="Склад" Grid.Column="0" Grid.Row="4" Background="LightGray" 
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1" Cursor="Hand">
         </Button>
-        <Button Command="{Binding Documents}" Content="Документы" Grid.Column="0" Grid.Row="5" Background="#00FF2F"
+        <Button Command="{Binding Documents}" Content="Документы" Grid.Column="0" Grid.Row="5" Background="LightGray"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1" Cursor="Hand">
         </Button>
-        <Button Command="{Binding ExportImport}" Content="Эспорт/Импорт"  Grid.Column="0" Grid.Row="6" Background="#00FF2F"
+        <Button Command="{Binding ExportImport}" Content="Эспорт/Импорт"  Grid.Column="0" Grid.Row="6" Background="LightGray"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1" Cursor="Hand">
         </Button>
-        <Button Command="{Binding Settings}" Content="Наcтройки" Grid.Column="0" Grid.Row="7" Background="#00FF2F"
+        <Button Command="{Binding Settings}" Content="Наcтройки" Grid.Column="0" Grid.Row="7" Background="LightGray"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1" Cursor="Hand">
         </Button>
-        <Button Command="{Binding Exit}" Content="Выйти" Grid.Column="0" Grid.Row="8" Background="#00FF2F"
+        <Button Command="{Binding Exit}" Content="Выйти" Grid.Column="0" Grid.Row="8" Background="LightGray"
                 Foreground="Black" FontWeight="Medium" FontSize="20" BorderBrush="Black"
                 BorderThickness="1" Cursor="Hand">
         </Button>

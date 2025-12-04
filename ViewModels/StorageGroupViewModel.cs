@@ -75,7 +75,7 @@ namespace CRM.ViewModels
             var isSelected = GroupCollection.Where(o => o.IsSelected).ToList();
             foreach(var selected in isSelected)
             {
-                _dialogService.ShowDialog(new GroupModalViewModel(selected, storage));
+                _dialogService.ShowDialog(new GroupModalViewModel(selected, storage)); // FIX: НЕ ОБНОВЛЯЕТСЯ СРАЗУ ПОСЛЕ ПЕРЕМЕЩЕНИЯ САМО
             }
         }
         private void DeleteGroupAction() // РАБОТАЕТ

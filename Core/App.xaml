@@ -51,6 +51,9 @@
             <DataTemplate DataType="{x:Type vm:StorageProductViewModel}">
                 <views:StorageProductControl />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ProductCreateViewModel}">
+                <views:ProductCreateControl />
+            </DataTemplate>
             <Style x:Key="CustomDatePickerStyle" TargetType="DatePicker">
                 <Setter Property="Template" Value="{StaticResource DatePickerTemplate}" />
             </Style>

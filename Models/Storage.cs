@@ -132,7 +132,7 @@ namespace CRM.Models
         public bool IsSelected { get; set; }
         public int ProductId { get; set; } // код товара для групп 
 
-        public string SKU { get; set; } // внутренний код товара
+        public string? SKU { get; set; } // внутренний код товара
 
         private string? _articul;
         public string? Articul
@@ -316,7 +316,7 @@ namespace CRM.Models
             }
         }
 
-        public string Barcode { get; set; } //Штрих-код в формате EAN/UPC.
-        public Dictionary<string, string> Attributes { get; set; } // Динамические характеристики товара
+        public string? Barcode { get; set; } //Штрих-код в формате EAN/UPC.
+        public Dictionary<string, string>? Attributes { get; set; } // Дополнительные характеристики
     }
 }

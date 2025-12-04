@@ -770,5 +770,17 @@ namespace CRM.Models
                 return cmd.ExecuteNonQuery() > 0;
             }
         }
+        public bool UpdateGroupSQLAction(ProductGroups group)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"UPDATE productGroup SET Name = ?, Description = ?, StorageId = ? WHERE Id = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value = group.Name });
+                cmd.Parameters.Add(new DuckDBParameter { Value = group.Description });
+                cmd.Parameters.Add(new DuckDBParameter { Value = group.StorageId });
+                cmd.Parameters.Add(new DuckDBParameter { Value = group.Id });
+                return cmd.ExecuteNonQuery() > 0;
+            } 
+        }
     }
 }
