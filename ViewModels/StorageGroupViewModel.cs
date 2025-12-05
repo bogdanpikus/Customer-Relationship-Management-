@@ -102,7 +102,7 @@ namespace CRM.ViewModels
                 return;
             }
 
-            CurrentView = new StorageProductViewModel();
+            CurrentView = new StorageProductViewModel(group.Id);
             ContentVisiability = true;
             OnPropertyChange(nameof(CurrentView));
             OnPropertyChange(nameof(ContentVisiability));

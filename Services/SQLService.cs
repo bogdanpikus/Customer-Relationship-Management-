@@ -119,5 +119,21 @@ namespace CRM.Services
         {
             return _db.UpdateGroupSQLAction(group);
         }
+        public bool ProductCreatingAction(Products product)
+        {
+            return _db.ProductCreatingAction(product);
+        }
+        public List<Products> SelectProducts(int id)
+        {
+            return _db.SelectProducts(id);
+        }
+        public bool DeleteProductAction(int id)
+        {
+            return _db.DeleteProductAction(id);
+        }
+        public bool UpdateProductAction(Products product)
+        {
+            return _db.UpdateProductAction(product);
+        }
     }
 }

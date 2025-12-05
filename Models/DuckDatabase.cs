@@ -1,8 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Windows.Controls;
-using CRM.ViewModels;
+﻿using System.IO;
 using DuckDB.NET.Data;
 
 namespace CRM.Models
@@ -109,8 +105,9 @@ namespace CRM.Models
             using (var cmd = _connection.CreateCommand()) // NOTE: СОЗДАНИЕ ТАБЛИЦЫ PRODUCTS
             {
                 cmd.CommandText = @"CREATE TABLE IF NOT EXISTS products (Id INTEGER DEFAULT nextval('seq_products') PRIMARY KEY, ProductId INTEGER NOT NULL,
-                                    Articul VARCHAR, PhotoPath VARCHAR, Name VARCHAR, Price DECIMAL(18,2), PrimaryPrice DECIMAL(18,2), 
-                                    IncomeFromSelling DECIMAL(18,2), Amount INTEGER, Comment VARCHAR,
+                                    Articul VARCHAR, PhotoPath VARCHAR, ProductName VARCHAR, Color VARCHAR, Price DECIMAL(18,2), PrimePrice DECIMAL(18,2), 
+                                    IncomeFromSelling DECIMAL(18,2), Measurement VARCHAR, Amount INTEGER, Supplier VARCHAR, Category VARCHAR,
+                                    Status VARCHAR, Comment VARCHAR, Barcode VARCHAR, ActivityLabel VARCHAR, StatusLabel VARCHAR, Commission DECIMAL(18,2), Description VARCHAR,
                                     FOREIGN KEY (ProductId) REFERENCES productGroup(Id))";
                 cmd.ExecuteNonQuery();
             }
@@ -781,6 +778,112 @@ namespace CRM.Models
                 cmd.Parameters.Add(new DuckDBParameter { Value = group.Id });
                 return cmd.ExecuteNonQuery() > 0;
             } 
+        }
+        public bool ProductCreatingAction(Products product)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"INSERT INTO products (ProductId, Articul, PhotoPath, ProductName, Color, Price, PrimePrice, Measurement,
+                                    Amount, Supplier, Category, Status, Comment, Barcode, ActivityLabel, StatusLabel, Commission, Description) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) RETURNING Id";
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.ProductId });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Articul });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.PhotoPath });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.ProductName });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Color });  
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Price });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.PrimePrice });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Measurement });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Amount });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Supplier });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Category });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Status });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Comment });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Barcode });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.ActivityLabel });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.StatusLabel });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Commission });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Description });
+                product.Id = Convert.ToInt32(cmd.ExecuteScalar());
+                return product.Id > 0;
+            }
+        }
+        public List<Products> SelectProducts(int id)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                var listProducts = new List<Products>();
+
+                cmd.CommandText = @"SELECT Id, ProductId, Articul, PhotoPath, ProductName, Color, Price, PrimePrice, Measurement, Amount, Supplier,
+                                    Category, Status, Comment, Barcode, ActivityLabel, StatusLabel, Commission, Description  FROM products WHERE ProductId = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value =  id });
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    listProducts.Add(new Products
+                    {
+                        Id = reader.GetInt32(0),
+                        ProductId = reader.GetInt32(1),
+                        Articul = reader.IsDBNull(2) ? null : reader.GetString(2),
+                        PhotoPath = reader.IsDBNull(3) ? null : reader.GetString(3),
+                        ProductName = reader.IsDBNull(4) ? null : reader.GetString(4),
+                        Color = reader.IsDBNull(5) ? null : reader.GetString(5),
+                        Price = reader.IsDBNull(6) ? null : reader.GetDecimal(6),
+                        PrimePrice = reader.IsDBNull(7) ? null : reader.GetDecimal(7),
+                        Measurement = reader.IsDBNull(8) ? null : reader.GetString(8),
+                        Amount = reader.IsDBNull(9) ? null : reader.GetInt32(9),
+                        Supplier = reader.IsDBNull(10) ? null : reader.GetString(10),
+                        Category = reader.IsDBNull(11) ? null : reader.GetString(11),
+                        Status = reader.IsDBNull(12) ? null : reader.GetString(12),
+                        Comment = reader.IsDBNull(13) ? null : reader.GetString(13),
+                        Barcode = reader.IsDBNull(14) ? null : reader.GetString(14),
+                        ActivityLabel = reader.IsDBNull(15) ? null : reader.GetString(15),
+                        StatusLabel = reader.IsDBNull(16) ? null : reader.GetString(16),
+                        Commission = reader.IsDBNull(17) ? null : reader.GetDecimal(17),
+                        Description = reader.IsDBNull(18) ? null : reader.GetString(18)
+                    });
+                }
+
+                return listProducts;
+            }
+        }
+        public bool DeleteProductAction(int id)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"DELETE FROM products WHERE Id = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value = id });
+
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+        public bool UpdateProductAction(Products product)
+        {
+            using (var cmd = _connection.CreateCommand())
+            {
+                cmd.CommandText = @"UPDATE products SET Articul = ?, PhotoPath = ?, ProductName = ?, Color = ?, Price = ?,
+                                    PrimePrice = ?, Measurement = ?, Amount = ?, Supplier = ?, Category = ?, Status = ?,
+                                    Comment = ?, ActivityLabel = ?, StatusLabel = ?, Commission = ?, Description = ? WHERE Id = ?";
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Articul });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.PhotoPath });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.ProductName });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Color });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Price });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.PrimePrice });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Measurement });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Amount });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Supplier });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Category });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Status });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Comment });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.ActivityLabel });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.StatusLabel });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Commission });
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Description });
+
+                cmd.Parameters.Add(new DuckDBParameter { Value = product.Id });
+                return cmd.ExecuteNonQuery() > 0;
+            }
         }
     }
 }

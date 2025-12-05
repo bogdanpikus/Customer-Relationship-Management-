@@ -72,18 +72,25 @@
                             <DataTemplate>
                                 <Button Command="{Binding DataContext.OpenProduct, RelativeSource={RelativeSource AncestorType=DataGrid}}"
                                         CommandParameter="{Binding}" Width="50" Height="45" FontSize="20" >
-                                    <Image Source="{Binding ImagePath}" Stretch="Uniform" />
+                                    <Image Source="{Binding PhotoPath}" Stretch="Uniform" />
                                 </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="Название" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Название" Binding="{Binding ProductName}" />
                     <DataGridTextColumn Header="Цвет" Binding="{Binding Color}" />
                     <DataGridTextColumn Header="Цена" Binding="{Binding Price}" />
-                    <DataGridTextColumn Header="Себестоимость" Binding="{Binding PrimaryPrice}" />
-                    <DataGridTextColumn Header="Прибыль от продажи" Binding="{Binding IncomeFromSelling}" />
+                    <DataGridTextColumn Header="Себестоимость" Binding="{Binding PrimePrice}" />
+                    <DataGridTextColumn Header="Единица измерения" Binding="{Binding Measurement}" />
                     <DataGridTextColumn Header="Колличество на складе" Binding="{Binding Amount}" />
+                    <DataGridTextColumn Header="Поставщик" Binding="{Binding Supplier}" />
+                    <DataGridTextColumn Header="Категория" Binding="{Binding Category}" />
+                    <DataGridTextColumn Header="Статус" Binding="{Binding Status}" />
+                    <DataGridTextColumn Header="Статус 2" Binding="{Binding ActivityLabel}" />
+                    <DataGridTextColumn Header="Статус 3" Binding="{Binding StatusLabel}" />
+                    <DataGridTextColumn Header="Коммисия с продажи 1(ед)" Binding="{Binding Commission}" />
+                    <DataGridTextColumn Header="Описание" Binding="{Binding Description}" />
                     <DataGridTextColumn Header="Комментарий" Binding="{Binding Comment}" />
 
                 </DataGrid.Columns>

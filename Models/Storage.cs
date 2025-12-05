@@ -130,7 +130,7 @@ namespace CRM.Models
     {
         public int Id { get; set; } // собственный id для базы данных
         public bool IsSelected { get; set; }
-        public int ProductId { get; set; } // код товара для групп 
+        public int ProductId { get; set; } // код группы 
 
         public string? SKU { get; set; } // внутренний код товара
 
@@ -148,30 +148,30 @@ namespace CRM.Models
             }
         }
 
-        private string? _imagePath;
-        public string? ImagePath // путь для отображения фото
+        private string? _photoPath;
+        public string? PhotoPath // путь для отображения фото
         {
-            get => _imagePath;
+            get => _photoPath;
             set
             {
-                if(_imagePath != value)
+                if(_photoPath != value)
                 {
-                    _imagePath = value;
-                    OnPropertyChange(nameof(ImagePath));
+                    _photoPath = value;
+                    OnPropertyChange(nameof(PhotoPath));
                 }
             }
         }
 
-        private string? _name;
-        public string? Name
+        private string? _productName;
+        public string? ProductName
         {
-            get => _name;
+            get => _productName;
             set
             {
-                if(_name != value)
+                if(_productName != value)
                 {
-                    _name = value;
-                    OnPropertyChange(nameof(Name));
+                    _productName = value;
+                    OnPropertyChange(nameof(ProductName));
                 }
             }
         }
@@ -205,7 +205,7 @@ namespace CRM.Models
         }
 
         private decimal? _primaryPrice;
-        public decimal? PrimaryPrice
+        public decimal? PrimePrice
         {
             get => _primaryPrice;
             set
@@ -213,7 +213,7 @@ namespace CRM.Models
                 if(_primaryPrice != value)
                 {
                     _primaryPrice = value;
-                    OnPropertyChange(nameof(PrimaryPrice));
+                    OnPropertyChange(nameof(PrimePrice));
                 }
             }
         }
@@ -275,7 +275,7 @@ namespace CRM.Models
         }
 
         private string? _category;
-        public string Category
+        public string? Category
         {
             get => _category;
             set
@@ -317,6 +317,63 @@ namespace CRM.Models
         }
 
         public string? Barcode { get; set; } //Штрих-код в формате EAN/UPC.
-        public Dictionary<string, string>? Attributes { get; set; } // Дополнительные характеристики
+        public Dictionary<string, string>? Attributes { get; set; } // Дополнительные характеристики (не реализован)
+        ///////////////////////////////////////////////////////////
+        
+        private string? _activityLabel;
+        public string? ActivityLabel
+        {
+            get => _activityLabel;
+            set
+            {
+                if(_activityLabel != value)
+                {
+                    _activityLabel = value;
+                    OnPropertyChange(nameof(ActivityLabel));
+                }
+            }
+        }
+
+        private string? _statusLabel;
+        public string? StatusLabel
+        {
+            get => _statusLabel;
+            set
+            {
+                if(_statusLabel != value)
+                {
+                    _statusLabel = value;
+                    OnPropertyChange(nameof(StatusLabel));
+                }
+            }
+        }
+
+        private decimal? _commission;
+        public decimal? Commission
+        {
+            get => _commission;
+            set
+            {
+                if(_commission != value)
+                {
+                    _commission = value;
+                    OnPropertyChange(nameof(Commission));
+                }
+            }
+        }
+
+        private string? _description;
+        public string? Description
+        {
+            get => _description;
+            set
+            {
+                if(_description != value)
+                {
+                    _description = value;
+                    OnPropertyChange(nameof(Description));
+                }
+            }
+        }
     }
 }

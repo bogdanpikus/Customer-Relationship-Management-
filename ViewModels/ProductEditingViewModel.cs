@@ -1,19 +1,19 @@
 ﻿using CRM.Commands;
 using CRM.Models;
 using CRM.Services;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
 namespace CRM.ViewModels
 {
-    public class ProductCreateViewModel : NotifyPropertyChange
+    public class ProductEditingViewModel : NotifyPropertyChange
     {
+        private Products _product;
         private readonly SQLService _sqlService = new();
         public bool GridVisiability { get; set; }
 
         public ICommand GoBackToProducts { get; }
-        public ICommand ConfirmProductCreating { get; } // подтверждение создания продукта
+        public ICommand ConfirmProductUpdate { get; } // подтверждение создания продукта
 
         public bool PhotoVisisability { get; set; } // видимость загруменных фото
 
@@ -37,58 +37,66 @@ namespace CRM.ViewModels
 
         public int? PriceForAmount { get; set; } // Price за 1 штук(у) может DICTIONARY?
         public int? PrimeForAmount { get; set; } // PrimePrice за 1 штук(у) может DICTIONARY?
-        public int? OptAmount {  get; set; } 
-        public int? PercentOptDiscount {  get; set; }
+        public int? OptAmount { get; set; }
+        public int? PercentOptDiscount { get; set; }
 
-        private int _groupId;
-        private readonly ObservableCollection<Products> _productCollection;
-
-        public ProductCreateViewModel(ObservableCollection<Products> productCollection, int id) 
+        public ProductEditingViewModel(Products product) 
         {
-            _productCollection = productCollection;
-            _groupId = id;
-
             GridVisiability = true;
+            _product = product;
+
+            Articul = _product.Articul;
+            PhotoPath = _product.PhotoPath;
+            ProductName = _product.ProductName;
+            Color = _product.Color;
+            Price = _product.Price;
+            PrimePrice = _product.PrimePrice;
+            Measurement = _product.Measurement;
+            Amount = _product.Amount;
+            Supplier = _product.Supplier;
+            Category = _product.Category;
+            Status = _product.Status;
+            Comment = _product.Comment;
+            ActivityLabel = _product.ActivityLabel;
+            StatusLabel = _product.StatusLabel;
+            Commission = _product.Commission;
+            Description = _product.Description;
+
             GoBackToProducts = new RelayCommand(Click => GoBackToProductsAction());
-            ConfirmProductCreating = new RelayCommand(Click => ConfirmProductCreatingAction(_groupId));
+            ConfirmProductUpdate = new RelayCommand(Click => ConfirmProductUpdateAction());
         }
         private void GoBackToProductsAction()
         {
             GridVisiability = false;
             OnPropertyChange(nameof(GridVisiability));
         }
-        private void ConfirmProductCreatingAction(int id)
+        private void ConfirmProductUpdateAction()
         {
-            var product = new Products
-            {
-                ProductId = id,
-                Articul = Articul,
-                PhotoPath = PhotoPath,
-                ProductName = ProductName,
-                Color = Color,
-                Price = Price,
-                PrimePrice = PrimePrice,
-                Measurement = Measurement,
-                Amount = Amount,
-                Supplier = Supplier,
-                Category = Category,
-                Status = Status,
-                Comment = Comment,
-                ActivityLabel = ActivityLabel,
-                StatusLabel = StatusLabel,
-                Commission = Commission,
-                Description = Description
-            };
+            _product.Articul = Articul;
+            _product.PhotoPath = PhotoPath;
+            _product.ProductName = ProductName;
+            _product.Color = Color;
+            _product.Price = Price;
+            _product.PrimePrice = PrimePrice;
+            _product.Measurement = Measurement;
+            _product.Amount = Amount;
+            _product.Supplier = Supplier;
+            _product.Category = Category;
+            _product.Status = Status;
+            _product.Comment = Comment;
+            _product.ActivityLabel = ActivityLabel;
+            _product.StatusLabel = StatusLabel;
+            _product.Commission = Commission;
+            _product.Description = Description;
 
-            if (_sqlService.ProductCreatingAction(product))
+            if (_sqlService.UpdateProductAction(_product))
             {
                 GridVisiability = false;
-                _productCollection.Add(product);
-                OnPropertyChange(nameof(GridVisiability));
+                OnPropertyChange(nameof(GridVisiability));  
             }
             else
             {
-                MessageBox.Show($"SQL ERROR IN DATABASE TO INSERT");
+                MessageBox.Show($"ERROR {_product.ProductName} SQL UPDATE");
             }
         }
     }
