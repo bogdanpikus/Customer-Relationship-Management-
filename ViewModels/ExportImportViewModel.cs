@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace CRM.ViewModels
 {
-    class ExportImportViewModel
+    public class ExportImportViewModel
     {
+        public ExportImportViewModel() 
+        {
+
+        }
     }
 }

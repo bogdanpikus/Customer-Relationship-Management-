@@ -6,14 +6,151 @@
              xmlns:local="clr-namespace:CRM.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid Background="WhiteSmoke" ShowGridLines="True">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="300"/>
-                <RowDefinition Height="300"/>
-                <RowDefinition Height="300"/>
-            </Grid.RowDefinitions>
-            <Label FontSize="50">Settings</Label>
-        </Grid>
+    
+    <Grid Background="WhiteSmoke" ShowGridLines="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="96"/>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Row="0" Grid.Column="0" Width="475" HorizontalAlignment="Left" Content="Общие"
+                       FontSize="50"/>
+        <Button Grid.Row="0" Grid.Column="1" Width="475" HorizontalAlignment="Left" Content="Пользовательские"
+                       FontSize="50"/>
+        <Button Grid.Row="0" Grid.Column="2" Width="475" HorizontalAlignment="Left" Content="Безопасность"
+                       FontSize="50"/>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Название вашей компании:" FontSize="20" Target="{Binding ElementName=OrgName}"/>
+                <TextBox Name="OrgName" Width="130"  FontSize="20"  Template="{StaticResource TextPlaceholderSquare}"
+                  Height="25" Text="{Binding NameOfOrganization}"/>
+                <Button Width="25" Height="24" Background="RED" Margin="5,0,0,0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Валюта:" FontSize="20" Target="{Binding ElementName=currency}"/>
+                <ComboBox Name="currency" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">грывня</ComboBoxItem>
+                    <ComboBoxItem>амерека долааар</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Язык:" FontSize="20" Target="{Binding ElementName=language}"/>
+                <ComboBox Name="language" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">Русс</ComboBoxItem>
+                    <ComboBoxItem>Укр</ComboBoxItem>
+                    <ComboBoxItem>Ингл</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Формат даты:" FontSize="20" Target="{Binding ElementName=dateFormat}"/>
+                <ComboBox Name="dateFormat" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">Нет</ComboBoxItem>
+                    <ComboBoxItem>Да</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Формат валюты:" FontSize="20" Target="{Binding ElementName=currencyFormat}"/>
+                <ComboBox Name="currencyFormat" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">Нет</ComboBoxItem>
+                    <ComboBoxItem>Да</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Цветовая тема:" FontSize="20" Target="{Binding ElementName=theme}"/>
+                <ComboBox Name="theme" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem>Темная</ComboBoxItem>
+                    <ComboBoxItem IsSelected="True">Светлая</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Начальный экран:" FontSize="20" Target="{Binding ElementName=autoplay}"/>
+                <ComboBox Name="autoplay" Width="110"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">Заказы</ComboBoxItem>
+                    <ComboBoxItem>Аналитика</ComboBoxItem>
+                    <ComboBoxItem>Контакты</ComboBoxItem>
+                    <ComboBoxItem>Склад</ComboBoxItem>
+                    <ComboBoxItem>Документы</ComboBoxItem>
+                    <ComboBoxItem>Экспорт/импорт</ComboBoxItem>
+                    <ComboBoxItem>Настройки</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Подсказки:" FontSize="20" Target="{Binding ElementName=tip}"/>
+                <ComboBox Name="tip" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">Да</ComboBoxItem>
+                    <ComboBoxItem>Нет</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Режим:" FontSize="20" Target="{Binding ElementName=style}"/>
+                <ComboBox Name="style" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">Простой интерфейс</ComboBoxItem>
+                    <ComboBoxItem>Расширенный интерфейс</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Размер шрифта:" FontSize="20" Target="{Binding ElementName=fontSize}"/>
+                <TextBox Name="fontSize" Width="70"  FontSize="20"  Template="{StaticResource TextPlaceholderSquare}"
+                         Height="25" Text="{Binding NameOfOrganization}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Положение боковой панели:" FontSize="20" Target="{Binding ElementName=panel}"/>
+                <ComboBox Name="panel" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">Право</ComboBoxItem>
+                    <ComboBoxItem>Лево</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="3">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Пароль на файл базы данных:" FontSize="20" Target="{Binding ElementName=password}"/>
+                <PasswordBox Name="password" Width="150"  FontSize="20" 
+                         Height="25"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Проверка целосности при запуске:" FontSize="20" Target="{Binding ElementName=db}"/>
+                <ComboBox Name="db" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">Нет</ComboBoxItem>
+                    <ComboBoxItem>Да</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Шифрование файла бд:" FontSize="20" Target="{Binding ElementName=cryptography}"/>
+                <ComboBox Name="cryptography" Width="100"  FontSize="15" Height="25">
+                    <ComboBoxItem IsSelected="True">Нет</ComboBoxItem>
+                    <ComboBoxItem>Да</ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Резервное копирование:" FontSize="20" Target="{Binding ElementName=copy}"/>
+                    <TextBox Name="copy" Width="200" Tag="укажите путь куда"  FontSize="15"  Template="{StaticResource TextPlaceholderSquare}"
+                            Height="25" Text="{Binding NameOfOrganization}" Cursor="Hand"/>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+
+        <Button Grid.Row="3" Grid.Column="0" Command="{Binding ResetSettings}" Content="Сбросить настройки" Height="80" Width="480" FontSize="35" Cursor="Hand"
+                VerticalAlignment="Bottom"/>
+        <Button Grid.Row="3" Grid.Column="1" Command="{Binding Otmenit}" Content="Отмена" Height="80" Width="480" FontSize="35" Cursor="Hand"
+                VerticalAlignment="Bottom"/>
+        <Button Grid.Row="3" Grid.Column="2" Command="{Binding SaveSettings}" Content="Сохранить"  Height="80" Width="480" FontSize="35" Cursor="Hand"
+                VerticalAlignment="Bottom"/>
+
+            <ContentControl Content="{Binding CurrentContentControl}" Visibility="{Binding ContentControlVisiability,
+            Converter={StaticResource BooleanVisiabilityConverter}}"/>
+
     </Grid>
 </UserControl>
