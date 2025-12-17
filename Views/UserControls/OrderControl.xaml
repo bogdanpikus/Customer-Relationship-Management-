@@ -85,7 +85,7 @@
             </ComboBox>
         </DockPanel>
 
-        <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="8" Background="LightGray" Margin="0,60,0,0">
+        <DockPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="8" Style="{StaticResource DarkDockPanelStyle}" Margin="0,60,0,0">
             <DockPanel Grid.Row="0" Margin="5,5,17,5" DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="2,0,0,0">
                     <TextBox Template="{StaticResource TextPlaceholderSquare}" Tag="поиск..." Width="400" Cursor="IBeam"
@@ -114,12 +114,12 @@
 
 
             <DataGrid ItemsSource="{Binding Orders}" AutoGenerateColumns="False" HorizontalScrollBarVisibility="Visible"
-                      VerticalScrollBarVisibility="Visible" BorderThickness="0" BorderBrush="Black" 
+                      VerticalScrollBarVisibility="Visible" BorderThickness="0"  
                       ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                       FontFamily="Arial" FontSize="14" CanUserAddRows="False" CanUserDeleteRows="False"
-                      GridLinesVisibility="All" HorizontalGridLinesBrush="LightGray" VerticalGridLinesBrush="LightGray"
-                      RowBackground="Snow" ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
-                      EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" Focusable="False"
+                      GridLinesVisibility="all"
+                      ColumnHeaderHeight="40" ClipboardCopyMode="IncludeHeader" EnableRowVirtualization="True"
+                      EnableColumnVirtualization="True" RowDetailsVisibilityMode="Visible" 
                       VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsVirtualizing="True"
                       SelectionMode="Extended" SelectionUnit="CellOrRowHeader" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Cursor="Hand" >
 

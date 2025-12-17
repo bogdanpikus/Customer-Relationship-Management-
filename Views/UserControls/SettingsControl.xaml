@@ -67,9 +67,8 @@
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Цветовая тема:" FontSize="20" Target="{Binding ElementName=theme}"/>
-                <ComboBox Name="theme" Width="100"  FontSize="15" Height="25">
-                    <ComboBoxItem>Темная</ComboBoxItem>
-                    <ComboBoxItem IsSelected="True">Светлая</ComboBoxItem>
+                <ComboBox Name="theme" Width="100"  FontSize="15" Height="25"
+                          SelectedItem="{Binding ThemeChange}" ItemsSource="{Binding ThemeSourse}"> 
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
@@ -154,3 +153,4 @@
 
     </Grid>
 </UserControl>
+    

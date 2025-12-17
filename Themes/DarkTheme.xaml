@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Цвета -->
+    <Color x:Key="PrimaryColor">Black</Color>
+    <Color x:Key="WhiteSmoke">#F5F5F5</Color>
+    <Color x:Key="Grid">#969696</Color>
+    <Color x:Key="Snow">#FFFAFA</Color>
+    <Color x:Key="LightGray">#D3D3D3</Color>
+
+    <!-- Кисти -->
+    <SolidColorBrush x:Key="BlackBackground" Color="{StaticResource   PrimaryColor}" />
+    <SolidColorBrush x:Key="SmokeWhite" Color="{StaticResource  WhiteSmoke}" />
+    <SolidColorBrush x:Key="GridLight" Color="{StaticResource   Grid}" />
+    <SolidColorBrush x:Key="SnowBlush" Color="{StaticResource   Snow}" />
+    <SolidColorBrush x:Key="GrayLight" Color="{StaticResource   LightGray}" />
+
+    <!-- Пример стиля -->
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource  SmokeWhite}"/>
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+    <Style TargetType="Grid">
+        <Setter Property="Background" Value="{DynamicResource  SmokeWhite}" />
+    </Style>
+    <Style TargetType="DataGrid">
+        <Setter Property="Background" Value="{DynamicResource  BlackBackground}" />
+        <Setter Property="AlternatingRowBackground" Value="{DynamicResource SnowBlush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackBackground}" />
+        <Setter Property="ScrollViewer.Background" Value="{DynamicResource BlackBackground}" />
+        <Setter Property="RowBackground" Value="{DynamicResource  SnowBlush}" />
+        <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource  GrayLight}" />
+        <Setter Property="VerticalGridLinesBrush" Value="{DynamicResource  GrayLight}" />
+    </Style>
+    <Style x:Key="DarkDockPanelStyle" TargetType="DockPanel">
+        <Setter Property="Background" Value="{DynamicResource BlackBackground}" />
+    </Style>
+</ResourceDictionary>

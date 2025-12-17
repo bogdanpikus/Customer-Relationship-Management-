@@ -14,7 +14,52 @@
 
         <Button Grid.Row="0" Content="Create+" Width="400" FontSize="35" HorizontalAlignment="Left" Cursor="Hand"/>
         <StackPanel Grid.Row="1" Orientation="Vertical">
-            
+            <Border BorderBrush="Black" BorderThickness="1" Width="750" HorizontalAlignment="Left">
+                <TextBlock FontSize="25" Margin="30,30,30,30">
+                  <StackPanel>
+                      <TextBlock>
+                            <Hyperlink Command="{Binding AbcAnalizeCreate}" CommandParameter="{Binding}">
+                                       1) Отчет по АBC анализу PDF/EXEL
+                            </Hyperlink>
+                      </TextBlock>
+                      <TextBlock>
+                          <Hyperlink Command="{Binding SellsAnalizeInPeriod}" CommandParameter="{Binding}">
+                              2) Отчет о продажах за выбранный период PDF/EXEL
+                          </Hyperlink>
+                      </TextBlock>
+                      <TextBlock>
+                          <Hyperlink Command="{Binding CurrentYearAnalize}" CommandParameter="{Binding}">
+                              3) Отчет за год PDF/EXEL
+                          </Hyperlink>
+                      </TextBlock>
+                      <TextBlock>
+                          <Hyperlink Command="{Binding IncomeAnalizeInPeriod}" CommandParameter="{Binding}">
+                              4) Отчет о прибыли за выбранный период PDF/EXEL
+                          </Hyperlink>
+                      </TextBlock>
+                      <TextBlock>
+                          <Hyperlink Command="{Binding CashflowAnalizeInPeriod}" CommandParameter="{Binding}">
+                              5) Отчет об обороте денег за выбранный период PDF/EXEL
+                          </Hyperlink>
+                      </TextBlock>
+                      <TextBlock>
+                          <Hyperlink Command="{Binding SpendingsAnalizeInPeriod}" CommandParameter="{Binding}">
+                              6) Отчет о растратах за выбранный период PDF/EXEL
+                          </Hyperlink>
+                      </TextBlock>
+                      <TextBlock>
+                          <Hyperlink Command="{Binding ProductsAnalize}" CommandParameter="{Binding}">
+                              7) Отчет по вашему товару PDF/EXEL
+                          </Hyperlink>
+                      </TextBlock>
+                      <TextBlock>
+                          <Hyperlink Command="{Binding LastProductAnalize}" CommandParameter="{Binding}">
+                              8) Отчет по остаткам на складе PDF/EXEL
+                          </Hyperlink>
+                      </TextBlock>
+                  </StackPanel>
+                </TextBlock>
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>
