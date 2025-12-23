@@ -1,6 +1,8 @@
-﻿using CRM.Properties;
+﻿using CRM.Commands;
+using CRM.Properties;
 using CRM.Services;
 using CRM.Themes;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CRM.ViewModels
@@ -8,7 +10,6 @@ namespace CRM.ViewModels
     public class SettingsViewModel : NotifyPropertyChange
     {
         public ICommand ResetSettings {  get; }
-        public ICommand Otmenit {  get; }
         public ICommand SaveSettings { get; }
 
         public object CurrentContentControl { get; set; }
@@ -25,15 +26,17 @@ namespace CRM.ViewModels
                 {
                     _themeChange = value;
                     OnPropertyChange(nameof(ThemeChange));
-                    ThemeChangeAction(ThemeChange);
                 }
             }
         } 
 
         public SettingsViewModel() 
         {
-            ContentControlVisiability = true;
             ThemeConfiguration();
+            ContentControlVisiability = true;
+
+            SaveSettings = new RelayCommand(Click => SaveAppSettings());
+            ResetSettings = new RelayCommand(Click => ResetDefaultSettings());
         }
 
         private void ThemeConfiguration()
@@ -48,23 +51,26 @@ namespace CRM.ViewModels
                 ThemeChange = "Темная";
             }
         }
-        private void ThemeChangeAction(string newTheme)
+        private void SaveAppSettings()
         {
             var engNewDarkTheme = "Dark";
             var engNewLightTheme = "Light";
 
-            if(newTheme == "Светлая")
+            if (ThemeChange == "Светлая")
             {
-                Settings.Default.Theme = engNewLightTheme;
-                Settings.Default.Save();
                 ThemeManager.ChangeTheme(engNewLightTheme);
             }
-            else if(newTheme == "Темная")
+            else if (ThemeChange == "Темная")
             {
-                Settings.Default.Theme = engNewDarkTheme;
-                Settings.Default.Save();
                 ThemeManager.ChangeTheme(engNewDarkTheme);
             }
+            
+            MessageBox.Show("Theme was successfuly updated");
+        }
+        private void ResetDefaultSettings()
+        {
+            ResetSettingsService.SettingsToDefault();
+            MessageBox.Show("Settings was successfuly droped to DEFAULT, RELOAD PROGRAM PLEASE");
         }
     }
 } 

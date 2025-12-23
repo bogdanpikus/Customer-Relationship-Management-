@@ -1,4 +1,5 @@
 ﻿using CRM.Properties;
+using System.Diagnostics;
 using System.Windows;
 
 namespace CRM.Themes
@@ -7,6 +8,8 @@ namespace CRM.Themes
     {
         public static void ChangeTheme(string themeValue)
         {
+            //FIX: тема не меняется сразу, а только после перезапуска и действия App.xaml.cs/OnStartup
+
             Settings.Default.Theme = themeValue;
             Settings.Default.Save();
 
@@ -17,15 +20,17 @@ namespace CRM.Themes
                 Source = new Uri(themeValue == "Dark" ? "/Themes/DarkTheme.xaml" : "/Themes/LightTheme.xaml", UriKind.Relative)
             };
 
-            var oldDictionary = dictionaries.FirstOrDefault(d => d.Source != null &&
+            var oldDictionary = dictionaries.FirstOrDefault(d =>
             d.Source.OriginalString.Contains("/Themes/"));
 
-            if(oldDictionary != null)
+            if (oldDictionary != null)
             {
                 dictionaries.Remove(oldDictionary);
+                Debug.WriteLine($"{oldDictionary.Source} has been deleted");
             }
 
             dictionaries.Add(dictNew);
+            Debug.WriteLine($"{dictNew.Source} has been added");
         }
     }
 }

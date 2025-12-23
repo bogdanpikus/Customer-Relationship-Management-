@@ -19,11 +19,11 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <Button Grid.Row="0" Grid.Column="0" Width="475" HorizontalAlignment="Left" Content="Общие"
+        <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Content="Общие"
                        FontSize="50"/>
-        <Button Grid.Row="0" Grid.Column="1" Width="475" HorizontalAlignment="Left" Content="Пользовательские"
+        <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Content="Пользовательские"
                        FontSize="50"/>
-        <Button Grid.Row="0" Grid.Column="2" Width="475" HorizontalAlignment="Left" Content="Безопасность"
+        <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Content="Безопасность"
                        FontSize="50"/>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left">
@@ -141,11 +141,9 @@
         </StackPanel>
 
 
-        <Button Grid.Row="3" Grid.Column="0" Command="{Binding ResetSettings}" Content="Сбросить настройки" Height="80" Width="480" FontSize="35" Cursor="Hand"
+        <Button Grid.Row="3" Grid.Column="1" Command="{Binding ResetSettings}" Content="Сбросить" Height="80" Width="480" FontSize="35" Cursor="Hand"
                 VerticalAlignment="Bottom"/>
-        <Button Grid.Row="3" Grid.Column="1" Command="{Binding Otmenit}" Content="Отмена" Height="80" Width="480" FontSize="35" Cursor="Hand"
-                VerticalAlignment="Bottom"/>
-        <Button Grid.Row="3" Grid.Column="2" Command="{Binding SaveSettings}" Content="Сохранить"  Height="80" Width="480" FontSize="35" Cursor="Hand"
+        <Button Grid.Row="3" Grid.Column="2" Command="{Binding SaveSettings}" Content="Применить"  Height="80" Width="480" FontSize="35" Cursor="Hand"
                 VerticalAlignment="Bottom"/>
 
             <ContentControl Content="{Binding CurrentContentControl}" Visibility="{Binding ContentControlVisiability,

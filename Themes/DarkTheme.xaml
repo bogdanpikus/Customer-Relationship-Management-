@@ -8,18 +8,18 @@
     <Color x:Key="LightGray">#D3D3D3</Color>
 
     <!-- Кисти -->
-    <SolidColorBrush x:Key="BlackBackground" Color="{StaticResource   PrimaryColor}" />
-    <SolidColorBrush x:Key="SmokeWhite" Color="{StaticResource  WhiteSmoke}" />
-    <SolidColorBrush x:Key="GridLight" Color="{StaticResource   Grid}" />
-    <SolidColorBrush x:Key="SnowBlush" Color="{StaticResource   Snow}" />
-    <SolidColorBrush x:Key="GrayLight" Color="{StaticResource   LightGray}" />
+    <SolidColorBrush x:Key="BlackBackground" Color="{DynamicResource   PrimaryColor}" />
+    <SolidColorBrush x:Key="SmokeWhite" Color="{DynamicResource  WhiteSmoke}" />
+    <SolidColorBrush x:Key="GridLight" Color="{DynamicResource   Grid}" />
+    <SolidColorBrush x:Key="SnowBlush" Color="{DynamicResource   Snow}" />
+    <SolidColorBrush x:Key="GrayLight" Color="{DynamicResource   LightGray}" />
 
     <!-- Пример стиля -->
     <Style TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource  SmokeWhite}"/>
         <Setter Property="Foreground" Value="Black"/>
     </Style>
-    <Style TargetType="Grid">
+    <Style TargetType="Grid" >
         <Setter Property="Background" Value="{DynamicResource  SmokeWhite}" />
     </Style>
     <Style TargetType="DataGrid">

@@ -8,13 +8,40 @@
     <Setting Name="Version" Type="System.String" Scope="User">
       <Value Profile="(Default)">0.0.1</Value>
     </Setting>
-    <Setting Name="Nickname" Type="System.String" Scope="User">
+    <Setting Name="Company" Type="System.String" Scope="User">
       <Value Profile="(Default)">User</Value>
     </Setting>
     <Setting Name="StartPage" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="WindowScreenSize" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FontSize" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Currency" Type="System.String" Scope="User">
+      <Value Profile="(Default)">UAN</Value>
+    </Setting>
+    <Setting Name="Languaguе" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ru-US</Value>
+    </Setting>
+    <Setting Name="DateFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CurrencyFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Tips" Type="System.String" Scope="User">
+      <Value Profile="(Default)">On</Value>
+    </Setting>
+    <Setting Name="Mode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Simple</Value>
+    </Setting>
+    <Setting Name="Sidebar" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Left</Value>
+    </Setting>
+    <Setting Name="DBConnection" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
