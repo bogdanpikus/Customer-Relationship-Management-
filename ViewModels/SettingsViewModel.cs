@@ -69,7 +69,7 @@ namespace CRM.ViewModels
         }
         private void ResetDefaultSettings()
         {
-            ResetSettingsService.SettingsToDefault();
+            SettingsService.SettingsToDefault();
             MessageBox.Show("Settings was successfuly droped to DEFAULT, RELOAD PROGRAM PLEASE");
         }
     }

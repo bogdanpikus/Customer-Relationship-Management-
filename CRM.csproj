@@ -24,6 +24,11 @@
 		<Folder Include="Core\" />
 		<Folder Include="third_party\Microsoft.Extensions.DependencyInjection\" />
 		<Folder Include="third_party\OxyPlot\" />
+		<Folder Include="Language\" />
+		<Folder Include="Currency\" />
+		<Folder Include="DateFormat\" />
+		<Folder Include="CurrencyFormat\" />
+		<Folder Include="Fonts\" />
 	</ItemGroup>
   
   <ItemGroup>

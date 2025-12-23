@@ -2,7 +2,7 @@
 
 namespace CRM.Services
 {
-    public static class ResetSettingsService
+    public static class SettingsService
     {
        public static void SettingsToDefault()
         {
@@ -19,6 +19,16 @@ namespace CRM.Services
             Settings.Default.Mode = "Simple";
             Settings.Default.Sidebar = "Left";
             Settings.Default.Save();
+        }
+       
+        public static void DBPathSave(string newdbConnection) // TIP: когда выбираешь путь для запуска базы данных
+        {
+            string originaldbPath = Settings.Default.DBConnection;
+            if(newdbConnection != originaldbPath)
+            {
+                Settings.Default.DBConnection = newdbConnection;
+                Settings.Default.Save();
+            }
         }
     }
 }
