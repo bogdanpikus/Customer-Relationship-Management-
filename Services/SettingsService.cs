@@ -1,4 +1,5 @@
 ﻿using CRM.Properties;
+using System.Net.NetworkInformation;
 
 namespace CRM.Services
 {
@@ -30,5 +31,6 @@ namespace CRM.Services
                 Settings.Default.Save();
             }
         }
+
     }
 }

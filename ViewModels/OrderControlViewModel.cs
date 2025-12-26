@@ -6,6 +6,7 @@ using CRM.Models;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Diagnostics;
+using CRM.ViewModels.ModalWindowViewModels;
 
 namespace CRM.ViewModels
 {
@@ -209,7 +210,7 @@ namespace CRM.ViewModels
         }
         private void CreateNewDatabaseAction()
         {
-            MessageBox.Show("CreateNewDatabaseAction");
+            DialogService.Instance.ShowDialog(new ToolbarCreateViewModel());
         }
         private void OpenExistDatabaseAction()
         {

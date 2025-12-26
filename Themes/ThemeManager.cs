@@ -8,7 +8,6 @@ namespace CRM.Themes
     {
         public static void ChangeTheme(string themeValue)
         {
-            //FIX: тема не меняется сразу, а только после перезапуска и действия App.xaml.cs/OnStartup
 
             Settings.Default.Theme = themeValue;
             Settings.Default.Save();

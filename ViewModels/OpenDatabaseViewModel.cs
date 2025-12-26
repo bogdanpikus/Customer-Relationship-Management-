@@ -1,5 +1,6 @@
 ﻿using CRM.Commands;
 using CRM.Models;
+using CRM.Properties;
 using CRM.Services;
 using Microsoft.Win32;
 using System;
@@ -27,6 +28,17 @@ namespace CRM.ViewModels
             GoToMainWindowFromOpenControl = new RelayCommand(Click => GoBackToMainWindowFromOpenControl());
             SearchDataBaseFileToOpen = new RelayCommand(Click => BrouseDataBaseFileToOpen());
             OpenDuckDatabaseFile = new RelayCommand(Click => OpenDuckDBFile(openFilePath));
+            SavedPathDb();
+        }
+        private void SavedPathDb()
+        {
+            string savedPath = Settings.Default.DBConnection;
+            if (savedPath != "")
+            {
+                SearchDatabaseFileToOpenButtonLabel = savedPath;
+                openFilePath = savedPath;
+                OnPropertyChange(nameof(SearchDatabaseFileToOpenButtonLabel));
+            }
         }
         private void BrouseDataBaseFileToOpen()
         {
@@ -44,9 +56,16 @@ namespace CRM.ViewModels
         private void OpenDuckDBFile(string filePath) // opening database file 
         {
             string fileName = Path.GetFileNameWithoutExtension(filePath);
+
+            if(fileName == null)
+            {
+                MessageBox.Show($"{fileName} is empty");
+            }
+
             try
             {
                 DatabaseFactory.CreateDatabase(false, true, filePath, fileName);
+                SettingsService.DBPathSave(filePath);
             }
             catch (Exception ex)
             {

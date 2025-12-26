@@ -40,7 +40,6 @@ namespace CRM.ViewModels
                 createFolderPath = $"{dialog.FolderName}";
                 OnPropertyChange(nameof(SearchPlaceForDataBaseButtonLabel));
             }
-            else { MessageBox.Show("Error saving file directory"); }
         }
         private void ConfirmDatabaseName(string? folderPath,string? dataBaseName)
         {

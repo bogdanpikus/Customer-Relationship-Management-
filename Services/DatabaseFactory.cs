@@ -15,7 +15,6 @@ namespace CRM.Services
 
         public static void CreateDatabase(bool inMemory, bool openFile, string? folderPath, string? databaseName)
         {
-            if (_instance == null)
                 _instance = new DuckDatabase(inMemory, openFile, folderPath, databaseName);
         }
     }
