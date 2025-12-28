@@ -1,9 +1,7 @@
 ﻿using CRM.Commands;
-using CRM.Models;
 using CRM.Properties;
 using CRM.Services;
 using Microsoft.Win32;
-using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
@@ -72,8 +70,30 @@ namespace CRM.ViewModels
                 MessageBox.Show(ex.Message);
             }
 
-            CurrentControl = new OrderControlViewModel();
-            OnPropertyChange(nameof(CurrentControl));
+            StartPageOpen();
+        }
+        private void StartPageOpen()
+        {
+            string startPage = Settings.Default.StartPage;
+
+            switch (startPage) 
+            {
+                case "Order": CurrentControl = new OrderControlViewModel(); 
+                    OnPropertyChange(nameof(CurrentControl)); break;
+                case "Analize": CurrentControl = new AnalizeViewModel();
+                    OnPropertyChange(nameof(CurrentControl)); break;
+                case "Contacts": CurrentControl = new ContactsViewModel();
+                    OnPropertyChange(nameof(CurrentControl)); break;
+                case "Documents": CurrentControl = new DocumentsViewModel();
+                    OnPropertyChange(nameof(CurrentControl)); break;
+                case "Storage": CurrentControl = new StorageViewModel();
+                    OnPropertyChange(nameof(CurrentControl)); break;
+                case "Import": CurrentControl = new ExportImportViewModel();
+                    OnPropertyChange(nameof(CurrentControl)); break;
+                case "Settings": CurrentControl = new SettingsViewModel();
+                    OnPropertyChange(nameof(CurrentControl)); break;
+            }
+
         }
         private void GoBackToMainWindowFromOpenControl()
         {

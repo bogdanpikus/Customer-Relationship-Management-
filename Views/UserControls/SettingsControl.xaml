@@ -73,14 +73,7 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Начальный экран:" FontSize="20" Target="{Binding ElementName=autoplay}"/>
-                <ComboBox Name="autoplay" Width="110"  FontSize="15" Height="25">
-                    <ComboBoxItem IsSelected="True">Заказы</ComboBoxItem>
-                    <ComboBoxItem>Аналитика</ComboBoxItem>
-                    <ComboBoxItem>Контакты</ComboBoxItem>
-                    <ComboBoxItem>Склад</ComboBoxItem>
-                    <ComboBoxItem>Документы</ComboBoxItem>
-                    <ComboBoxItem>Экспорт/импорт</ComboBoxItem>
-                    <ComboBoxItem>Настройки</ComboBoxItem>
+                <ComboBox SelectedItem="{Binding StartPage}" ItemsSource="{Binding PagesSourse}"  Name="autoplay" Width="110"  FontSize="15" Height="25">
                 </ComboBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal">

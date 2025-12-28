@@ -1,5 +1,4 @@
 ﻿using CRM.Properties;
-using System.Net.NetworkInformation;
 
 namespace CRM.Services
 {

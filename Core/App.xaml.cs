@@ -19,6 +19,12 @@ namespace CRM
             };
 
             Resources.MergedDictionaries.Add(dict);
+            MigrateSettings();
+        }
+
+        private void MigrateSettings()
+        {
+
         }
     }
 

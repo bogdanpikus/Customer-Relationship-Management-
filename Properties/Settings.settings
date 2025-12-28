@@ -12,7 +12,7 @@
       <Value Profile="(Default)">User</Value>
     </Setting>
     <Setting Name="StartPage" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Order</Value>
     </Setting>
     <Setting Name="WindowScreenSize" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -43,6 +43,9 @@
     </Setting>
     <Setting Name="DBConnection" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SettingsVersion" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>
